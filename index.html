@@ -1,0 +1,1610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wanderlust — Discover Your Next Adventure</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --brand-red: #ff385c;
+            --brand-red-deep: #e00b41;
+            --text-primary: #222222;
+            --text-secondary: #6a6a6a;
+            --text-muted: #999999;
+            --surface-light: #f2f2f2;
+            --surface-white: #ffffff;
+            --border-color: #dddddd;
+            --card-shadow: rgba(0,0,0,0.02) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 6px, rgba(0,0,0,0.1) 0px 4px 8px;
+            --card-shadow-hover: rgba(0,0,0,0.04) 0px 0px 0px 1px, rgba(0,0,0,0.08) 0px 4px 12px, rgba(0,0,0,0.16) 0px 8px 24px;
+            --font-sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+            --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --radius-xl: 32px;
+            --max-width: 1320px;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            scroll-behavior: smooth;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-primary);
+            background: var(--surface-white);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* ── Scroll Reveal ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-children > * {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+        .reveal-children.visible > *:nth-child(1) { transition-delay: 0.00s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(2) { transition-delay: 0.08s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(3) { transition-delay: 0.16s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(4) { transition-delay: 0.22s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(5) { transition-delay: 0.28s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(6) { transition-delay: 0.32s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(7) { transition-delay: 0.36s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(8) { transition-delay: 0.38s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(9) { transition-delay: 0.40s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(10) { transition-delay: 0.41s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(11) { transition-delay: 0.42s; opacity: 1; transform: translateY(0); }
+        .reveal-children.visible > *:nth-child(12) { transition-delay: 0.43s; opacity: 1; transform: translateY(0); }
+
+        /* ── Navigation ── */
+        .nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--surface-white);
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            padding: 0 24px;
+        }
+        .nav.scrolled {
+            border-bottom-color: var(--border-color);
+            box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+        }
+        .nav-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+            gap: 24px;
+        }
+        .nav-logo {
+            font-family: var(--font-display);
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--brand-red);
+            letter-spacing: -0.5px;
+            text-decoration: none;
+            flex-shrink: 0;
+            transition: opacity 0.15s;
+        }
+        .nav-logo:hover { opacity: 0.8; }
+        .nav-logo span { color: var(--text-primary); }
+
+        .nav-search {
+            flex: 1;
+            max-width: 480px;
+            display: flex;
+            align-items: center;
+            background: var(--surface-white);
+            border-radius: 40px;
+            padding: 4px 4px 4px 20px;
+            box-shadow: var(--card-shadow);
+            transition: box-shadow 0.2s;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .nav-search:hover {
+            box-shadow: var(--card-shadow-hover);
+            border-color: var(--border-color);
+        }
+        .nav-search-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .nav-search-label span { color: var(--text-secondary); font-weight: 400; }
+        .nav-search-btn {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--brand-red);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: background 0.2s, transform 0.15s;
+        }
+        .nav-search-btn:hover { background: var(--brand-red-deep); transform: scale(1.08); }
+        .nav-search-btn svg { width: 16px; height: 16px; fill: none; stroke: white; stroke-width: 2.5; }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .btn-text {
+            font-family: var(--font-sans);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px 12px;
+            border-radius: 22px;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        .btn-text:hover { background: var(--surface-light); }
+        .btn-avatar {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--text-primary);
+            border: 2px solid var(--border-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow 0.15s;
+            position: relative;
+        }
+        .btn-avatar:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+        .btn-avatar svg { width: 16px; height: 16px; }
+        .btn-avatar svg line { stroke: white; stroke-width: 2; }
+
+        /* ── Hero ── */
+        .hero {
+            position: relative;
+            min-height: 580px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 24px;
+            color: white;
+            background: linear-gradient(160deg, #1a1a2e 0%, #16213e 35%, #0f3460 60%, #0d1b2a 100%);
+            overflow: hidden;
+        }
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(circle at 15% 85%, rgba(255,56,92,0.18) 0%, transparent 40%),
+                radial-gradient(circle at 85% 15%, rgba(255,180,70,0.12) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(80,140,240,0.06) 0%, transparent 60%);
+            animation: heroPulse 10s ease-in-out infinite alternate;
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.4), transparent),
+                radial-gradient(1px 1px at 25% 65%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 45% 30%, rgba(255,255,255,0.35), transparent),
+                radial-gradient(1px 1px at 60% 75%, rgba(255,255,255,0.25), transparent),
+                radial-gradient(1px 1px at 80% 40%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 90% 80%, rgba(255,255,255,0.2), transparent),
+                radial-gradient(1px 1px at 35% 10%, rgba(255,255,255,0.3), transparent),
+                radial-gradient(1px 1px at 70% 90%, rgba(255,255,255,0.25), transparent);
+            pointer-events: none;
+        }
+        @keyframes heroPulse {
+            0% { opacity: 0.6; transform: scale(1); }
+            100% { opacity: 1; transform: scale(1.06); }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+        }
+        .hero-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 8px 22px;
+            border-radius: 40px;
+            margin-bottom: 28px;
+        }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(42px, 7vw, 72px);
+            font-weight: 700;
+            line-height: 1.06;
+            letter-spacing: -1.5px;
+            margin-bottom: 14px;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--brand-red);
+            position: relative;
+        }
+        .hero h1 em::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--brand-red);
+            border-radius: 2px;
+            opacity: 0.4;
+        }
+        .hero p {
+            font-size: 18px;
+            font-weight: 400;
+            color: rgba(255,255,255,0.7);
+            max-width: 480px;
+            margin: 0 auto 44px;
+            line-height: 1.6;
+        }
+
+        .hero-search {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            background: var(--surface-white);
+            border-radius: 56px;
+            padding: 6px 6px 6px 8px;
+            box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .hero-search-field {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 8px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: background 0.15s;
+            text-align: left;
+            flex: 1;
+            min-width: 0;
+        }
+        .hero-search-field:hover { background: var(--surface-light); }
+        .hero-search-field strong {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .hero-search-field span {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        .hero-search-divider {
+            width: 1px; height: 32px;
+            background: var(--border-color);
+            flex-shrink: 0;
+        }
+        .hero-search-submit {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 26px;
+            border-radius: 48px;
+            background: var(--brand-red);
+            border: none;
+            cursor: pointer;
+            flex-shrink: 0;
+            transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+            font-family: var(--font-sans);
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            box-shadow: 0 4px 16px rgba(255,56,92,0.35);
+        }
+        .hero-search-submit:hover {
+            background: var(--brand-red-deep);
+            transform: scale(1.04);
+            box-shadow: 0 6px 24px rgba(255,56,92,0.45);
+        }
+        .hero-search-submit svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+
+        /* ── Section Shared ── */
+        .section {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 72px 24px;
+        }
+        .section-header {
+            margin-bottom: 36px;
+        }
+        .section-label {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--brand-red);
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text-primary);
+            line-height: 1.15;
+        }
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-top: 10px;
+            max-width: 520px;
+        }
+
+        /* ── Categories ── */
+        .categories {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 4px 0 20px;
+            scroll-snap-type: x proximity;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .categories::-webkit-scrollbar { display: none; }
+        .category-pill {
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 14px 10px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid transparent;
+            background: none;
+            font-family: var(--font-sans);
+            position: relative;
+        }
+        .category-pill:hover { background: var(--surface-light); }
+        .category-pill.active {
+            background: var(--surface-white);
+            border-color: var(--border-color);
+            box-shadow: var(--card-shadow);
+        }
+        .category-icon {
+            font-size: 26px;
+            line-height: 1;
+            transition: transform 0.15s;
+        }
+        .category-pill:active .category-icon { transform: scale(0.9); }
+        .category-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        .category-pill.active .category-label { color: var(--text-primary); }
+        .category-pill.active::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: 0;
+            width: calc(100% - 20px);
+            height: 2px;
+            background: var(--text-primary);
+            border-radius: 2px;
+        }
+
+        /* ── Destination Cards ── */
+        .destinations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 22px;
+        }
+        .dest-card {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            background: var(--surface-white);
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s;
+        }
+        .dest-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        .dest-card-img-wrap {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 4 / 3;
+        }
+        .dest-card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .dest-card:hover .dest-card-img { transform: scale(1.06); }
+        .dest-card-wishlist {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            backdrop-filter: blur(4px);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            transition: transform 0.2s, background 0.2s;
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+        .dest-card:hover .dest-card-wishlist { opacity: 1; transform: translateY(0); }
+        .dest-card-wishlist:hover { background: white; transform: scale(1.12) !important; }
+        .dest-card-wishlist.liked svg { fill: var(--brand-red); stroke: var(--brand-red); }
+        .dest-card-wishlist svg {
+            width: 18px; height: 18px;
+            fill: none;
+            stroke: var(--text-primary);
+            stroke-width: 2;
+            transition: fill 0.2s, stroke 0.2s;
+        }
+        .dest-card-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            background: white;
+            color: var(--text-primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            z-index: 3;
+        }
+        .dest-card-body {
+            padding: 14px 16px 16px;
+        }
+        .dest-card-location {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dest-card-location svg { width: 13px; height: 13px; stroke: var(--text-muted); }
+        .dest-card-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin: 2px 0 4px;
+            letter-spacing: -0.3px;
+        }
+        .dest-card-meta {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .dest-card-rating {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+        .dest-card-rating svg { width: 13px; height: 13px; fill: var(--brand-red); stroke: none; }
+        .dest-card-price {
+            margin-top: 8px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .dest-card-price strong {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        /* ── Collections ── */
+        .collections-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        .collection-card {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            cursor: pointer;
+            min-height: 320px;
+            display: flex;
+            align-items: flex-end;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: var(--card-shadow);
+        }
+        .collection-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--card-shadow-hover);
+        }
+        .collection-card-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        .collection-card:hover .collection-card-img { transform: scale(1.05); }
+        .collection-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.0) 100%);
+        }
+        .collection-card-content {
+            position: relative;
+            z-index: 2;
+            padding: 28px 24px;
+            color: white;
+        }
+        .collection-card-content h3 {
+            font-family: var(--font-display);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .collection-card-content p {
+            font-size: 14px;
+            opacity: 0.85;
+        }
+
+        /* ── Trust Strip ── */
+        .trust-strip {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 32px;
+            text-align: center;
+            padding: 40px 0;
+        }
+        .trust-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .trust-icon {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            background: var(--surface-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 26px;
+            transition: transform 0.2s;
+        }
+        .trust-item:hover .trust-icon { transform: scale(1.1); }
+        .trust-item strong {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .trust-item span {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.4;
+        }
+
+        /* ── Featured Banner ── */
+        .featured-banner {
+            position: relative;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            background: linear-gradient(135deg, #0f0c29 0%, #1a1040 40%, #0d1b2a 100%);
+            padding: 64px 56px;
+            margin: 24px 0 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 48px;
+            flex-wrap: wrap;
+        }
+        .featured-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 25% 60%, rgba(255,56,92,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse at 75% 40%, rgba(120,160,255,0.07) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .featured-content {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            min-width: 280px;
+        }
+        .featured-badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: var(--brand-red);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(255,56,92,0.3);
+        }
+        .featured-content h2 {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 42px);
+            font-weight: 700;
+            color: white;
+            line-height: 1.12;
+            letter-spacing: -0.5px;
+            margin-bottom: 14px;
+        }
+        .featured-content p {
+            font-size: 16px;
+            color: rgba(255,255,255,0.6);
+            max-width: 420px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+        .btn-primary {
+            font-family: var(--font-sans);
+            font-size: 15px;
+            font-weight: 600;
+            color: white;
+            background: var(--brand-red);
+            border: none;
+            padding: 14px 28px;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 16px rgba(255,56,92,0.3);
+        }
+        .btn-primary:hover {
+            background: var(--brand-red-deep);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255,56,92,0.4);
+        }
+        .featured-stats {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            gap: 48px;
+        }
+        .stat-item { text-align: center; }
+        .stat-number {
+            font-family: var(--font-display);
+            font-size: 44px;
+            font-weight: 700;
+            color: white;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.5);
+            margin-top: 6px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ── Testimonials ── */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 22px;
+        }
+        .testimonial-card {
+            background: var(--surface-white);
+            border-radius: var(--radius-lg);
+            padding: 28px 30px;
+            box-shadow: var(--card-shadow);
+            transition: box-shadow 0.3s, transform 0.3s;
+            border: 1px solid transparent;
+        }
+        .testimonial-card:hover {
+            box-shadow: var(--card-shadow-hover);
+            transform: translateY(-2px);
+            border-color: var(--border-color);
+        }
+        .testimonial-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 14px;
+        }
+        .testimonial-stars svg { width: 17px; height: 17px; fill: var(--brand-red); stroke: none; }
+        .testimonial-quote {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.65;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        .testimonial-quote::before { content: '\201C'; font-family: var(--font-display); font-size: 32px; color: var(--brand-red); line-height: 0; vertical-align: -8px; margin-right: 4px; }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .testimonial-avatar {
+            width: 44px; height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .testimonial-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .testimonial-role {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* ── Newsletter ── */
+        .newsletter {
+            background: linear-gradient(135deg, #f9f9fb 0%, #f2f2f5 100%);
+            border-radius: var(--radius-xl);
+            padding: 60px 48px;
+            text-align: center;
+            margin-top: 16px;
+            border: 1px solid var(--border-color);
+        }
+        .newsletter h3 {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+        }
+        .newsletter p {
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            max-width: 440px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 15px;
+        }
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 460px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .newsletter-input {
+            flex: 1;
+            min-width: 220px;
+            padding: 15px 22px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            font-family: var(--font-sans);
+            font-size: 14px;
+            color: var(--text-primary);
+            outline: none;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            background: white;
+        }
+        .newsletter-input:focus {
+            border-color: var(--text-primary);
+            box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+        }
+
+        /* ── Back to Top ── */
+        .back-to-top {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            width: 48px; height: 48px;
+            border-radius: 50%;
+            background: var(--text-primary);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 90;
+            opacity: 0;
+            transform: translateY(12px);
+            pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s, background 0.2s;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        .back-to-top:hover { background: var(--brand-red); }
+        .back-to-top svg { width: 20px; height: 20px; fill: none; stroke: white; stroke-width: 2.5; }
+
+        /* ── Footer ── */
+        .footer {
+            background: #1a1a1a;
+            padding: 64px 24px 32px;
+            margin-top: 72px;
+            color: rgba(255,255,255,0.7);
+        }
+        .footer-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.5fr repeat(3, 1fr);
+            gap: 48px;
+        }
+        .footer-brand .nav-logo {
+            display: inline-block;
+            margin-bottom: 12px;
+            font-size: 26px;
+            color: white;
+        }
+        .footer-brand .nav-logo span { color: rgba(255,255,255,0.5); }
+        .footer-brand p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            max-width: 280px;
+            line-height: 1.6;
+        }
+        .footer-col h4 {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 16px;
+        }
+        .footer-col a {
+            display: block;
+            font-size: 14px;
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            padding: 5px 0;
+            transition: color 0.15s;
+        }
+        .footer-col a:hover { color: white; }
+        .footer-bottom {
+            max-width: var(--max-width);
+            margin: 44px auto 0;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 13px;
+            color: rgba(255,255,255,0.35);
+        }
+        .footer-bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+        .footer-bottom-links a {
+            color: rgba(255,255,255,0.35);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+
+        /* ── Responsive ── */
+        @media (max-width: 1100px) {
+            .collections-row { grid-template-columns: 1fr 1fr; }
+            .collections-row .collection-card:last-child { grid-column: span 2; }
+            .trust-strip { grid-template-columns: 1fr 1fr; gap: 24px; }
+        }
+        @media (max-width: 950px) {
+            .nav-search { max-width: 320px; }
+            .hero-search { flex-wrap: wrap; border-radius: 24px; padding: 10px; gap: 4px; }
+            .hero-search-field { flex: 1 1 100%; padding: 8px 14px; flex-direction: row; gap: 8px; align-items: center; }
+            .hero-search-field strong { margin-bottom: 0; min-width: 60px; }
+            .hero-search-divider { display: none; }
+            .hero-search-submit { width: 100%; justify-content: center; border-radius: 16px; margin-top: 4px; }
+            .footer-inner { grid-template-columns: 1fr 1fr; }
+            .featured-banner { padding: 44px 32px; }
+            .featured-stats { width: 100%; justify-content: space-around; }
+            .collections-row { grid-template-columns: 1fr; }
+            .collections-row .collection-card:last-child { grid-column: span 1; }
+            .collection-card { min-height: 240px; }
+        }
+        @media (max-width: 744px) {
+            .nav-search { display: none; }
+            .nav-inner { height: 60px; }
+            .hero { min-height: 460px; padding: 60px 16px; }
+            .hero h1 { font-size: clamp(32px, 10vw, 48px); }
+            .section { padding: 44px 16px; }
+            .destinations-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .newsletter { padding: 40px 20px; }
+            .featured-banner { padding: 36px 24px; text-align: center; }
+            .featured-stats { justify-content: center; gap: 32px; }
+            .stat-number { font-size: 32px; }
+            .trust-strip { grid-template-columns: 1fr 1fr; }
+            .back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; }
+        }
+        @media (max-width: 480px) {
+            .destinations-grid { grid-template-columns: 1fr; }
+            .trust-strip { grid-template-columns: 1fr; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .reveal-children > * { opacity: 1; transform: none; transition: none; }
+            .hero-grid { animation: none; }
+            .dest-card:hover .dest-card-img { transform: none; }
+            .collection-card:hover .collection-card-img { transform: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════════════ NAVIGATION ════════════ -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">wander<span>lust</span></a>
+            <div class="nav-search">
+                <span class="nav-search-label">Anywhere <span>· Any week · Add guests</span></span>
+                <button class="nav-search-btn" aria-label="Search">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="22" y2="22"/></svg>
+                </button>
+            </div>
+            <div class="nav-actions">
+                <button class="btn-text">Become a Host</button>
+                <button class="btn-avatar" aria-label="Menu">
+                    <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ════════════ HERO ════════════ -->
+    <section class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content reveal">
+            <div class="hero-badge">✦ Explore the World</div>
+            <h1>Where will you<br>go <em>next</em>?</h1>
+            <p>Discover extraordinary places to stay — from mountain cabins to beachfront villas, curated for every kind of traveler.</p>
+            <div class="hero-search">
+                <div class="hero-search-field">
+                    <strong>Where</strong>
+                    <span>Search destinations</span>
+                </div>
+                <div class="hero-search-divider"></div>
+                <div class="hero-search-field">
+                    <strong>Check in</strong>
+                    <span>Add dates</span>
+                </div>
+                <div class="hero-search-divider"></div>
+                <div class="hero-search-field">
+                    <strong>Who</strong>
+                    <span>Add guests</span>
+                </div>
+                <button class="hero-search-submit">
+                    <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="22" y2="22"/></svg>
+                    Search
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════ CATEGORIES ════════════ -->
+    <div class="section" style="padding-bottom: 0;">
+        <div class="section-header reveal">
+            <div class="section-label">Browse by style</div>
+            <h2 class="section-title">What kind of trip?</h2>
+        </div>
+    </div>
+    <div style="max-width: var(--max-width); margin: 0 auto; padding: 0 24px;" class="reveal">
+        <div class="categories">
+            <button class="category-pill active"><span class="category-icon">🏖️</span><span class="category-label">Beach</span></button>
+            <button class="category-pill"><span class="category-icon">🏔️</span><span class="category-label">Mountains</span></button>
+            <button class="category-pill"><span class="category-icon">🏛️</span><span class="category-label">Historic</span></button>
+            <button class="category-pill"><span class="category-icon">🏙️</span><span class="category-label">City</span></button>
+            <button class="category-pill"><span class="category-icon">🌿</span><span class="category-label">Countryside</span></button>
+            <button class="category-pill"><span class="category-icon">🏝️</span><span class="category-label">Islands</span></button>
+            <button class="category-pill"><span class="category-icon">🏕️</span><span class="category-label">Camping</span></button>
+            <button class="category-pill"><span class="category-icon">🎿</span><span class="category-label">Skiing</span></button>
+            <button class="category-pill"><span class="category-icon">🏊</span><span class="category-label">Amazing pools</span></button>
+            <button class="category-pill"><span class="category-icon">🏰</span><span class="category-label">Castles</span></button>
+            <button class="category-pill"><span class="category-icon">🌴</span><span class="category-label">Tropical</span></button>
+            <button class="category-pill"><span class="category-icon">🧘</span><span class="category-label">Wellness</span></button>
+        </div>
+    </div>
+
+    <!-- ════════════ POPULAR DESTINATIONS ════════════ -->
+    <div class="section">
+        <div class="section-header reveal">
+            <div class="section-label">Popular now</div>
+            <h2 class="section-title">Trending destinations</h2>
+            <p class="section-subtitle">The most-booked spots this month, handpicked by our travel editors.</p>
+        </div>
+        <div class="destinations-grid reveal-children">
+            <!-- Venice -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=600&h=450&fit=crop&auto=format" alt="Venice canals" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Italy
+                    </div>
+                    <div class="dest-card-title">Venice</div>
+                    <div class="dest-card-meta">
+                        <span>287 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.92
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$129</strong> / night</div>
+                </div>
+            </div>
+            <!-- Paris -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=600&h=450&fit=crop&auto=format" alt="Paris" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        France
+                    </div>
+                    <div class="dest-card-title">Paris</div>
+                    <div class="dest-card-meta">
+                        <span>1,024 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.87
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$145</strong> / night</div>
+                </div>
+            </div>
+            <!-- Tokyo -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1535139262971-c51845709a48?w=600&h=450&fit=crop&auto=format" alt="Tokyo" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Japan
+                    </div>
+                    <div class="dest-card-title">Tokyo</div>
+                    <div class="dest-card-meta">
+                        <span>890 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.95
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$98</strong> / night</div>
+                </div>
+            </div>
+            <!-- Bali -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?w=600&h=450&fit=crop&auto=format" alt="Bali" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Indonesia
+                    </div>
+                    <div class="dest-card-title">Bali</div>
+                    <div class="dest-card-meta">
+                        <span>1,432 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.89
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$67</strong> / night</div>
+                </div>
+            </div>
+            <!-- Santorini -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <div class="dest-card-badge">Trending</div>
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?w=600&h=450&fit=crop&auto=format" alt="Santorini" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Greece
+                    </div>
+                    <div class="dest-card-title">Santorini</div>
+                    <div class="dest-card-meta">
+                        <span>412 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.96
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$184</strong> / night</div>
+                </div>
+            </div>
+            <!-- Amsterdam -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?w=600&h=450&fit=crop&auto=format" alt="Amsterdam" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Netherlands
+                    </div>
+                    <div class="dest-card-title">Amsterdam</div>
+                    <div class="dest-card-meta">
+                        <span>634 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.83
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$112</strong> / night</div>
+                </div>
+            </div>
+            <!-- Barcelona -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1583422409516-2895a77efded?w=600&h=450&fit=crop&auto=format" alt="Barcelona" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Spain
+                    </div>
+                    <div class="dest-card-title">Barcelona</div>
+                    <div class="dest-card-meta">
+                        <span>756 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.88
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$108</strong> / night</div>
+                </div>
+            </div>
+            <!-- Cape Town -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=600&h=450&fit=crop&auto=format" alt="Cape Town" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        South Africa
+                    </div>
+                    <div class="dest-card-title">Cape Town</div>
+                    <div class="dest-card-meta">
+                        <span>498 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.91
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$84</strong> / night</div>
+                </div>
+            </div>
+            <!-- Sydney -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=600&h=450&fit=crop&auto=format" alt="Sydney" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Australia
+                    </div>
+                    <div class="dest-card-title">Sydney</div>
+                    <div class="dest-card-meta">
+                        <span>592 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.86
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$137</strong> / night</div>
+                </div>
+            </div>
+            <!-- Marrakech -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=600&h=450&fit=crop&auto=format" alt="Marrakech" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Morocco
+                    </div>
+                    <div class="dest-card-title">Marrakech</div>
+                    <div class="dest-card-meta">
+                        <span>345 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.93
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$72</strong> / night</div>
+                </div>
+            </div>
+            <!-- Rio de Janeiro -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <div class="dest-card-badge">New</div>
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&h=450&fit=crop&auto=format" alt="Rio de Janeiro" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Brazil
+                    </div>
+                    <div class="dest-card-title">Rio de Janeiro</div>
+                    <div class="dest-card-meta">
+                        <span>523 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.79
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$76</strong> / night</div>
+                </div>
+            </div>
+            <!-- Reykjavik -->
+            <div class="dest-card">
+                <div class="dest-card-img-wrap">
+                    <img class="dest-card-img" src="https://images.unsplash.com/photo-1504829857797-ddff29c27927?w=600&h=450&fit=crop&auto=format" alt="Reykjavik" loading="lazy">
+                    <button class="dest-card-wishlist" aria-label="Save to wishlist" onclick="toggleWishlist(this, event)">
+                        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                    </button>
+                </div>
+                <div class="dest-card-body">
+                    <div class="dest-card-location">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        Iceland
+                    </div>
+                    <div class="dest-card-title">Reykjavik</div>
+                    <div class="dest-card-meta">
+                        <span>178 stays</span>
+                        <div class="dest-card-rating">
+                            <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                            4.97
+                        </div>
+                    </div>
+                    <div class="dest-card-price">From <strong>$156</strong> / night</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════ CURATED COLLECTIONS ════════════ -->
+    <div class="section">
+        <div class="section-header reveal">
+            <div class="section-label">Curated for you</div>
+            <h2 class="section-title">Handpicked collections</h2>
+            <p class="section-subtitle">Themed stays selected by our editors — each one verified for quality.</p>
+        </div>
+        <div class="collections-row reveal-children">
+            <div class="collection-card">
+                <img class="collection-card-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=500&fit=crop&auto=format" alt="Beachfront escapes" loading="lazy">
+                <div class="collection-card-overlay"></div>
+                <div class="collection-card-content">
+                    <h3>Beachfront Escapes</h3>
+                    <p>Wake up to ocean views — 180+ stunning properties</p>
+                </div>
+            </div>
+            <div class="collection-card">
+                <img class="collection-card-img" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=500&fit=crop&auto=format" alt="Mountain retreats" loading="lazy">
+                <div class="collection-card-overlay"></div>
+                <div class="collection-card-content">
+                    <h3>Mountain Retreats</h3>
+                    <p>Cozy cabins and luxury chalets — 240+ alpine stays</p>
+                </div>
+            </div>
+            <div class="collection-card">
+                <img class="collection-card-img" src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&h=500&fit=crop&auto=format" alt="City lofts" loading="lazy">
+                <div class="collection-card-overlay"></div>
+                <div class="collection-card-content">
+                    <h3>Designer City Lofts</h3>
+                    <p>Architectural gems in the world's best cities</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════ TRUST STRIP ════════════ -->
+    <div class="section reveal">
+        <div class="trust-strip">
+            <div class="trust-item">
+                <div class="trust-icon">🔒</div>
+                <strong>Secure booking</strong>
+                <span>SSL encrypted payments with instant confirmation</span>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">⭐</div>
+                <strong>Verified reviews</strong>
+                <span>Every review from real guests who stayed</span>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">💬</div>
+                <strong>24/7 support</strong>
+                <span>Real humans ready to help, anytime day or night</span>
+            </div>
+            <div class="trust-item">
+                <div class="trust-icon">🏠</div>
+                <strong>15K+ Hosts</strong>
+                <span>Trusted by thousands of property owners worldwide</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════ FEATURED BANNER ════════════ -->
+    <div class="section">
+        <div class="featured-banner reveal">
+            <div class="featured-content">
+                <div class="featured-badge">Limited Offer</div>
+                <h2>Summer escapes<br>up to 30% off</h2>
+                <p>Book early and save on thousands of hand-picked stays across Europe, Asia, and the Americas.</p>
+                <button class="btn-primary">
+                    Explore deals
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </button>
+            </div>
+            <div class="featured-stats">
+                <div class="stat-item">
+                    <div class="stat-number">12K+</div>
+                    <div class="stat-label">Properties</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">190+</div>
+                    <div class="stat-label">Countries</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">Avg Rating</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════ TESTIMONIALS ════════════ -->
+    <div class="section">
+        <div class="section-header reveal">
+            <div class="section-label">Testimonials</div>
+            <h2 class="section-title">Loved by travelers</h2>
+        </div>
+        <div class="testimonials-grid reveal-children">
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                </div>
+                <p class="testimonial-quote">Found the most incredible villa in Tuscany through Wanderlust. The booking process was seamless and the property exceeded every expectation. Will absolutely book again.</p>
+                <div class="testimonial-author">
+                    <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&auto=format" alt="Sarah M." loading="lazy">
+                    <div>
+                        <div class="testimonial-name">Sarah Mitchell</div>
+                        <div class="testimonial-role">Travel Blogger</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                </div>
+                <p class="testimonial-quote">I've used a dozen travel platforms and Wanderlust is by far the most intuitive. The curated collections saved me hours of research. The Kyoto ryokan they recommended was magical.</p>
+                <div class="testimonial-author">
+                    <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&auto=format" alt="James K." loading="lazy">
+                    <div>
+                        <div class="testimonial-name">James Kowalski</div>
+                        <div class="testimonial-role">Software Engineer</div>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <div class="testimonial-stars">
+                    <svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>
+                </div>
+                <p class="testimonial-quote">Booked a last-minute weekend in the Cotswolds and everything was perfect. The host was responsive, the cottage was pristine, and the whole experience felt personal.</p>
+                <div class="testimonial-author">
+                    <img class="testimonial-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&auto=format" alt="Priya N." loading="lazy">
+                    <div>
+                        <div class="testimonial-name">Priya Nair</div>
+                        <div class="testimonial-role">Photographer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════ NEWSLETTER ════════════ -->
+    <div class="section">
+        <div class="newsletter reveal">
+            <h3>Get travel inspiration</h3>
+            <p>Join our newsletter for curated destinations, exclusive deals, and travel tips — delivered weekly.</p>
+            <div class="newsletter-form">
+                <input type="email" class="newsletter-input" placeholder="Your email address" aria-label="Email address">
+                <button class="btn-primary">Subscribe</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════ FOOTER ════════════ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <a href="#" class="nav-logo">wander<span>lust</span></a>
+                <p>Curating extraordinary stays and experiences around the world since 2018. Travel better, not just farther.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="#">All destinations</a>
+                <a href="#">Beach houses</a>
+                <a href="#">Mountain cabins</a>
+                <a href="#">City apartments</a>
+                <a href="#">Unique stays</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="#">About us</a>
+                <a href="#">Careers</a>
+                <a href="#">Press</a>
+                <a href="#">Blog</a>
+                <a href="#">Partner with us</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="#">Help center</a>
+                <a href="#">Safety information</a>
+                <a href="#">Cancellation options</a>
+                <a href="#">Contact us</a>
+                <a href="#">Accessibility</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 Wanderlust, Inc. All rights reserved.</span>
+            <div class="footer-bottom-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Sitemap</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ════════════ BACK TO TOP ════════════ -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+        <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+
+    <script>
+        // ── Sticky nav shadow ──
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 10);
+        });
+
+        // ── Category pills ──
+        document.querySelectorAll('.category-pill').forEach(pill => {
+            pill.addEventListener('click', function() {
+                document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // ── Wishlist toggle ──
+        function toggleWishlist(btn, event) {
+            event.stopPropagation();
+            btn.classList.toggle('liked');
+        }
+
+        // ── Scroll reveal (Intersection Observer) ──
+        const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -40px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal, .reveal-children').forEach(el => observer.observe(el));
+
+        // ── Back to top visibility ──
+        const backBtn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            backBtn.classList.toggle('visible', window.scrollY > 600);
+        });
+    </script>
+
+</body>
+</html>
