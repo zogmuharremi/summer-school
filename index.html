@@ -316,35 +316,35 @@
 <script>
 // ══ DATA ══
 const D = [
-  {id:"maldives",name:"Maldives",country:"Maldives",img:"photo-1514282401047-d79a71a590e8",cats:["beach","islands","tropical","pools"],props:642,rating:4.96,price:289,badge:"",desc:"The Maldives is a tropical paradise of over 1,000 coral islands scattered across the Indian Ocean. Crystal-clear turquoise waters, white sandy beaches, and world-class overwater bungalows make it the ultimate luxury escape.",
+  {id:"maldives",name:"Maldives",country:"Maldives",img:"photo-1573843981267-be1999ff37cd",cats:["beach","islands","tropical","pools"],props:642,rating:4.96,price:289,badge:"",desc:"The Maldives is a tropical paradise of over 1,000 coral islands scattered across the Indian Ocean. Crystal-clear turquoise waters, white sandy beaches, and world-class overwater bungalows make it the ultimate luxury escape.",
    food:["Maldivian Fish Curry — A fragrant coconut-based curry with fresh tuna","Mas Huni — Shredded smoked tuna with coconut, onion, and chili","Bis Keemiya — A savory samosa-like pastry filled with spiced fish","Raa — Sweet palm wine tapped from palm trees, a local specialty"],
    act:["Snorkel with manta rays and whale sharks at South Ari Atoll","Dine underwater at Ithaa Undersea Restaurant","Take a seaplane ride over the coral atolls","Sunset fishing trip on a traditional dhoni boat"],
    why:"The Maldives offers a level of serenity and tropical beauty found nowhere else on Earth. It's the definition of paradise — pristine beaches, incredible marine life, and luxurious overwater villas that redefine relaxation."},
-  {id:"bali",name:"Bali",country:"Indonesia",img:"photo-1518548419970-58e3b4079ab2",cats:["islands","tropical","pools","wellness","beach"],props:1432,rating:4.89,price:67,badge:"",desc:"Bali, the Island of the Gods, is a lush tropical haven with terraced rice paddies, ancient temples, vibrant arts, and surf-worthy beaches.",
+  {id:"bali",name:"Bali",country:"Indonesia",img:"photo-1537996194471-e657df975ab4",cats:["islands","tropical","pools","wellness","beach"],props:1432,rating:4.89,price:67,badge:"",desc:"Bali, the Island of the Gods, is a lush tropical haven with terraced rice paddies, ancient temples, vibrant arts, and surf-worthy beaches.",
    food:["Babi Guling — Suckling pig slow-roasted with turmeric and spices","Nasi Campur — A mixed rice platter with meats, vegetables, and sambal","Sate Lilit — Minced seafood satay wrapped around lemongrass sticks","Lawar — A traditional mix of vegetables, coconut, and minced meat"],
    act:["Watch sunrise at Tanah Lot temple","Ubud Monkey Forest and rice terrace walk","Surf lessons at Padang Padang Beach","Full-day Ubud art and culture tour"],
    why:"Bali offers incredible value for world-class experiences. From $15 spa treatments to $3 street food feasts, it's one of the most affordable tropical destinations with unmatched cultural richness."},
-  {id:"paris",name:"Paris",country:"France",img:"photo-1502602898657-3e91760cbb34",cats:["city","historic"],props:1024,rating:4.87,price:145,badge:"",desc:"Paris, the City of Light, is a timeless blend of romance, art, and gastronomy. From the majestic Eiffel Tower to charming street-side cafes, every corner exudes elegance.",
+  {id:"paris",name:"Paris",country:"France",img:"photo-1509439581779-6298f75bf6e5",cats:["city","historic"],props:1024,rating:4.87,price:145,badge:"",desc:"Paris, the City of Light, is a timeless blend of romance, art, and gastronomy. From the majestic Eiffel Tower to charming street-side cafes, every corner exudes elegance.",
    food:["Croissant — Flaky, buttery perfection from any boulangerie","Steak Frites — Grilled steak with crispy french fries and béarnaise","Escargots de Bourgogne — Snails baked with garlic-parsley butter","Crème Brûlée — Silky vanilla custard with caramelized sugar top"],
    act:["Climb the Eiffel Tower at sunset","Louvre Museum — see the Mona Lisa and Venus de Milo","Stroll Montmartre and Sacré-Cœur","Seine River dinner cruise"],
    why:"Paris is the most romantic city in the world, with world-class museums, incredible food at every price point, and architecture that makes every street feel like a movie set."},
-  {id:"tokyo",name:"Tokyo",country:"Japan",img:"photo-1535139262971-c51845709a48",cats:["city","historic","wellness"],props:890,rating:4.95,price:98,badge:"",desc:"Tokyo is a dazzling metropolis where cutting-edge technology meets ancient tradition.",
+  {id:"tokyo",name:"Tokyo",country:"Japan",img:"photo-1540959733332-eab4deabeeaf",cats:["city","historic","wellness"],props:890,rating:4.95,price:98,badge:"",desc:"Tokyo is a dazzling metropolis where cutting-edge technology meets ancient tradition.",
    food:["Ramen at Ichiran — Customizable tonkotsu ramen in private booths","Sushi at Tsukiji outer market — World's freshest sushi","Okonomiyaki — Savory Japanese pancake cooked on a hotplate","Kaiseki — Traditional multi-course Japanese haute cuisine"],
    act:["Visit Sensō-ji Temple and Nakamise Street","Shibuya Crossing — the world's busiest intersection","Explore Akihabara Electric Town","TeamLab Borderless digital art museum"],
    why:"Tokyo is a sensory overload in the best way — incredible food, unparalleled public transit, and a blend of tradition and futurism you won't find anywhere else."},
-  {id:"rome",name:"Rome",country:"Italy",img:"photo-1552832230-c0197dd311b5",cats:["city","historic"],props:1245,rating:4.82,price:132,badge:"",desc:"Rome, the Eternal City, is a living museum where ancient history unfolds around every corner.",
+  {id:"rome",name:"Rome",country:"Italy",img:"photo-1525874684015-58379d421a52",cats:["city","historic"],props:1245,rating:4.82,price:132,badge:"",desc:"Rome, the Eternal City, is a living museum where ancient history unfolds around every corner.",
    food:["Cacio e Pepe — Simple perfection: pecorino cheese and black pepper pasta","Carbonara — Creamy egg-based pasta with guanciale","Supplì — Fried rice balls stuffed with mozzarella","Gelato artigianale — Handmade gelato"],
    act:["Colosseum and Roman Forum guided tour","Vatican Museums and Sistine Chapel","Throw a coin in the Trevi Fountain","Explore Trastevere food scene"],
    why:"Rome has 2,000+ years of history visible at every turn, plus food that's simple, fresh, and life-changing."},
-  {id:"santorini",name:"Santorini",country:"Greece",img:"photo-1504513775721-40e554384c67",cats:["islands","beach","pools","historic"],props:412,rating:4.96,price:184,badge:"Trending",desc:"Santorini is the crown jewel of the Cyclades — iconic blue-domed churches, whitewashed villages, and sunsets that paint the sky in shades of gold.",
+  {id:"santorini",name:"Santorini",country:"Greece",img:"photo-1570077188670-e3a8d69ac5ff",cats:["islands","beach","pools","historic"],props:412,rating:4.96,price:184,badge:"Trending",desc:"Santorini is the crown jewel of the Cyclades — iconic blue-domed churches, whitewashed villages, and sunsets that paint the sky in shades of gold.",
    food:["Fava — Creamy yellow split pea puree, a Santorini specialty","Tomato Keftedes — Crispy tomato fritters with local sun-dried tomatoes","Grilled Octopus — Fresh octopus drizzled with olive oil and lemon","Vinsanto — Sweet dessert wine made from sun-dried grapes"],
    act:["Watch sunset from Oia Castle","Wine tour of volcanic vineyards","Boat trip to the volcano at Nea Kameni","Red Beach and Akrotiri ruins"],
    why:"Santorini's architecture is unlike anywhere else — those blue domes against the white and caldera views create a visual experience that's pure magic."},
-  {id:"barcelona",name:"Barcelona",country:"Spain",img:"photo-1583422409516-2895a77efded",cats:["city","beach"],props:756,rating:4.88,price:108,badge:"",desc:"Barcelona is a vibrant Mediterranean city where Gaudí's whimsical architecture meets sunny beachside living.",
+  {id:"barcelona",name:"Barcelona",country:"Spain",img:"photo-1583779421876-6e5c8a0d3f35",cats:["city","beach"],props:756,rating:4.88,price:108,badge:"",desc:"Barcelona is a vibrant Mediterranean city where Gaudí's whimsical architecture meets sunny beachside living.",
    food:["Paella Marinera — Seafood paella cooked over an open fire","Patatas Bravas — Crispy potatoes with spicy tomato and aioli","Jamón Ibérico — Cured acorn-fed ham, sliced paper-thin","Crema Catalana — Spanish crème brûlée"],
    act:["Sagrada Familia — Gaudí's unfinished masterpiece","Park Güell — Mosaic sculptures park","Las Ramblas and La Boqueria market","Barceloneta beach"],
    why:"Barcelona has it all — incredible architecture, a beautiful coastline, world-class food, and a relaxed Mediterranean vibe."},
-  {id:"amalfi",name:"Amalfi Coast",country:"Italy",img:"photo-1534308983496-4fabb1a015ee",cats:["beach","historic"],props:312,rating:4.94,price:198,badge:"Trending",desc:"The Amalfi Coast is a stunning stretch of coastline dotted with pastel-colored villages clinging to dramatic cliffs.",
+  {id:"amalfi",name:"Amalfi Coast",country:"Italy",img:"photo-1555400038-63f5ba517a47",cats:["beach","historic"],props:312,rating:4.94,price:198,badge:"Trending",desc:"The Amalfi Coast is a stunning stretch of coastline dotted with pastel-colored villages clinging to dramatic cliffs.",
    food:["Scialatielli ai Frutti di Mare — Fresh thick spaghetti with seafood","Delizia al Limone — Lemon dessert cake","Risotto alla Pescatora — Seafood risotto","Limoncello — Famous lemon liqueur"],
    act:["Drive the Amalfi coastal road","Visit the cathedral in Amalfi town","Boat trip to the island of Capri","Hike the Path of the Gods"],
    why:"The Amalfi Coast is a UNESCO World Heritage site — those cliffside villages with vibrant colors, turquoise water, and incredible food make it unforgettable."},
@@ -352,7 +352,7 @@ const D = [
    food:["Kaiseki Ryori — Traditional multi-course Japanese haute cuisine","Yudofu — Silky hot tofu in a light broth at a temple","Matcha sweets — Green tea flavored desserts","Nikujaga — Japanese-style meat and potato stew"],
    act:["Fushimi Inari Shrine — Thousands of vermilion torii gates","Arashiyama Bamboo Grove","Kinkaku-ji — The Golden Pavilion","Traditional tea ceremony in Gion"],
    why:"Kyoto is Japan's most culturally rich city, with centuries of tradition preserved in its temples, gardens, and cuisine."},
-  {id:"banff",name:"Banff",country:"Canada",img:"photo-1536615652268-01edbe780714",cats:["mountains","camping","skiing"],props:287,rating:4.93,price:167,badge:"",desc:"Banff is a stunning mountain town in the heart of the Canadian Rockies, surrounded by turquoise lakes and towering peaks.",
+  {id:"banff",name:"Banff",country:"Canada",img:"photo-1517093602195-b40d968277a0",cats:["mountains","camping","skiing"],props:287,rating:4.93,price:167,badge:"",desc:"Banff is a stunning mountain town in the heart of the Canadian Rockies, surrounded by turquoise lakes and towering peaks.",
    food:["Alberta Beef — World-class steak","Poutine — Crispy fries with cheese curds and gravy","Wild game — Bison, elk, and venison dishes","Maple syrup pie"],
    act:["Lake Louise canoe ride","Banff Gondola to Sulphur Mountain","Hike Johnston Canyon","Banff Upper Hot Springs"],
    why:"Banff offers some of the most breathtaking mountain scenery on Earth — emerald lakes, snow-capped peaks, and glaciers all accessible from a charming alpine town."},
@@ -360,7 +360,7 @@ const D = [
    food:["Al Harees — Slow-cooked wheat and meat porridge","Shawarma — Spiced meat wrapped in flatbread","Machboos — Fragrant spiced rice with meat or seafood","Luqaimat — Sweet fried dumplings with date syrup"],
    act:["Burj Khalifa observation deck on the 148th floor","Desert safari with dune bashing","Dubai Marina yacht dinner cruise","Atlantis Aquaventure"],
    why:"Dubai pushes the boundaries of what's possible — indoor skiing in the desert, underwater hotels, and man-made islands."},
-  {id:"marrakech",name:"Marrakech",country:"Morocco",img:"photo-1597212618440-806262de4f6b",cats:["historic","city","wellness"],props:345,rating:4.93,price:72,badge:"",desc:"Marrakech is a sensory explosion — vibrant souks, ornate palaces, fragrant food stalls, and the vast Sahara Desert beyond the city gates.",
+  {id:"marrakech",name:"Marrakech",country:"Morocco",img:"photo-1506197603052-3cc9cbbdf2b1",cats:["historic","city","wellness"],props:345,rating:4.93,price:72,badge:"",desc:"Marrakech is a sensory explosion — vibrant souks, ornate palaces, fragrant food stalls, and the vast Sahara Desert beyond the city gates.",
    food:["Tagine — Slow-cooked meat and vegetable stew in a clay pot","Couscous with Lamb — Fluffy semolina with tender spiced lamb","Pastilla — Sweet and savory pigeon pie with cinnamon","Mint Tea — Sweet green tea with fresh mint"],
    act:["Explore Jemaa el-Fna square at night","Bahia Palace and Saadian Tombs","Hot air balloon over the Atlas Mountains","Hammam and spa experience"],
    why:"Marrakech offers incredible value — luxury riads for under $100, street food feasts for a few dollars, and an exotic atmosphere."},
@@ -397,7 +397,7 @@ const CATS = [
 let activeCat = "all";
 
 function renderCats(){
-  document.getElementById("categories").innerHTML = CATS.map(c=>`<button class="cat-btn${c.id===activeCat?' active':''}" data-cat="${c.id}"><span class="icon">${c.icon}</span>${c.label}</button>`).join("");
+  document.getElementById("categories").innerHTML = CATS.map(c=>`<button class="cat-btn${c.id===activeCat?' active':''}" data-action="cat" data-cat="${c.id}"><span class="icon">${c.icon}</span>${c.label}</button>`).join("");
 }
 
 function getDests(){
@@ -438,7 +438,7 @@ function openModal(id){
   const tabs = document.getElementById("modalTabs");
   tabs.innerHTML = [
     {id:"food",label:"🍜 Food"}, {id:"act",label:"🎯 Activities"}, {id:"why",label:"💎 Why Go"}
-  ].map((t,i)=>`<button class="modal-tab${i===0?' active':''}" data-tab="${t.id}">${t.label}</button>`).join("");
+  ].map((t,i)=>`<button class="modal-tab${i===0?' active':''}" data-action="tab" data-tab="${t.id}">${t.label}</button>`).join("");
   switchTab("food");
   document.getElementById("locationModal").classList.add("open");
   document.body.style.overflow = "hidden";
@@ -488,7 +488,7 @@ document.addEventListener("click", function(e){
   const id = btn.dataset.id;
   const msg = btn.dataset.msg;
 
-  if(action==="set-cat"){ activeCat=btn.dataset.cat; renderCats(); renderDests(); }
+  if(action==="cat"){ activeCat=btn.dataset.cat; renderCats(); renderDests(); }
   else if(action==="explore"){ openModal(id); }
   else if(action==="open-modal"){ openModal(id||btn.closest("[data-id]")?.dataset.id); }
   else if(action==="close-modal"||action==="close-chat"){ document.getElementById("locationModal").classList.remove("open"); document.getElementById("chatWindow").classList.remove("open"); document.getElementById("chatBtn").style.display="block"; document.body.style.overflow=""; }
@@ -517,6 +517,11 @@ document.addEventListener("click", function(e){
   }
   else if(action==="toast"){ showToast(msg||"Coming soon!"); }
   else if(action==="book"){ showToast("Booking feature coming soon! 🎉"); }
+  else if(action==="suggest"){
+    document.getElementById("chatInput").value = btn.dataset.q;
+    const inp = document.getElementById("chatInput"); const q = inp.value.trim();
+    if(!q) return; inp.value=""; addMsg(q,"user"); setTimeout(()=>chatResponse(q),300);
+  }
 });
 
 // Chat suggestions
