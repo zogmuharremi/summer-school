@@ -524,8 +524,7 @@ const DESTINATIONS = [
    food:["Kaisen Don — Seafood bowl with fresh Hokkaido catch","Jingisukan — Grilled lamb hotpot, a Hokkaido specialty","Soup Curry — Rich spiced soup with vegetables and chicken","Hokkaido Milk Ice Cream — Famous for its rich, creamy texture"],
    activities:["World-class powder skiing from November to May","Snow monkeys at Jigokudani Park","Onsen hot springs after skiing","Snowshoeing through birch forests"],
    why:"Niseko gets some of the best powder snow on Earth, combined with incredible Japanese cuisine and the unique experience of soaking in a hot spring after a day on the slopes.",
-   tags:["skiing","snow","onsen","japan"]},
-  {id:"maldives",name:"Maldives",country:"Maldives",img:"photo-1514282401047-d79a71a590e8",cats:["pools","luxury"],props:642,rating:4.96,price:289,badge:"",desc:"Maldives",food:[],activities:[],why:"",tags:[]},
+   tags:["skiing","snow","onsen","japan"]}
 ];
 
 const CATEGORIES = [
@@ -612,7 +611,7 @@ function openModal(id){
   document.getElementById("modalDesc").textContent=d.desc;
   document.getElementById("modalPrice").textContent=`From $${d.price} / night`;
   
-  const tabs=d3.getElementById("modalTabs");
+  const tabs=document.getElementById("modalTabs");
   const tabLabels=[{id:"food",label:"🍜 Food"},{id:"activities",label:"🎯 Activities"},{id:"why",label:"💎 Why Go"}];
   tabs.innerHTML=tabLabels.map((t,i)=>`<button class="modal-tab${i===0?" active":""}" onclick="switchModalTab('${t.id}',this)">${t.label}</button>`).join("");
   
