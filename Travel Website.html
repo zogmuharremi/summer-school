@@ -408,7 +408,7 @@ function getDests(){
 function renderDests(){
   const f=getDests(),s=new Set(),u=f.filter(d=>{const t=!s.has(d.id);s.add(d.id);return t});
   document.getElementById("filterCount").textContent=activeCat==="all"?`${u.length} unique destinations`:`${u.length} destinations`;
-  document.getElementById("destGrid").innerHTML=u.map(d=>`<div class="dest-card" data-id="${d.id}">
+  document.getElementById("destGrid").innerHTML=u.map(d=>`<div class="dest-card" data-action="open-modal" data-id="${d.id}">
     <div class="dest-img-wrap">
       <img class="dest-img" src="https://images.unsplash.com/${d.img}?w=600&h=450&fit=crop&auto=format" alt="${d.name}" loading="lazy">
       ${d.badge?`<div class="dest-badge">${d.badge}</div>`:''}
@@ -489,7 +489,8 @@ document.addEventListener("click", function(e){
   const msg = btn.dataset.msg;
 
   if(action==="set-cat"){ activeCat=btn.dataset.cat; renderCats(); renderDests(); }
-  else if(action==="explore"||action==="open-modal"){ openModal(id||btn.closest("[data-id]")?.dataset.id); }
+  else if(action==="explore"){ openModal(id); }
+  else if(action==="open-modal"){ openModal(id||btn.closest("[data-id]")?.dataset.id); }
   else if(action==="close-modal"||action==="close-chat"){ document.getElementById("locationModal").classList.remove("open"); document.getElementById("chatWindow").classList.remove("open"); document.getElementById("chatBtn").style.display="block"; document.body.style.overflow=""; }
   else if(action==="open-chat"){ document.getElementById("chatWindow").classList.add("open"); document.getElementById("chatBtn").style.display="none"; document.getElementById("chatInput").focus(); }
   else if(action==="send-chat"||action==="chat-send"){
