@@ -6,63 +6,58 @@
     <title>Wanderlust — Discover Your Next Adventure</title>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary: #0f172a; --accent: #ff385c; --accent-light: #ff6b6a;
-            --text: #1e293b; --text-muted: #64748b; --surface: #ffffff;
-            --bg: #f8fafc; --border: #e2e8f0; --radius: 12px; --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-            --max-w: 1200px; --font: 'DM Sans',sans-serif; --font-display: 'Playfair Display',serif;
-        }
+        :root{--primary:#0f172a;--accent:#ff385c;--accent-light:#ff6b6a;--text:#1e293b;--text-muted:#64748b;--surface:#fff;--bg:#f8fafc;--border:#e2e8f0;--radius:12px;--shadow:0 4px 6px -1px rgba(0,0,0,0.1);--max-w:1200px;--font:'DM Sans',sans-serif;--font-d:'Playfair Display',serif}
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
         html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
         body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden}
         .container{width:92%;max-width:var(--max-w);margin:0 auto;padding:0 1rem}
         .section{padding:5rem 0}
         .section-title{text-align:center;margin-bottom:3rem}
-        .section-title h2{font-family:var(--font-display);font-size:2.5rem;font-weight:700;color:var(--primary);margin-bottom:0.75rem}
+        .section-title h2{font-family:var(--font-d);font-size:2.5rem;font-weight:700;color:var(--primary);margin-bottom:0.75rem}
         .section-title p{color:var(--text-muted);max-width:600px;margin:0 auto;font-size:1.1rem}
-
-        /* ── NAV ── */
-        nav{position:fixed;top:0;width:100%;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100;height:64px}
+        
+        /* Nav */
+        nav{position:fixed;top:0;width:100%;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid transparent;z-index:100;height:64px;transition:border-color 0.3s}
+        nav.scrolled{border-bottom-color:var(--border)}
         .nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:100%;padding:0 1rem}
-        .logo{font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--primary);text-decoration:none;display:flex;align-items:center;gap:8px}
+        .logo{font-family:var(--font-d);font-size:1.4rem;font-weight:700;color:var(--primary);text-decoration:none;display:flex;align-items:center;gap:8px}
         .logo::before{content:'✦';color:var(--accent);font-size:1.1rem}
         .nav-links{display:flex;align-items:center;gap:2rem}
-        .nav-links a{color:var(--text-muted);text-decoration:none;font-weight:500;font-size:0.9rem;transition:color 0.2s;cursor:pointer}
-        .nav-links a:hover{color:var(--accent)}
+        .nav-links button{color:var(--text-muted);background:none;border:none;font-weight:500;font-size:0.9rem;cursor:pointer;transition:color 0.2s;font-family:var(--font)}
+        .nav-links button:hover{color:var(--accent)}
         .nav-actions{display:flex;align-items:center;gap:1rem}
-        .btn-nav{background:none;border:none;font-size:0.9rem;font-weight:600;color:var(--text);cursor:pointer;padding:8px 16px;border-radius:8px;transition:all 0.2s}
+        .btn-nav{background:none;border:none;font-size:0.9rem;font-weight:600;color:var(--text);cursor:pointer;padding:8px 16px;border-radius:8px;transition:all 0.2s;font-family:var(--font)}
         .btn-nav:hover{background:var(--bg)}
         .btn-nav.primary{background:var(--accent);color:#fff}
         .btn-nav.primary:hover{background:#d93552}
-
-        /* ── HERO ── */
+        
+        /* Hero */
         .hero{position:relative;min-height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 1rem;color:#fff;background:#0f172a;overflow:hidden}
         .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 80%,rgba(255,56,92,0.2)0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(100,150,255,0.15)0%,transparent 50%);animation:pulse 12s ease-in-out infinite alternate}
         @keyframes pulse{0%{opacity:0.8;transform:scale(1)}100%{opacity:1;transform:scale(1.03)}}
         .hero-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 10% 20%,rgba(255,255,255,0.4),transparent),radial-gradient(1px 1px at 30% 70%,rgba(255,255,255,0.3),transparent),radial-gradient(2px 2px at 50% 30%,rgba(255,255,255,0.35),transparent),radial-gradient(1px 1px at 70% 80%,rgba(255,255,255,0.25),transparent),radial-gradient(1px 1px at 90% 40%,rgba(255,255,255,0.3),transparent);pointer-events:none}
         .hero-content{position:relative;z-index:2;max-width:800px}
         .hero-badge{display:inline-block;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);padding:8px 20px;border-radius:40px;margin-bottom:28px}
-        .hero h1{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1rem}
+        .hero h1{font-family:var(--font-d);font-size:clamp(2.5rem,6vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1rem}
         .hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),#ff9e80);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
         .hero p{font-size:1.15rem;color:rgba(255,255,255,0.7);max-width:520px;margin:0 auto 2rem}
         .hero-search{display:flex;align-items:center;gap:0;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border-radius:60px;padding:5px;max-width:620px;margin:0 auto;border:1px solid rgba(255,255,255,0.15)}
         .hero-search input{flex:1;background:transparent;border:none;padding:12px 20px;color:#fff;font-size:0.95rem;outline:none}
         .hero-search input::placeholder{color:rgba(255,255,255,0.5)}
-        .hero-search button{display:flex;align-items:center;gap:8px;background:var(--accent);border:none;color:#fff;padding:12px 24px;border-radius:40px;font-weight:600;font-size:0.95rem;cursor:pointer;transition:all 0.2s}
+        .hero-search button{display:flex;align-items:center;gap:8px;background:var(--accent);border:none;color:#fff;padding:12px 24px;border-radius:40px;font-weight:600;font-size:0.95rem;cursor:pointer;transition:all 0.2s;font-family:var(--font)}
         .hero-search button:hover{background:#d93552;transform:scale(1.03)}
         .hero-search button svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.5}
-
-        /* ── CATEGORIES ── */
+        
+        /* Categories */
         .categories{display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-bottom:2.5rem}
-        .cat-btn{background:var(--surface);border:1px solid var(--border);border-radius:40px;padding:8px 20px;font-size:0.85rem;font-weight:600;color:var(--text);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+        .cat-btn{background:var(--surface);border:1px solid var(--border);border-radius:40px;padding:8px 20px;font-size:0.85rem;font-weight:600;color:var(--text);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;font-family:var(--font)}
         .cat-btn:hover{background:var(--accent);color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,56,92,0.2)}
         .cat-btn.active{background:var(--accent);color:#fff}
-        .cat-btn .icon{font-size:1.1rem}
-
-        /* ── DESTINATION GRID ── */
+        
+        /* Destinations Grid */
         .filter-count{text-align:center;color:var(--text-muted);font-size:0.9rem;margin-bottom:1.5rem}
         .dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
-        .dest-card{border-radius:16px;overflow:hidden;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);transition:all 0.3s;cursor:pointer;position:relative}
+        .dest-card{border-radius:16px;overflow:hidden;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,0.06);transition:all 0.3s;cursor:pointer;position:relative}
         .dest-card:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.08)}
         .dest-img-wrap{position:relative;height:200px;overflow:hidden;background:var(--bg)}
         .dest-img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;filter:contrast(1.05) saturate(1.15) brightness(1.02)}
@@ -84,107 +79,102 @@
         .dest-rating svg{width:12px;height:12px;fill:var(--accent)}
         .dest-price{font-size:0.9rem;color:var(--text-muted);margin-top:6px}
         .dest-price strong{color:var(--text);font-size:1rem}
-        .dest-action{display:inline-block;margin-top:10px;background:var(--accent);color:#fff;border:none;padding:6px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+        .dest-action{display:inline-block;margin-top:10px;background:var(--accent);color:#fff;border:none;padding:6px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:var(--font)}
         .dest-action:hover{background:#d93552}
-
-        /* ── FEATURES ── */
-        .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}
-        .feat-card{background:var(--surface);border-radius:16px;padding:2rem;text-align:center;box-shadow:var(--shadow);transition:all 0.3s}
-        .feat-card:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.08)}
-        .feat-icon{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,rgba(255,56,92,0.1),rgba(255,107,106,0.1));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.5rem}
-        .feat-card h3{font-size:1.1rem;font-weight:600;margin-bottom:0.5rem}
-        .feat-card p{font-size:0.9rem;color:var(--text-muted);line-height:1.6}
-
-        /* ── CTA ── */
-        .cta{background:linear-gradient(135deg,#0f172a 0%,#1a1a3e 100%);border-radius:20px;padding:4rem;text-align:center;color:#fff;margin:2rem 0}
-        .cta h2{font-family:var(--font-display);font-size:2rem;margin-bottom:1rem}
-        .cta p{color:rgba(255,255,255,0.6);max-width:500px;margin:0 auto 2rem}
-        .btn-cta{background:var(--accent);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s}
-        .btn-cta:hover{background:#d93552;transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,56,92,0.3)}
-
-        /* ── TESTIMONIALS ── */
-        .test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
-        .test-card{background:var(--surface);border-radius:16px;padding:1.5rem;box-shadow:var(--shadow);transition:all 0.3s}
-        .test-card:hover{box-shadow:0 10px 25px rgba(0,0,0,0.08);transform:translateY(-2px)}
-        .test-stars{display:flex;gap:2px;margin-bottom:0.75rem}
-        .test-stars svg{width:16px;height:16px;fill:#f59e0b}
-        .test-text{font-size:0.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
-        .test-author{display:flex;align-items:center;gap:10px}
-        .test-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover}
-        .test-name{font-size:0.9rem;font-weight:600}
-        .test-role{font-size:0.8rem;color:var(--text-muted)}
-
-        /* ── NEWSLETTER ── */
-        .newsletter{background:var(--surface);border-radius:20px;padding:3rem;text-align:center;box-shadow:var(--shadow);border:1px solid var(--border)}
-        .newsletter h3{font-family:var(--font-display);font-size:1.8rem;margin-bottom:0.5rem}
-        .newsletter p{color:var(--text-muted);margin-bottom:1.5rem}
-        .news-form{display:flex;gap:0.75rem;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center}
-        .news-form input{flex:1;min-width:200px;padding:12px 18px;border-radius:10px;border:1px solid var(--border);font-size:0.9rem;outline:none;transition:border-color 0.2s}
-        .news-form input:focus{border-color:var(--accent)}
-        .news-form button{background:var(--accent);color:#fff;border:none;padding:12px 24px;border-radius:10px;font-weight:600;cursor:pointer;transition:all 0.2s}
-        .news-form button:hover{background:#d93552}
-
-        /* ── FOOTER ── */
-        footer{background:#0f172a;color:rgba(255,255,255,0.7);padding:3rem 1rem 1.5rem;margin-top:4rem}
-        .footer-inner{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
-        .footer-brand p{font-size:0.85rem;max-width:280px;margin-top:0.5rem}
-        .footer-col h4{color:#fff;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
-        .footer-col a{display:block;color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.85rem;padding:4px 0;transition:color 0.2s}
-        .footer-col a:hover{color:#fff}
-        .footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:0.8rem}
-
-        /* ── LOCATION MODAL ── */
+        
+        /* Modal */
         .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem;overflow-y:auto}
         .modal-overlay.open{display:flex}
-        .modal{background:var(--surface);border-radius:20px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;padding:0;animation:modalIn 0.3s}
-        @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+        .modal{background:var(--surface);border-radius:20px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;padding:0;animation:fadeIn 0.3s;position:relative}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
         .modal-img{width:100%;height:280px;object-fit:cover;display:block;filter:contrast(1.05) saturate(1.1)}
         .modal-body{padding:2rem}
         .modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);border:none;color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;transition:all 0.2s}
         .modal-close:hover{background:rgba(0,0,0,0.7);transform:scale(1.1)}
-        .modal h2{font-family:var(--font-display);font-size:1.8rem;margin-bottom:0.5rem}
+        .modal h2{font-family:var(--font-d);font-size:1.8rem;margin-bottom:0.5rem}
         .modal .country{color:var(--text-muted);display:flex;align-items:center;gap:6px;margin-bottom:1rem;font-size:0.95rem}
         .modal .desc{font-size:0.95rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.5rem}
         .modal-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
-        .modal-tab{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+        .modal-tab{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:var(--font)}
         .modal-tab:hover{border-color:var(--accent);color:var(--accent)}
         .modal-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
         .modal-tab-content{min-height:100px}
-        .modal-tab-content ul{list-style:none;padding:0}
+        .modal-tab-content ul{list-style:none}
         .modal-tab-content li{padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
         .modal-tab-content li:last-child{border:none}
         .modal-tab-content li .emoji{font-size:1.3rem}
         .modal-tab-content li .label{font-weight:600;font-size:0.95rem}
-        .modal-tab-content li .desc{font-size:0.85rem;color:var(--text-muted)}
         .modal-price{font-size:1.5rem;font-weight:700;color:var(--accent);margin:1rem 0}
-        .modal-btn{display:inline-block;background:var(--accent);color:#fff;border:none;padding:12px 28px;border-radius:10px;font-weight:600;font-size:1rem;cursor:pointer;transition:all 0.2s;margin-top:0.5rem}
+        .modal-btn{display:inline-block;background:var(--accent);color:#fff;border:none;padding:12px 28px;border-radius:10px;font-weight:600;font-size:1rem;cursor:pointer;transition:all 0.2s;margin-top:0.5rem;font-family:var(--font)}
         .modal-btn:hover{background:#d93552;transform:translateY(-2px)}
-
-        /* ── AI TRAVEL ASSISTANT ── */
-        .chat-btn{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:150;box-shadow:0 4px 20px rgba(255,56,92,0.4);transition:all 0.3s;font-size:1.5rem}
+        
+        /* Chat */
+        .chat-btn{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;z-index:150;box-shadow:0 4px 20px rgba(255,56,92,0.4);transition:all 0.3s;font-size:1.5rem}
         .chat-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(255,56,92,0.5)}
-        .chat-window{position:fixed;bottom:92px;right:24px;width:360px;max-width:calc(100vw - 32px);height:480px;max-height:calc(100vh - 140px);background:var(--surface);border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.15);z-index:150;display:none;flex-direction:column;overflow:hidden;animation:modalIn 0.3s;border:1px solid var(--border)}
+        .chat-window{position:fixed;bottom:92px;right:24px;width:360px;max-width:calc(100vw-32px);height:480px;max-height:calc(100vh-140px);background:var(--surface);border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.15);z-index:150;display:none;flex-direction:column;overflow:hidden;animation:fadeIn 0.3s;border:1px solid var(--border)}
         .chat-window.open{display:flex}
         .chat-header{background:var(--primary);color:#fff;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
         .chat-header h4{font-size:1rem;display:flex;align-items:center;gap:8px}
         .chat-header button{background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:1.2rem;transition:color 0.2s}
         .chat-header button:hover{color:#fff}
         .chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:10px}
-        .msg{padding:10px 14px;border-radius:14px;max-width:85%;font-size:0.875rem;line-height:1.5;animation:fadeIn 0.3s}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .msg{padding:10px 14px;border-radius:14px;max-width:85%;font-size:0.875rem;line-height:1.5;animation:msgIn 0.3s}
+        @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
         .msg.bot{align-self:flex-start;background:var(--bg);border-bottom-left-radius:4px}
         .msg.user{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
         .chat-input-wrap{display:flex;gap:8px;padding:0.75rem;border-top:1px solid var(--border)}
-        .chat-input-wrap input{flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:0.875rem;outline:none;transition:border-color 0.2s}
+        .chat-input-wrap input{flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:0.875rem;outline:none;transition:border-color 0.2s;font-family:var(--font)}
         .chat-input-wrap input:focus{border-color:var(--accent)}
         .chat-input-wrap button{background:var(--accent);color:#fff;border:none;width:40px;height:40px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
         .chat-input-wrap button:hover{background:#d93552}
         .chat-input-wrap button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.5}
-        .chat-suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:0.5rem 0.75rem 0;border-top:1px solid var(--border)}
-        .chat-suggestions button{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:4px 12px;font-size:0.75rem;color:var(--text-muted);cursor:pointer;transition:all 0.15s}
+        .chat-suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:0.5rem 0.75rem 0}
+        .chat-suggestions button{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:4px 12px;font-size:0.75rem;color:var(--text-muted);cursor:pointer;transition:all 0.15s;font-family:var(--font)}
         .chat-suggestions button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
-
-        /* ── RESPONSIVE ── */
+        
+        /* Features */
+        .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}
+        .feat-card{background:var(--surface);border-radius:16px;padding:2rem;text-align:center;box-shadow:var(--shadow);transition:all 0.3s}
+        .feat-card:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.08)}
+        .feat-icon{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,rgba(255,56,92,0.1),rgba(255,107,106,0.1));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.5rem}
+        .feat-card h3{font-size:1.1rem;font-weight:600;margin-bottom:0.5rem}
+        .feat-card p{font-size:0.9rem;color:var(--text-muted);line-height:1.6}
+        
+        .cta{background:linear-gradient(135deg,#0f172a 0%,#1a1a3e 100%);border-radius:20px;padding:4rem;text-align:center;color:#fff;margin:2rem 0}
+        .cta h2{font-family:var(--font-d);font-size:2rem;margin-bottom:1rem}
+        .cta p{color:rgba(255,255,255,0.6);max-width:500px;margin:0 auto 2rem}
+        .btn-cta{background:var(--accent);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:var(--font)}
+        .btn-cta:hover{background:#d93552;transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,56,92,0.3)}
+        
+        .test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+        .test-card{background:var(--surface);border-radius:16px;padding:1.5rem;box-shadow:var(--shadow);transition:all 0.3s}
+        .test-card:hover{box-shadow:0 10px 25px rgba(0,0,0,0.08);transform:translateY(-2px)}
+        .test-stars{display:flex;gap:2px;margin-bottom:0.75rem;font-size:1.1rem}
+        .test-text{font-size:0.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
+        .test-author{display:flex;align-items:center;gap:10px}
+        .test-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover}
+        .test-name{font-size:0.9rem;font-weight:600}
+        .test-role{font-size:0.8rem;color:var(--text-muted)}
+        
+        .newsletter{background:var(--surface);border-radius:20px;padding:3rem;text-align:center;box-shadow:var(--shadow);border:1px solid var(--border)}
+        .newsletter h3{font-family:var(--font-d);font-size:1.8rem;margin-bottom:0.5rem}
+        .newsletter p{color:var(--text-muted);margin-bottom:1.5rem}
+        .news-form{display:flex;gap:0.75rem;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+        .news-form input{flex:1;min-width:200px;padding:12px 18px;border-radius:10px;border:1px solid var(--border);font-size:0.9rem;outline:none;transition:border-color 0.2s;font-family:var(--font)}
+        .news-form input:focus{border-color:var(--accent)}
+        .news-form button{background:var(--accent);color:#fff;border:none;padding:12px 24px;border-radius:10px;font-weight:600;cursor:pointer;transition:all 0.2s;font-family:var(--font)}
+        .news-form button:hover{background:#d93552}
+        
+        footer{background:#0f172a;color:rgba(255,255,255,0.7);padding:3rem 1rem 1.5rem;margin-top:4rem}
+        .footer-inner{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+        .footer-brand p{font-size:0.85rem;max-width:280px;margin-top:0.5rem}
+        .footer-col h4{color:#fff;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
+        .footer-col button{display:block;color:rgba(255,255,255,0.5);background:none;border:none;font-size:0.85rem;padding:4px 0;cursor:pointer;transition:color 0.2s;font-family:var(--font);text-align:left}
+        .footer-col button:hover{color:#fff}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:0.8rem}
+        
+        #toast{position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;padding:12px 24px;border-radius:12px;font-size:0.9rem;z-index:300;box-shadow:0 8px 32px rgba(0,0,0,0.2);display:none;transition:opacity 0.3s;text-align:center;max-width:90vw}
+        
         @media(max-width:768px){
             .hero h1{font-size:2rem}
             .hero-search{flex-direction:column;border-radius:16px;padding:8px;background:rgba(255,255,255,0.1)}
@@ -195,60 +185,42 @@
             .footer-inner{grid-template-columns:1fr 1fr}
             .cta{padding:3rem 1.5rem}
             .nav-links{display:none}
-            .chat-window{right:8px;width:calc(100vw - 16px);height:60vh}
-            .modal{max-width:100%}
+            .chat-window{right:8px;width:calc(100vw-16px);height:60vh}
             .modal-img{height:200px}
         }
-        @media(max-width:480px){
-            .dest-grid{grid-template-columns:1fr}
-            .features-grid{grid-template-columns:1fr}
-            .footer-inner{grid-template-columns:1fr}
-            .newsletter{padding:2rem 1rem}
-        }
-        @media(prefers-reduced-motion:reduce){
-            .hero-bg,.dest-card:hover .dest-img{animation:none;transform:none}
-            .modal{animation:none}
-        }
+        @media(max-width:480px){.dest-grid{grid-template-columns:1fr}.features-grid,.footer-inner{grid-template-columns:1fr}.newsletter{padding:2rem 1rem}}
+        @media(prefers-reduced-motion:reduce){.hero-bg,.dest-card:hover .dest-img{animation:none;transform:none}}
     </style>
 </head>
 <body>
 
-<!-- ═══ NAV ═══ -->
-<nav>
-    <div class="nav-inner">
-        <a href="#" class="logo">anderlust</a>
-        <div class="nav-links">
-            <a onclick="document.querySelector('.section.destinations').scrollIntoView({behavior:'smooth'})">Destinations</a>
-            <a onclick="document.querySelector('.section.features').scrollIntoView({behavior:'smooth'})">Features</a>
-            <a onclick="document.querySelector('.cta').scrollIntoView({behavior:'smooth'})">Deals</a>
-        </div>
-        <div class="nav-actions">
-            <button class="btn-nav" onclick="showToast('Host program coming soon!')">Become a Host</button>
-            <button class="btn-nav primary" onclick="openChat()">✈️ Ask AI</button>
-        </div>
+<nav id="navbar"><div class="nav-inner">
+    <a href="#" class="logo">anderlust</a>
+    <div class="nav-links">
+        <button data-action="scroll-destinations">Destinations</button>
+        <button data-action="scroll-features">Features</button>
+        <button data-action="scroll-deals">Deals</button>
     </div>
-</nav>
+    <div class="nav-actions">
+        <button class="btn-nav" data-action="host">Become a Host</button>
+        <button class="btn-nav primary" data-action="open-chat">✈️ Ask AI</button>
+    </div>
+</div></nav>
 
-<!-- ═══ HERO ═══ -->
 <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-stars"></div>
+    <div class="hero-bg"></div><div class="hero-stars"></div>
     <div class="hero-content">
         <div class="hero-badge">✦ Explore the World</div>
         <h1>Where will you go <em>next</em>?</h1>
         <p>Discover extraordinary places to stay, from mountain cabins to beachfront villas — curated for every traveler.</p>
         <div class="hero-search">
-            <input type="text" id="heroSearchInput" placeholder="Search destinations..." onkeydown="if(event.key==='Enter')filterBySearch()">
-            <button onclick="filterBySearch()">
-                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="22" y2="22"/></svg>
-                Search
-            </button>
+            <input type="text" id="heroSearch" placeholder="Search destinations...">
+            <button data-action="hero-search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="22" y2="22"/></svg>Search</button>
         </div>
     </div>
 </section>
 
-<!-- ═══ CATEGORIES + DESTINATIONS ═══ -->
-<section class="section destinations">
+<section class="section" id="destinations-section">
     <div class="container">
         <div class="section-title">
             <h2>Explore destinations</h2>
@@ -260,138 +232,61 @@
     </div>
 </section>
 
-<!-- ═══ FEATURES ═══ -->
-<section class="section features">
+<section class="section" id="features-section">
     <div class="container">
-        <div class="section-title">
-            <h2>Why travel with us</h2>
-            <p>Everything you need for the perfect trip</p>
-        </div>
+        <div class="section-title"><h2>Why travel with us</h2><p>Everything you need for the perfect trip</p></div>
         <div class="features-grid">
-            <div class="feat-card">
-                <div class="feat-icon">📍</div>
-                <h3>Curated Destinations</h3>
-                <p>Every location is hand-picked by travel experts with insider knowledge.</p>
-            </div>
-            <div class="feat-card">
-                <div class="feat-icon">🍜</div>
-                <h3>Local Food Guides</h3>
-                <p>Know exactly what to eat — from street food to Michelin-starred restaurants.</p>
-            </div>
-            <div class="feat-card">
-                <div class="feat-icon">🎯</div>
-                <h3>AI Travel Assistant</h3>
-                <p>Ask our AI anything about any destination — it knows the best spots, foods, and tips.</p>
-            </div>
-            <div class="feat-card">
-                <div class="feat-icon">💎</div>
-                <h3>Best Price Guarantee</h3>
-                <p>We match any price. Book with confidence knowing you got the best deal.</p>
-            </div>
+            <div class="feat-card"><div class="feat-icon">📍</div><h3>Curated Destinations</h3><p>Every location is hand-picked by travel experts with insider knowledge.</p></div>
+            <div class="feat-card"><div class="feat-icon">🍜</div><h3>Local Food Guides</h3><p>Know what to eat — from street food to Michelin restaurants.</p></div>
+            <div class="feat-card"><div class="feat-icon">🎯</div><h3>AI Travel Assistant</h3><p>Ask our AI about any destination — food, activities, best time to visit.</p></div>
+            <div class="feat-card"><div class="feat-icon">💎</div><h3>Best Price Guarantee</h3><p>We match any price. Book with confidence.</p></div>
         </div>
     </div>
 </section>
 
-<!-- ═══ CTA ═══ -->
-<section>
-    <div class="container">
-        <div class="cta">
-            <h2>Summer escapes — up to 30% off</h2>
-            <p>Book early and save on thousands of hand-picked stays across Europe, Asia, and the Americas.</p>
-            <button class="btn-cta" onclick="showToast('Summer deals loading... 🎉')">Explore Deals</button>
-        </div>
+<section id="deals-section"><div class="container">
+    <div class="cta">
+        <h2>Summer escapes — up to 30% off</h2>
+        <p>Book early and save on thousands of hand-picked stays across Europe, Asia, and the Americas.</p>
+        <button class="btn-cta" data-action="deals">Explore Deals</button>
     </div>
-</section>
+</div></section>
 
-<!-- ═══ TESTIMONIALS ═══ -->
 <section class="section">
     <div class="container">
-        <div class="section-title">
-            <h2>What travelers say</h2>
-            <p>Real reviews from real people</p>
-        </div>
+        <div class="section-title"><h2>What travelers say</h2><p>Real reviews from real people</p></div>
         <div class="test-grid">
-            <div class="test-card">
-                <div class="test-stars">★★★★★</div>
-                <p class="test-text">"Found the most incredible villa in Tuscany through Wanderlust. The booking was seamless and the property exceeded every expectation."</p>
-                <div class="test-author">
-                    <img class="test-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop" alt="" loading="lazy">
-                    <div><div class="test-name">Sarah Mitchell</div><div class="test-role">Travel Blogger</div></div>
-                </div>
-            </div>
-            <div class="test-card">
-                <div class="test-stars">★★★★★</div>
-                <p class="test-text">"The AI assistant recommended a hidden gem in Kyoto that wasn't in any guidebook. Made our trip unforgettable."</p>
-                <div class="test-author">
-                    <img class="test-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" alt="" loading="lazy">
-                    <div><div class="test-name">James Kowalski</div><div class="test-role">Software Engineer</div></div>
-                </div>
-            </div>
-            <div class="test-card">
-                <div class="test-stars">★★★★★</div>
-                <p class="test-text">"Booked a last-minute weekend in the Cotswolds. Everything was perfect from the host to the curated food recommendations."</p>
-                <div class="test-author">
-                    <img class="test-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" alt="" loading="lazy">
-                    <div><div class="test-name">Priya Nair</div><div class="test-role">Photographer</div></div>
-                </div>
-            </div>
+            <div class="test-card"><div class="test-stars">★★★★★</div><p class="test-text">"Found the most incredible villa in Tuscany through Wanderlust. The booking was seamless and the property exceeded every expectation."</p><div class="test-author"><img class="test-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop" alt="" loading="lazy"><div><div class="test-name">Sarah Mitchell</div><div class="test-role">Travel Blogger</div></div></div></div>
+            <div class="test-card"><div class="test-stars">★★★★★</div><p class="test-text">"The AI assistant recommended a hidden gem in Kyoto that wasn't in any guidebook. Made our trip unforgettable."</p><div class="test-author"><img class="test-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" alt="" loading="lazy"><div><div class="test-name">James Kowalski</div><div class="test-role">Software Engineer</div></div></div></div>
+            <div class="test-card"><div class="test-stars">★★★★★</div><p class="test-text">"Booked a last-minute weekend in the Cotswolds. Everything was perfect from the host to the curated food recommendations."</p><div class="test-author"><img class="test-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" alt="" loading="lazy"><div><div class="test-name">Priya Nair</div><div class="test-role">Photographer</div></div></div></div>
         </div>
     </div>
 </section>
 
-<!-- ═══ NEWSLETTER ═══ -->
-<section class="section">
-    <div class="container">
-        <div class="newsletter">
-            <h3>Get travel inspiration</h3>
-            <p>Join our newsletter for curated destinations, exclusive deals, and travel tips — delivered weekly.</p>
-            <div class="news-form">
-                <input type="email" placeholder="Your email address" aria-label="Email" id="newsEmail">
-                <button onclick="subNews()">Subscribe</button>
-            </div>
+<section class="section"><div class="container">
+    <div class="newsletter">
+        <h3>Get travel inspiration</h3>
+        <p>Join our newsletter for curated destinations, exclusive deals, and travel tips — delivered weekly.</p>
+        <div class="news-form">
+            <input type="email" id="newsEmail" placeholder="Your email address" aria-label="Email">
+            <button data-action="subscribe">Subscribe</button>
         </div>
     </div>
-</section>
+</div></section>
 
-<!-- ═══ FOOTER ═══ -->
 <footer>
     <div class="footer-inner">
-        <div class="footer-brand">
-            <div style="font-family:var(--font-display);font-size:1.4rem;color:#fff">✦ Wanderlust</div>
-            <p>Curating extraordinary stays and experiences around the world since 2018. Travel better, not just farther.</p>
-        </div>
-        <div class="footer-col">
-            <h4>Explore</h4>
-            <a href="#" onclick="document.querySelector('.section.destinations').scrollIntoView({behavior:'smooth'})">All destinations</a>
-            <a href="#" onclick="showToast('Beach houses coming soon! 🏖️')">Beach houses</a>
-            <a href="#" onclick="showToast('Mountain cabins coming soon! 🏔️')">Mountain cabins</a>
-        </div>
-        <div class="footer-col">
-            <h4>Company</h4>
-            <a href="#" onclick="showToast('About us — coming soon')">About us</a>
-            <a href="#" onclick="showToast('Careers — coming soon')">Careers</a>
-            <a href="#" onclick="showToast('Press — coming soon')">Press</a>
-        </div>
-        <div class="footer-col">
-            <h4>Support</h4>
-            <a href="#" onclick="showToast('Help center — coming soon')">Help center</a>
-            <a href="#" onclick="showToast('Contact us at support@wanderlust.com')">Contact us</a>
-            <a href="#" onclick="openChat()">Ask AI Assistant</a>
-        </div>
+        <div class="footer-brand"><div style="font-family:var(--font-d);font-size:1.4rem;color:#fff">✦ Wanderlust</div><p>Curating extraordinary stays and experiences around the world since 2018.</p></div>
+        <div class="footer-col"><h4>Explore</h4><button data-action="scroll-destinations">All destinations</button><button data-action="host">Beach houses</button><button data-action="host">Mountain cabins</button></div>
+        <div class="footer-col"><h4>Company</h4><button data-action="toast" data-msg="About us coming soon">About us</button><button data-action="toast" data-msg="Careers coming soon">Careers</button><button data-action="toast" data-msg="Press coming soon">Press</button></div>
+        <div class="footer-col"><h4>Support</h4><button data-action="toast" data-msg="Help center coming soon">Help center</button><button data-action="toast" data-msg="Contact us at support@wanderlust.com">Contact us</button><button data-action="open-chat">Ask AI Assistant</button></div>
     </div>
-    <div class="footer-bottom">
-        <span>© 2026 Wanderlust, Inc.</span>
-        <div style="display:flex;gap:1.5rem">
-            <a href="#" style="color:rgba(255,255,255,0.35);text-decoration:none">Privacy</a>
-            <a href="#" style="color:rgba(255,255,255,0.35);text-decoration:none">Terms</a>
-        </div>
-    </div>
+    <div class="footer-bottom"><span>© 2026 Wanderlust, Inc.</span><div style="display:flex;gap:1.5rem"><button style="color:rgba(255,255,255,0.35);background:none;border:none;cursor:pointer;font-size:0.8rem;font-family:var(--font)" data-action="toast" data-msg="Privacy policy coming soon">Privacy</button><button style="color:rgba(255,255,255,0.35);background:none;border:none;cursor:pointer;font-size:0.8rem;font-family:var(--font)" data-action="toast" data-msg="Terms coming soon">Terms</button></div></div>
 </footer>
 
-<!-- ═══ LOCATION MODAL ═══ -->
 <div class="modal-overlay" id="locationModal">
     <div class="modal" style="position:relative">
-        <button class="modal-close" onclick="closeModal()">✕</button>
+        <button class="modal-close" data-action="close-modal">✕</button>
         <img class="modal-img" id="modalImg" src="" alt="">
         <div class="modal-body">
             <h2 id="modalTitle"></h2>
@@ -400,351 +295,259 @@
             <div class="modal-price" id="modalPrice"></div>
             <div class="modal-tabs" id="modalTabs"></div>
             <div class="modal-tab-content" id="modalTabContent"></div>
-            <button class="modal-btn" onclick="showToast('Booking feature coming soon! 🎉')">Book Now</button>
+            <button class="modal-btn" data-action="book">Book Now</button>
         </div>
     </div>
 </div>
 
-<!-- ═══ AI CHAT ═══ -->
-<button class="chat-btn" id="chatBtn" onclick="toggleChat()">🤖</button>
+<button class="chat-btn" id="chatBtn" data-action="open-chat">🤖</button>
 <div class="chat-window" id="chatWindow">
-    <div class="chat-header">
-        <h4>🤖 Travel Assistant</h4>
-        <button onclick="toggleChat()">✕</button>
-    </div>
-    <div class="chat-messages" id="chatMessages">
-        <div class="msg bot">Hi! I'm your AI travel assistant. Ask me about any destination — its food, things to do, best time to visit, or why you should go! For example: <em>"What should I eat in Tokyo?"</em> or <em>"Tell me about Bali"</em></div>
-    </div>
+    <div class="chat-header"><h4>🤖 Travel Assistant</h4><button data-action="close-chat">✕</button></div>
+    <div class="chat-messages" id="chatMessages"></div>
     <div class="chat-suggestions" id="chatSuggestions"></div>
     <div class="chat-input-wrap">
-        <input type="text" id="chatInput" placeholder="Ask about any destination..." onkeydown="if(event.key==='Enter')sendChat()">
-        <button onclick="sendChat()">
-            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
-        </button>
+        <input type="text" id="chatInput" placeholder="Ask about any destination...">
+        <button data-action="send-chat"><svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
     </div>
 </div>
 
-<!-- ═══ TOAST ═══ -->
-<div id="toast" style="position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;padding:12px 24px;border-radius:12px;font-size:0.9rem;z-index:300;box-shadow:0 8px 32px rgba(0,0,0,0.2);display:none;transition:opacity 0.3s;text-align:center;max-width:90vw"></div>
+<div id="toast"></div>
 
 <script>
-// ═══════════════ DESTINATION DATA ═══════════════
-const DESTINATIONS = [
+// ══ DATA ══
+const D = [
   {id:"maldives",name:"Maldives",country:"Maldives",img:"photo-1514282401047-d79a71a590e8",cats:["beach","islands","tropical","pools"],props:642,rating:4.96,price:289,badge:"",desc:"The Maldives is a tropical paradise of over 1,000 coral islands scattered across the Indian Ocean. Crystal-clear turquoise waters, white sandy beaches, and world-class overwater bungalows make it the ultimate luxury escape.",
    food:["Maldivian Fish Curry — A fragrant coconut-based curry with fresh tuna","Mas Huni — Shredded smoked tuna with coconut, onion, and chili","Bis Keemiya — A savory samosa-like pastry filled with spiced fish","Raa — Sweet palm wine tapped from palm trees, a local specialty"],
-   activities:["Snorkel with manta rays and whale sharks at South Ari Atoll","Dine underwater at Ithaa Undersea Restaurant","Take a seaplane ride over the coral atolls","Sunset fishing trip on a traditional dhoni boat"],
-   why:"The Maldives offers a level of serenity and tropical beauty found nowhere else on Earth. It's the definition of paradise — pristine beaches, incredible marine life, and luxurious overwater villas that redefine relaxation.",
-   tags:["romantic","luxury","diving","beach"]},
-  {id:"bali",name:"Bali",country:"Indonesia",img:"photo-1518548419970-58e3b4079ab2",cats:["islands","tropical","pools","wellness","beach"],props:1432,rating:4.89,price:67,badge:"",desc:"Bali, the Island of the Gods, is a lush tropical haven with terraced rice paddies, ancient temples, vibrant arts, and surf-worthy beaches. It's a place where spirituality meets paradise.",
-   food:["Babi Guling — Suckling pig slow-roasted with turmeric and spices","Nasi Campur — A mixed rice platter with meats, vegetables, and sambal","Sate Lilit — Minced seafood satay wrapped around lemongrass sticks","Lawar — A traditional mix of vegetables, coconut, and minced meat with spices"],
-   activities:["Watch sunrise at Tanah Lot temple perched on a sea rock","Ubud Monkey Forest and rice terrace walk","Surf lessons at Padang Padang Beach","Full-day Ubud art and culture tour"],
-   why:"Bali offers incredible value for world-class experiences. From $15 spa treatments to $3 street food feasts, it's one of the most affordable tropical destinations with unmatched cultural richness.",
-   tags:["budget","culture","surf","spiritual"]},
+   act:["Snorkel with manta rays and whale sharks at South Ari Atoll","Dine underwater at Ithaa Undersea Restaurant","Take a seaplane ride over the coral atolls","Sunset fishing trip on a traditional dhoni boat"],
+   why:"The Maldives offers a level of serenity and tropical beauty found nowhere else on Earth. It's the definition of paradise — pristine beaches, incredible marine life, and luxurious overwater villas that redefine relaxation."},
+  {id:"bali",name:"Bali",country:"Indonesia",img:"photo-1518548419970-58e3b4079ab2",cats:["islands","tropical","pools","wellness","beach"],props:1432,rating:4.89,price:67,badge:"",desc:"Bali, the Island of the Gods, is a lush tropical haven with terraced rice paddies, ancient temples, vibrant arts, and surf-worthy beaches.",
+   food:["Babi Guling — Suckling pig slow-roasted with turmeric and spices","Nasi Campur — A mixed rice platter with meats, vegetables, and sambal","Sate Lilit — Minced seafood satay wrapped around lemongrass sticks","Lawar — A traditional mix of vegetables, coconut, and minced meat"],
+   act:["Watch sunrise at Tanah Lot temple","Ubud Monkey Forest and rice terrace walk","Surf lessons at Padang Padang Beach","Full-day Ubud art and culture tour"],
+   why:"Bali offers incredible value for world-class experiences. From $15 spa treatments to $3 street food feasts, it's one of the most affordable tropical destinations with unmatched cultural richness."},
   {id:"paris",name:"Paris",country:"France",img:"photo-1502602898657-3e91760cbb34",cats:["city","historic"],props:1024,rating:4.87,price:145,badge:"",desc:"Paris, the City of Light, is a timeless blend of romance, art, and gastronomy. From the majestic Eiffel Tower to charming street-side cafes, every corner exudes elegance.",
    food:["Croissant — Flaky, buttery perfection from any boulangerie","Steak Frites — Grilled steak with crispy french fries and béarnaise","Escargots de Bourgogne — Snails baked with garlic-parsley butter","Crème Brûlée — Silky vanilla custard with caramelized sugar top"],
-   activities:["Climb the Eiffel Tower at sunset","Louvre Museum — see the Mona Lisa and Venus de Milo","Stroll Montmartre and Sacré-Cœur","Seine River dinner cruise"],
-   why:"Paris is the most romantic city in the world, with world-class museums, incredible food at every price point, and architecture that makes every street feel like a movie set.",
-   tags:["romantic","art","food","luxury"]},
-  {id:"tokyo",name:"Tokyo",country:"Japan",img:"photo-1535139262971-c51845709a48",cats:["city","historic","wellness"],props:890,rating:4.95,price:98,badge:"",desc:"Tokyo is a dazzling metropolis where cutting-edge technology meets ancient tradition. Neon-lit skyscrapers tower over serene temples, and Michelin-starred ramen shops sit beside centuries-old shrines.",
-   food:["Ramen at Ichiran — Customizable tonkotsu ramen in private booths","Sushi at Tsukiji outer market — World's freshest sushi","Okonomiyaki — Savory Japanese pancake cooked on a hotplate at your table","Kaiseki — Traditional multi-course Japanese haute cuisine"],
-   activities:["Visit Sensō-ji Temple and Nakamise Street","Shibuya Crossing — the world's busiest intersection","Explore Akihabara Electric Town","TeamLab Borderless digital art museum"],
-   why:"Tokyo is a sensory overload in the best way — incredible food, unparalleled public transit, spotless streets, and a blend of tradition and futurism you won't find anywhere else.",
-   tags:["food","technology","shopping","culture"]},
-  {id:"rome",name:"Rome",country:"Italy",img:"photo-1552832230-c0197dd311b5",cats:["city","historic"],props:1245,rating:4.82,price:132,badge:"",desc:"Rome, the Eternal City, is a living museum where ancient history unfolds around every corner. From the Colosseum to Trastevere's cobblestone streets, Rome is a feast for the senses.",
-   food:["Cacio e Pepe — Simple perfection: pecorino cheese and black pepper pasta","Carbonara — Creamy egg-based pasta with guanciale","Supplì — Fried rice balls stuffed with mozzarella","Gelato artigianale — Handmade gelato from a proper gelateria"],
-   activities:["Colosseum and Roman Forum guided tour","Vatican Museums and Sistine Chapel","Throw a coin in the Trevi Fountain","Explore Trastevere and eat dinner in a piazza"],
-   why:"Rome has 2,000+ years of history visible at every turn, plus food that's simple, fresh, and life-changing. It's a city you can walk through and feel the weight of civilization.",
-   tags:["history","food","art","walking"]},
-  {id:"santorini",name:"Santorini",country:"Greece",img:"photo-1504513775721-40e554384c67",cats:["islands","beach","pools","historic"],props:412,rating:4.96,price:184,badge:"Trending",desc:"Santorini is the crown jewel of the Cyclades — iconic blue-domed churches, whitewashed villages clinging to cliffs, and sunsets that paint the sky in shades of gold and purple.",
-   food:["Fava — Creamy yellow split pea puree, a Santorini specialty","Tomato Keftedes — Crispy tomato fritters made with local sun-dried tomatoes","Grilled Octopus — Fresh octopus drizzled with olive oil and lemon","Vinsanto — Sweet dessert wine made from sun-dried grapes"],
-   activities:["Watch sunset from Oia Castle","Wine tour of Santorini's volcanic vineyards","Boat trip to the active volcano at Nea Kameni","Red Beach and Akrotiri ruins"],
-   why:"Santorini's architecture is unlike anywhere else — those blue domes against the white and the caldera views create a visual experience that's pure magic. Plus, the volcanic wine is exceptional.",
-   tags:["romantic","wine","sunset","luxury"]},
-  {id:"barcelona",name:"Barcelona",country:"Spain",img:"photo-1583422409516-2895a77efded",cats:["city","beach"],props:756,rating:4.88,price:108,badge:"",desc:"Barcelona is a vibrant Mediterranean city where Gaudí's whimsical architecture meets sunny beachside living. World-class art, tapas bars, and a lively street culture make it endlessly exciting.",
-   food:["Paella Marinera — Seafood paella cooked over an open fire","Patatas Bravas — Crispy potatoes with spicy tomato and aioli","Jamón Ibérico — Cured acorn-fed ham, sliced paper-thin","Crema Catalana — The Spanish version of crème brûlée"],
-   activities:["Sagrada Familia — Gaudí's unfinished masterpiece","Park Güell — A whimsical park with mosaic sculptures","Las Ramblas and La Boqueria market","Barceloneta beach and seafood lunch"],
-   why:"Barcelona has it all — incredible architecture, a beautiful coastline, world-class food, and a relaxed Mediterranean vibe that makes every day feel like a holiday.",
-   tags:["art","beach","food","architecture"]},
-  {id:"amalfi",name:"Amalfi Coast",country:"Italy",img:"photo-1534308983496-4fabb1a015ee",cats:["beach","historic"],props:312,rating:4.94,price:198,badge:"Trending",desc:"The Amalfi Coast is a stunning stretch of coastline dotted with pastel-colored villages clinging to dramatic cliffs overlooking the turquoise Tyrrhenian Sea.",
-   food:["Scialatielli ai Frutti di Mare — Fresh thick spaghetti with seafood","Delizia al Limone — Lemon dessert cake from the Amalfi region","Risotto alla Pescatora — Seafood risotto with local catch","Limoncello — Famous lemon liqueur, best enjoyed chilled"],
-   activities:["Drive the Amalfi coastal road from Positano to Ravello","Visit the cathedral in Amalfi town","Boat trip to the island of Capri","Hike the Path of the Gods above Positano"],
-   why:"The Amalfi Coast is a UNESCO World Heritage site for good reason — those cliffside villages with vibrant colors, the turquoise water, the incredible food, and the romance of the Italian Riviera.",
-   tags:["romantic","roadtrip","food","scenic"]},
-  {id:"kyoto",name:"Kyoto",country:"Japan",img:"photo-1493976040374-85c8e12f0c0e",cats:["historic","city","wellness"],props:876,rating:4.93,price:104,badge:"Trending",desc:"Kyoto is Japan's cultural heart, home to over 2,000 temples and shrines, serene bamboo groves, and a deeply preserved traditional culture that has flourished for over a thousand years.",
-   food:["Kaiseki Ryori — Traditional multi-course Japanese haute cuisine","Yudofu — Silky hot tofu in a light broth at a temple restaurant","Matcha sweets — Green tea flavored desserts and ice cream","Nikujaga — Japanese-style meat and potato stew"],
-   activities:["Fushimi Inari Shrine — Thousands of vermilion torii gates","Arashiyama Bamboo Grove","Kinkaku-ji — The Golden Pavilion temple","Traditional tea ceremony in Gion"],
-   why:"Kyoto is Japan's most culturally rich city, with centuries of tradition preserved in its temples, gardens, tea houses, and cuisine. It's where you truly experience the soul of Japan.",
-   tags:["culture","temples","nature","food"]},
-  {id:"banff",name:"Banff",country:"Canada",img:"photo-1536615652268-01edbe780714",cats:["mountains","camping","skiing"],props:287,rating:4.93,price:167,badge:"",desc:"Banff is a stunning mountain town in the heart of the Canadian Rockies, surrounded by turquoise lakes, towering peaks, and abundant wildlife.",
-   food:["Alberta Beef — World-class steak from Canadian cattle ranches","Poutine — Crispy fries with cheese curds and gravy","Wild game — Bison, elk, and venison dishes","Maple syrup pie — Sweet Canadian classic"],
-   activities:["Lake Louise canoe ride on turquoise water","Banff Gondola to the top of Sulphur Mountain","Hike Johnston Canyon to the inkwells","Banff Upper Hot Springs"],
-   why:"Banff offers some of the most breathtaking mountain scenery on Earth — emerald lakes, snow-capped peaks, and glaciers all accessible from a charming alpine town.",
-   tags:["hiking","skiing","wildlife","nature"]},
-  {id:"dubai",name:"Dubai",country:"UAE",img:"photo-1512453979798-5ea266f8880c",cats:["city","beach","pools"],props:1456,rating:4.85,price:234,badge:"",desc:"Dubai is a city of superlatives — the world's tallest building, largest shopping mall, and most luxurious hotels, all rising from the Arabian desert.",
+   act:["Climb the Eiffel Tower at sunset","Louvre Museum — see the Mona Lisa and Venus de Milo","Stroll Montmartre and Sacré-Cœur","Seine River dinner cruise"],
+   why:"Paris is the most romantic city in the world, with world-class museums, incredible food at every price point, and architecture that makes every street feel like a movie set."},
+  {id:"tokyo",name:"Tokyo",country:"Japan",img:"photo-1535139262971-c51845709a48",cats:["city","historic","wellness"],props:890,rating:4.95,price:98,badge:"",desc:"Tokyo is a dazzling metropolis where cutting-edge technology meets ancient tradition.",
+   food:["Ramen at Ichiran — Customizable tonkotsu ramen in private booths","Sushi at Tsukiji outer market — World's freshest sushi","Okonomiyaki — Savory Japanese pancake cooked on a hotplate","Kaiseki — Traditional multi-course Japanese haute cuisine"],
+   act:["Visit Sensō-ji Temple and Nakamise Street","Shibuya Crossing — the world's busiest intersection","Explore Akihabara Electric Town","TeamLab Borderless digital art museum"],
+   why:"Tokyo is a sensory overload in the best way — incredible food, unparalleled public transit, and a blend of tradition and futurism you won't find anywhere else."},
+  {id:"rome",name:"Rome",country:"Italy",img:"photo-1552832230-c0197dd311b5",cats:["city","historic"],props:1245,rating:4.82,price:132,badge:"",desc:"Rome, the Eternal City, is a living museum where ancient history unfolds around every corner.",
+   food:["Cacio e Pepe — Simple perfection: pecorino cheese and black pepper pasta","Carbonara — Creamy egg-based pasta with guanciale","Supplì — Fried rice balls stuffed with mozzarella","Gelato artigianale — Handmade gelato"],
+   act:["Colosseum and Roman Forum guided tour","Vatican Museums and Sistine Chapel","Throw a coin in the Trevi Fountain","Explore Trastevere food scene"],
+   why:"Rome has 2,000+ years of history visible at every turn, plus food that's simple, fresh, and life-changing."},
+  {id:"santorini",name:"Santorini",country:"Greece",img:"photo-1504513775721-40e554384c67",cats:["islands","beach","pools","historic"],props:412,rating:4.96,price:184,badge:"Trending",desc:"Santorini is the crown jewel of the Cyclades — iconic blue-domed churches, whitewashed villages, and sunsets that paint the sky in shades of gold.",
+   food:["Fava — Creamy yellow split pea puree, a Santorini specialty","Tomato Keftedes — Crispy tomato fritters with local sun-dried tomatoes","Grilled Octopus — Fresh octopus drizzled with olive oil and lemon","Vinsanto — Sweet dessert wine made from sun-dried grapes"],
+   act:["Watch sunset from Oia Castle","Wine tour of volcanic vineyards","Boat trip to the volcano at Nea Kameni","Red Beach and Akrotiri ruins"],
+   why:"Santorini's architecture is unlike anywhere else — those blue domes against the white and caldera views create a visual experience that's pure magic."},
+  {id:"barcelona",name:"Barcelona",country:"Spain",img:"photo-1583422409516-2895a77efded",cats:["city","beach"],props:756,rating:4.88,price:108,badge:"",desc:"Barcelona is a vibrant Mediterranean city where Gaudí's whimsical architecture meets sunny beachside living.",
+   food:["Paella Marinera — Seafood paella cooked over an open fire","Patatas Bravas — Crispy potatoes with spicy tomato and aioli","Jamón Ibérico — Cured acorn-fed ham, sliced paper-thin","Crema Catalana — Spanish crème brûlée"],
+   act:["Sagrada Familia — Gaudí's unfinished masterpiece","Park Güell — Mosaic sculptures park","Las Ramblas and La Boqueria market","Barceloneta beach"],
+   why:"Barcelona has it all — incredible architecture, a beautiful coastline, world-class food, and a relaxed Mediterranean vibe."},
+  {id:"amalfi",name:"Amalfi Coast",country:"Italy",img:"photo-1534308983496-4fabb1a015ee",cats:["beach","historic"],props:312,rating:4.94,price:198,badge:"Trending",desc:"The Amalfi Coast is a stunning stretch of coastline dotted with pastel-colored villages clinging to dramatic cliffs.",
+   food:["Scialatielli ai Frutti di Mare — Fresh thick spaghetti with seafood","Delizia al Limone — Lemon dessert cake","Risotto alla Pescatora — Seafood risotto","Limoncello — Famous lemon liqueur"],
+   act:["Drive the Amalfi coastal road","Visit the cathedral in Amalfi town","Boat trip to the island of Capri","Hike the Path of the Gods"],
+   why:"The Amalfi Coast is a UNESCO World Heritage site — those cliffside villages with vibrant colors, turquoise water, and incredible food make it unforgettable."},
+  {id:"kyoto",name:"Kyoto",country:"Japan",img:"photo-1493976040374-85c8e12f0c0e",cats:["historic","city","wellness"],props:876,rating:4.93,price:104,badge:"Trending",desc:"Kyoto is Japan's cultural heart, home to over 2,000 temples and shrines, serene bamboo groves, and deeply preserved traditional culture.",
+   food:["Kaiseki Ryori — Traditional multi-course Japanese haute cuisine","Yudofu — Silky hot tofu in a light broth at a temple","Matcha sweets — Green tea flavored desserts","Nikujaga — Japanese-style meat and potato stew"],
+   act:["Fushimi Inari Shrine — Thousands of vermilion torii gates","Arashiyama Bamboo Grove","Kinkaku-ji — The Golden Pavilion","Traditional tea ceremony in Gion"],
+   why:"Kyoto is Japan's most culturally rich city, with centuries of tradition preserved in its temples, gardens, and cuisine."},
+  {id:"banff",name:"Banff",country:"Canada",img:"photo-1536615652268-01edbe780714",cats:["mountains","camping","skiing"],props:287,rating:4.93,price:167,badge:"",desc:"Banff is a stunning mountain town in the heart of the Canadian Rockies, surrounded by turquoise lakes and towering peaks.",
+   food:["Alberta Beef — World-class steak","Poutine — Crispy fries with cheese curds and gravy","Wild game — Bison, elk, and venison dishes","Maple syrup pie"],
+   act:["Lake Louise canoe ride","Banff Gondola to Sulphur Mountain","Hike Johnston Canyon","Banff Upper Hot Springs"],
+   why:"Banff offers some of the most breathtaking mountain scenery on Earth — emerald lakes, snow-capped peaks, and glaciers all accessible from a charming alpine town."},
+  {id:"dubai",name:"Dubai",country:"UAE",img:"photo-1512453979798-5ea266f8880c",cats:["city","beach","pools"],props:1456,rating:4.85,price:234,badge:"",desc:"Dubai is a city of superlatives — the world's tallest building, largest mall, and most luxurious hotels, all rising from the Arabian desert.",
    food:["Al Harees — Slow-cooked wheat and meat porridge","Shawarma — Spiced meat wrapped in flatbread","Machboos — Fragrant spiced rice with meat or seafood","Luqaimat — Sweet fried dumplings with date syrup"],
-   activities:["Burj Khalifa observation deck on the 148th floor","Desert safari with dune bashing and camel ride","Dubai Marina yacht dinner cruise","Visit the Palm Jumeirah and Atlantis Aquaventure"],
-   why:"Dubai pushes the boundaries of what's possible — indoor skiing in the desert, underwater hotels, and man-made islands. It's a futuristic marvel with incredible luxury at every level.",
-   tags:["luxury","shopping","adventure","family"]},
-  {id:"london",name:"London",country:"UK",img:"photo-1513635269975-59663e0ac1ad",cats:["city","historic"],props:1890,rating:4.78,price:167,badge:"",desc:"London is a global city where centuries of history meet cutting-edge culture. Royal palaces, world-class museums, and a pub on every corner create an endlessly fascinating metropolis.",
-   food:["Fish and Chips — Classic battered fish with thick-cut chips","Sunday Roast — Roasted meat with Yorkshire pudding","Afternoon Tea — Finger sandwiches, scones, and pastries","Pie and Mash — Traditional meat pie with mashed potatoes"],
-   activities:["British Museum — see the Rosetta Stone and Elgin Marbles","Tower of London and Crown Jewels","Westminster Abbey and Houses of Parliament","West End theatre show"],
-   why:"London has more free museums than any city in the world, a pub culture that's deeply social and welcoming, and a history that's visible on every street corner.",
-   tags:["history","museums","theatre","shopping"]},
-  {id:"queenstown",name:"Queenstown",country:"New Zealand",img:"photo-1469521669194-babb45599def",cats:["mountains","skiing","camping"],props:278,rating:4.94,price:176,badge:"",desc:"Queenstown is the adventure capital of New Zealand, set on the shores of crystal-clear Lake Wakatipu surrounded by The Remarkables mountain range.",
-   food:["Fergburger — Legendary giant burgers worth the queue","Green-lipped mussels — Fresh local seafood","Lamb dishes — New Zealand's famous grass-fed lamb","Pavlova — Classic Kiwi meringue dessert with fruit"],
-   activities:["Bungee jump at the Kawarau Bridge — the world's first","Milford Sound day cruise","Shotover Jet boat ride through canyons","Glenorchy — hike to Isengard from LOTR"],
-   why:"Queenstown is the adventure capital of the world — bungee jumping, jet boating, skydiving, and skiing all in one stunning lakeside setting.",
-   tags:["adventure","skiing","hiking","film"]},
-  {id:"marrakech",name:"Marrakech",country:"Morocco",img:"photo-1597212618440-806262de4f6b",cats:["historic","city","wellness"],props:345,rating:4.93,price:72,badge:"",desc:"Marrakech is a sensory explosion — vibrant souks, ornate palaces, fragrant food stalls, and the vast Sahara Desert just beyond the city gates.",
+   act:["Burj Khalifa observation deck on the 148th floor","Desert safari with dune bashing","Dubai Marina yacht dinner cruise","Atlantis Aquaventure"],
+   why:"Dubai pushes the boundaries of what's possible — indoor skiing in the desert, underwater hotels, and man-made islands."},
+  {id:"marrakech",name:"Marrakech",country:"Morocco",img:"photo-1597212618440-806262de4f6b",cats:["historic","city","wellness"],props:345,rating:4.93,price:72,badge:"",desc:"Marrakech is a sensory explosion — vibrant souks, ornate palaces, fragrant food stalls, and the vast Sahara Desert beyond the city gates.",
    food:["Tagine — Slow-cooked meat and vegetable stew in a clay pot","Couscous with Lamb — Fluffy semolina with tender spiced lamb","Pastilla — Sweet and savory pigeon pie with cinnamon","Mint Tea — Sweet green tea with fresh mint"],
-   activities:["Explore Jemaa el-Fna square at night","Bahia Palace and Saadian Tombs","Hot air balloon over the Atlas Mountains","Hammam and spa experience"],
-   why:"Marrakech offers incredible value — luxury riads for under $100, street food feasts for a few dollars, and an exotic atmosphere that feels like stepping into another world.",
-   tags:["budget","culture","desert","spices"]},
-  {id:"nyc",name:"New York",country:"USA",img:"photo-1496442226666-8d4d0e62e6e9",cats:["city"],props:2345,rating:4.72,price:198,badge:"",desc:"New York City is the ultimate urban playground — iconic skyscrapers, world-class museums, diverse neighborhoods, and a 24/7 energy that never stops.",
-   food:["New York-style Pizza — Huge, foldable slices","Bagel with Lox — Classic New York breakfast","Pastrami on Rye from Katz's Deli","Black and White Cookie — Iconic NYC bakery treat"],
-   activities:["Statue of Liberty and Ellis Island","Metropolitan Museum of Art","Broadway show in the Theater District","Walk the High Line and Chelsea Market"],
-   why:"New York is the city that never sleeps for a reason — there's always something to do, see, or eat, with a diversity and energy that's unmatched anywhere in the world.",
-   tags:["culture","music","food","shopping"]},
-  {id:"seychelles",name:"Seychelles",country:"Seychelles",img:"photo-1580674285054-bed31e145f59",cats:["islands","beach","tropical"],props:187,rating:4.95,price:345,badge:"",desc:"Seychelles is an archipelago of 115 granite and coral islands in the Indian Ocean, known for its otherworldly rock formations, pristine beaches, and unique wildlife.",
-   food:["Grilled Fish with Coconut Sauce — Fresh catch with creamy coconut","Pwason ek diri — Salted fish with rice and grilled plantains","Seychelles Curry — Fragrant coconut curry with local spices","Fresh Tropical Fruits — Mango, papaya, jackfruit"],
-   activities:["Anse Source d'Argent beach at La Digue","Vallee de Mai Nature Reserve — see the Coco de Mer","Snorkeling at Sainte Anne Marine Park","Island hopping by boat"],
-   why:"Seychelles has some of the most photogenic beaches on Earth — giant granite boulders that have been sculpted by nature for millions of years create a landscape unlike anywhere else.",
-   tags:["luxury","nature","honeymoon","diving"]},
-  {id:"prague",name:"Prague",country:"Czech Republic",img:"photo-1519677100203-a0e668c92439",cats:["city","historic","castles"],props:654,rating:4.81,price:68,badge:"",desc:"Prague is a fairy-tale city of Gothic spires, Baroque churches, and the largest castle complex in the world, all on the banks of the Vltava River.",
-   food:["Svíčková — Braised beef in creamy vegetable sauce","Trdelník — Chimney cake with cinnamon and sugar","Vepřo-knedlo-zelo — Roast pork with dumplings and sauerkraut","Czech Beer — The best pilsner in the world"],
-   activities:["Prague Castle and St. Vitus Cathedral","Charles Bridge at sunrise","Old Town Square Astronomical Clock","Beer spa experience"],
-   why:"Prague is one of Europe's most beautiful cities at a fraction of the cost — excellent beer for $2, stunning architecture at every turn, and a vibrant cultural scene.",
-   tags:["budget","beer","history","architecture"]},
-  {id:"iceland",name:"Reykjavik",country:"Iceland",img:"photo-1504829857797-ddff29c27927",cats:["mountains","camping"],props:178,rating:4.97,price:156,badge:"",desc:"Iceland is a land of dramatic contrasts — glaciers, volcanoes, geysirs, and waterfalls create a raw, otherworldly landscape that feels like another planet.",
-   food:["Icelandic Lamb — Free-range lamb with incredible flavor","Hákarl — Fermented shark, a traditional delicacy","Skyr — Thick, creamy Icelandic yogurt","Hot Dog (Pylsur) — Icelandic hot dog with remoulade and onions"],
-   activities:["Golden Circle tour — Geysir, Gullfoss, Thingvellir","Blue Lagoon geothermal spa","Northern Lights hunting in winter","Ice cave tour inside Vatnajökull glacier"],
-   why:"Iceland offers a natural spectacle found nowhere else — you can see geysirs, glaciers, waterfalls, volcanoes, and the Northern Lights all in one trip.",
-   tags:["nature","adventure","northernlights","roadtrip"]},
-  {id:"niseko",name:"Niseko",country:"Japan",img:"photo-1518009654794-42142c5d2e7a",cats:["skiing","mountains"],props:178,rating:4.91,price:234,badge:"",desc:"Niseko is Japan's premier ski resort, famous for its light, fluffy powder snow and stunning views of Mount Yotei, Japan's answer to Mount Fuji.",
-   food:["Kaisen Don — Seafood bowl with fresh Hokkaido catch","Jingisukan — Grilled lamb hotpot, a Hokkaido specialty","Soup Curry — Rich spiced soup with vegetables and chicken","Hokkaido Milk Ice Cream — Famous for its rich, creamy texture"],
-   activities:["World-class powder skiing from November to May","Snow monkeys at Jigokudani Park","Onsen hot springs after skiing","Snowshoeing through birch forests"],
-   why:"Niseko gets some of the best powder snow on Earth, combined with incredible Japanese cuisine and the unique experience of soaking in a hot spring after a day on the slopes.",
-   tags:["skiing","snow","onsen","japan"]}
+   act:["Explore Jemaa el-Fna square at night","Bahia Palace and Saadian Tombs","Hot air balloon over the Atlas Mountains","Hammam and spa experience"],
+   why:"Marrakech offers incredible value — luxury riads for under $100, street food feasts for a few dollars, and an exotic atmosphere."},
+  {id:"nyc",name:"New York",country:"USA",img:"photo-1496442226666-8d4d0e62e6e9",cats:["city"],props:2345,rating:4.72,price:198,badge:"",desc:"New York City is the ultimate urban playground — iconic skyscrapers, world-class museums, and 24/7 energy.",
+   food:["New York-style Pizza — Huge, foldable slices","Bagel with Lox","Pastrami on Rye from Katz's Deli","Black and White Cookie"],
+   act:["Statue of Liberty and Ellis Island","Metropolitan Museum of Art","Broadway show in the Theater District","Walk the High Line"],
+   why:"New York is the city that never sleeps — there's always something to do, see, or eat."},
+  {id:"seychelles",name:"Seychelles",country:"Seychelles",img:"photo-1580674285054-bed31e145f59",cats:["islands","beach","tropical"],props:187,rating:4.95,price:345,badge:"",desc:"Seychelles is an archipelago of 115 granite and coral islands known for otherworldly rock formations and pristine beaches.",
+   food:["Grilled Fish with Coconut Sauce","Pwason ek diri — Salted fish with rice and plantains","Seychelles Curry","Fresh Tropical Fruits"],
+   act:["Anse Source d'Argent beach","Vallee de Mai Nature Reserve","Snorkeling at Sainte Anne Marine Park","Island hopping by boat"],
+   why:"Seychelles has some of the most photogenic beaches on Earth — giant granite boulders create a landscape unlike anywhere else."},
+  {id:"prague",name:"Prague",country:"Czech Republic",img:"photo-1519677100203-a0e668c92439",cats:["city","historic","castles"],props:654,rating:4.81,price:68,badge:"",desc:"Prague is a fairy-tale city of Gothic spires, Baroque churches, and the largest castle complex in the world.",
+   food:["Svíčková — Braised beef in creamy vegetable sauce","Trdelník — Chimney cake with cinnamon and sugar","Vepřo-knedlo-zelo — Roast pork with dumplings","Czech Beer — The best pilsner"],
+   act:["Prague Castle and St. Vitus Cathedral","Charles Bridge at sunrise","Old Town Square Astronomical Clock","Beer spa experience"],
+   why:"Prague is one of Europe's most beautiful cities at a fraction of the cost — excellent beer for $2 and stunning architecture at every turn."},
+  {id:"iceland",name:"Reykjavik",country:"Iceland",img:"photo-1504829857797-ddff29c27927",cats:["mountains","camping"],props:178,rating:4.97,price:156,badge:"",desc:"Iceland is a land of dramatic contrasts — glaciers, volcanoes, geysirs, and waterfalls create a raw, otherworldly landscape.",
+   food:["Icelandic Lamb — Free-range lamb","Hákarl — Fermented shark, a traditional delicacy","Skyr — Thick Icelandic yogurt","Icelandic Hot Dog with remoulade"],
+   act:["Golden Circle tour — Geysir, Gullfoss, Thingvellir","Blue Lagoon geothermal spa","Northern Lights hunting","Ice cave tour inside Vatnajökull glacier"],
+   why:"Iceland offers a natural spectacle found nowhere else — geysirs, glaciers, waterfalls, volcanoes, and the Northern Lights all in one trip."},
+  {id:"niseko",name:"Niseko",country:"Japan",img:"photo-1518009654794-42142c5d2e7a",cats:["skiing","mountains"],props:178,rating:4.91,price:234,badge:"",desc:"Niseko is Japan's premier ski resort, famous for its light, fluffy powder snow.",
+   food:["Kaisen Don — Seafood bowl with fresh Hokkaido catch","Jingisukan — Grilled lamb hotpot","Soup Curry — Rich spiced soup","Hokkaido Milk Ice Cream"],
+   act:["World-class powder skiing from November to May","Snow monkeys at Jigokudani Park","Onsen hot springs after skiing","Snowshoeing through birch forests"],
+   why:"Niseko gets some of the best powder snow on Earth, combined with incredible Japanese cuisine and hot springs."},
+  {id:"queenstown",name:"Queenstown",country:"New Zealand",img:"photo-1469521669194-babb45599def",cats:["mountains","skiing","camping"],props:278,rating:4.94,price:176,badge:"",desc:"Queenstown is the adventure capital of New Zealand on the shores of Lake Wakatipu.",
+   food:["Fergburger — Legendary giant burgers","Green-lipped mussels","New Zealand lamb","Pavlova — Kiwi meringue dessert"],
+   act:["Bungee jump at Kawarau Bridge","Milford Sound day cruise","Shotover Jet boat ride","Glenorchy — hike to Isengard from LOTR"],
+   why:"Queenstown is the adventure capital of the world — bungee jumping, jet boating, skydiving, and skiing all in one stunning lakeside setting."}
 ];
 
-const CATEGORIES = [
-  {id:"all",icon:"🌍",label:"All"},
-  {id:"beach",icon:"🏖️",label:"Beach"},
-  {id:"mountains",icon:"🏔️",label:"Mountains"},
-  {id:"city",icon:"🏙️",label:"City"},
-  {id:"historic",icon:"🏛️",label:"Historic"},
-  {id:"islands",icon:"🏝️",label:"Islands"},
-  {id:"countryside",icon:"🌿",label:"Countryside"},
-  {id:"camping",icon:"🏕️",label:"Camping"},
-  {id:"skiing",icon:"🎿",label:"Skiing"},
-  {id:"pools",icon:"🏊",label:"Amazing pools"},
-  {id:"castles",icon:"🏰",label:"Castles"},
-  {id:"tropical",icon:"🌴",label:"Tropical"},
-  {id:"wellness",icon:"🧘",label:"Wellness"},
+const CATS = [
+  {id:"all",icon:"🌍",label:"All"},{id:"beach",icon:"🏖️",label:"Beach"},{id:"mountains",icon:"🏔️",label:"Mountains"},{id:"city",icon:"🏙️",label:"City"},{id:"historic",icon:"🏛️",label:"Historic"},{id:"islands",icon:"🏝️",label:"Islands"},{id:"camping",icon:"🏕️",label:"Camping"},{id:"skiing",icon:"🎿",label:"Skiing"},{id:"pools",icon:"🏊",label:"Amazing pools"},{id:"castles",icon:"🏰",label:"Castles"},{id:"tropical",icon:"🌴",label:"Tropical"},{id:"wellness",icon:"🧘",label:"Wellness"}
 ];
 
 let activeCat = "all";
 
-function imgUrl(id){return `https://images.unsplash.com/${DESTINATIONS.find(d=>d.id===id).img}?w=600&h=450&fit=crop&auto=format`}
-
 function renderCats(){
-  const c=document.getElementById("categories");
-  c.innerHTML=CATEGORIES.map(cat=>`<button class="cat-btn${cat.id===activeCat?" active":""}" onclick="setCat('${cat.id}')"><span class="icon">${cat.icon}</span>${cat.label}</button>`).join("");
-}
-
-function setCat(id){
-  activeCat=id;
-  renderCats();
-  renderDests();
+  document.getElementById("categories").innerHTML = CATS.map(c=>`<button class="cat-btn${c.id===activeCat?' active':''}" data-cat="${c.id}"><span class="icon">${c.icon}</span>${c.label}</button>`).join("");
 }
 
 function getDests(){
-  if(activeCat==="all"){
-    const seen=new Set();
-    return DESTINATIONS.filter(d=>{const u=!seen.has(d.id);seen.add(d.id);return u});
-  }
-  return DESTINATIONS.filter(d=>d.cats&&d.cats.includes(activeCat));
+  if(activeCat==="all"){const s=new Set();return D.filter(d=>{const u=!s.has(d.id);s.add(d.id);return u})}
+  return D.filter(d=>d.cats.includes(activeCat));
 }
 
 function renderDests(){
-  const g=document.getElementById("destGrid");
-  const f=getDests();
-  const seen=new Set();
-  const unique=f.filter(d=>{const u=!seen.has(d.id);seen.add(d.id);return u});
-  document.getElementById("filterCount").textContent=activeCat==="all"?`${unique.length} unique destinations`:`${unique.length} destinations`;
-  g.innerHTML=unique.map(d=>`<div class="dest-card" onclick="openModal('${d.id}')">
+  const f=getDests(),s=new Set(),u=f.filter(d=>{const t=!s.has(d.id);s.add(d.id);return t});
+  document.getElementById("filterCount").textContent=activeCat==="all"?`${u.length} unique destinations`:`${u.length} destinations`;
+  document.getElementById("destGrid").innerHTML=u.map(d=>`<div class="dest-card" data-id="${d.id}">
     <div class="dest-img-wrap">
-      <img class="dest-img" src="${imgUrl(d.id)}" alt="${d.name}" loading="lazy">
-      ${d.badge?`<div class="dest-badge">${d.badge}</div>`:""}
-      <button class="dest-heart" onclick="event.stopPropagation();this.classList.toggle('liked')">
-        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-      </button>
+      <img class="dest-img" src="https://images.unsplash.com/${d.img}?w=600&h=450&fit=crop&auto=format" alt="${d.name}" loading="lazy">
+      ${d.badge?`<div class="dest-badge">${d.badge}</div>`:''}
+      <button class="dest-heart" data-action="wishlist"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
     </div>
     <div class="dest-body">
-      <div class="dest-country"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${d.country}</div>
+      <div class="dest-country"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" width="12" height="12"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${d.country}</div>
       <div class="dest-name">${d.name}</div>
-      <div class="dest-meta"><span>${d.props.toLocaleString()} stays</span><div class="dest-rating"><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>${d.rating}</div></div>
+      <div class="dest-meta"><span>${d.props.toLocaleString()} stays</span><div class="dest-rating"><svg viewBox="0 0 24 24" width="12" height="12"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>${d.rating}</div></div>
       <div class="dest-price">From <strong>$${d.price}</strong> / night</div>
-      <button class="dest-action" onclick="event.stopPropagation();openModal('${d.id}')">Explore →</button>
+      <button class="dest-action" data-action="explore" data-id="${d.id}">Explore →</button>
     </div>
   </div>`).join("");
 }
 
-function filterBySearch(){
-  const q=document.getElementById("heroSearchInput").value.toLowerCase().trim();
-  if(!q)return;
-  const found=DESTINATIONS.find(d=>d.name.toLowerCase().includes(q)||d.country.toLowerCase().includes(q));
-  if(found){activeCat="all";renderCats();renderDests();setTimeout(()=>{openModal(found.id);document.querySelector(".section.destinations").scrollIntoView({behavior:"smooth"})},100)}
-  else showToast(`No results for "${q}". Try a different search!`);
-}
-
-// ── MODAL ──
-let currentModalId=null;
+// ══ MODAL ══
+let modalId = null;
 
 function openModal(id){
-  const d=DESTINATIONS.find(x=>x.id===id);
-  if(!d)return;
-  currentModalId=id;
-  document.getElementById("modalImg").src=imgUrl(id);
-  document.getElementById("modalTitle").textContent=d.name;
-  document.getElementById("modalCountry").innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke-width="2" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${d.country}`;
-  document.getElementById("modalDesc").textContent=d.desc;
-  document.getElementById("modalPrice").textContent=`From $${d.price} / night`;
-  
-  const tabs=document.getElementById("modalTabs");
-  const tabLabels=[{id:"food",label:"🍜 Food"},{id:"activities",label:"🎯 Activities"},{id:"why",label:"💎 Why Go"}];
-  tabs.innerHTML=tabLabels.map((t,i)=>`<button class="modal-tab${i===0?" active":""}" onclick="switchModalTab('${t.id}',this)">${t.label}</button>`).join("");
-  
-  switchModalTab("food",tabs.querySelector(".modal-tab"));
+  const d = D.find(x=>x.id===id); if(!d) return;
+  modalId = id;
+  document.getElementById("modalImg").src = "https://images.unsplash.com/"+d.img+"?w=720&h=400&fit=crop&auto=format";
+  document.getElementById("modalTitle").textContent = d.name;
+  document.getElementById("modalCountry").innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> '+d.country;
+  document.getElementById("modalDesc").textContent = d.desc;
+  document.getElementById("modalPrice").textContent = "From $"+d.price+" / night";
+  const tabs = document.getElementById("modalTabs");
+  tabs.innerHTML = [
+    {id:"food",label:"🍜 Food"}, {id:"act",label:"🎯 Activities"}, {id:"why",label:"💎 Why Go"}
+  ].map((t,i)=>`<button class="modal-tab${i===0?' active':''}" data-tab="${t.id}">${t.label}</button>`).join("");
+  switchTab("food");
   document.getElementById("locationModal").classList.add("open");
-  document.body.style.overflow="hidden";
+  document.body.style.overflow = "hidden";
 }
 
-function switchModalTab(tab,btn){
-  document.querySelectorAll(".modal-tab").forEach(t=>t.classList.remove("active"));
-  btn.classList.add("active");
-  const d=DESTINATIONS.find(x=>x.id===currentModalId);
-  if(!d)return;
-  const c=document.getElementById("modalTabContent");
-  if(tab==="food"&&d.food){
-    c.innerHTML=`<ul>${d.food.map(f=>`<li><span class="emoji">🍽️</span><div><div class="label">${f}</div></div></li>`).join("")}</ul>`;
-  }else if(tab==="activities"&&d.activities){
-    c.innerHTML=`<ul>${d.activities.map(a=>`<li><span class="emoji">⭐</span><div><div class="label">${a}</div></div></li>`).join("")}</ul>`;
-  }else if(tab==="why"&&d.why){
-    c.innerHTML=`<ul><li><span class="emoji">💎</span><div><div class="label">${d.why}</div></div></li></ul>`;
-  }
+function switchTab(tab){
+  document.querySelectorAll(".modal-tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===tab));
+  const d = D.find(x=>x.id===modalId); if(!d) return;
+  const c = document.getElementById("modalTabContent");
+  if(tab==="food"&&d.food) c.innerHTML = "<ul>"+d.food.map(f=>'<li><span class="emoji">🍽️</span><div><div class="label">'+f+'</div></div></li>').join("")+"</ul>";
+  else if(tab==="act"&&d.act) c.innerHTML = "<ul>"+d.act.map(a=>'<li><span class="emoji">⭐</span><div><div class="label">'+a+'</div></div></li>').join("")+"</ul>";
+  else if(tab==="why"&&d.why) c.innerHTML = '<ul><li><span class="emoji">💎</span><div><div class="label">'+d.why+'</div></div></li></ul>';
 }
 
-function closeModal(){
-  document.getElementById("locationModal").classList.remove("open");
-  document.body.style.overflow="";
-}
-
-document.getElementById("locationModal").addEventListener("click",function(e){if(e.target===this)closeModal()});
-document.addEventListener("keydown",function(e){if(e.key==="Escape")closeModal()});
-
-// ── TOAST ──
-let toastTimeout;
-
-function showToast(msg){
-  const t=document.getElementById("toast");
-  t.textContent=msg;
-  t.style.display="block";
-  t.style.opacity="1";
-  clearTimeout(toastTimeout);
-  toastTimeout=setTimeout(()=>{t.style.opacity="0";setTimeout(()=>{t.style.display="none"},300)},3000);
-}
-
-// ── CHAT ──
-function toggleChat(){
-  const w=document.getElementById("chatWindow");
-  const b=document.getElementById("chatBtn");
-  w.classList.toggle("open");
-  b.style.display=w.classList.contains("open")?"none":"block";
-  if(w.classList.contains("open")){
-    document.getElementById("chatInput").focus();
-    showSuggestions();
-  }
-}
-
-function openChat(){
-  document.getElementById("chatWindow").classList.add("open");
-  document.getElementById("chatBtn").style.display="none";
-  showSuggestions();
-  document.getElementById("chatInput").focus();
-}
-
-function showSuggestions(){
-  const s=document.getElementById("chatSuggestions");
-  const suggestions=["What should I eat in Tokyo?","Tell me about Bali","Best time to visit Paris","Things to do in Santorini","Why visit Marrakech?","Rome food recommendations"];
-  s.innerHTML=suggestions.map(sg=>`<button onclick="document.getElementById('chatInput').value='${sg}';sendChat()">${sg}</button>`).join("");
-}
-
-function sendChat(){
-  const input=document.getElementById("chatInput");
-  const q=input.value.trim();
-  if(!q)return;
-  const m=document.getElementById("chatMessages");
-  m.innerHTML+=`<div class="msg user">${q}</div>`;
-  input.value="";
-  setTimeout(()=>chatResponse(q),300);
-  m.scrollTop=m.scrollHeight;
+// ══ CHAT ══
+function addMsg(text,role){
+  const m = document.getElementById("chatMessages");
+  m.innerHTML += '<div class="msg '+role+'">'+text+'</div>';
+  m.scrollTop = m.scrollHeight;
 }
 
 function chatResponse(q){
-  const m=document.getElementById("chatMessages");
-  const lower=q.toLowerCase();
-  let answer="";
-  
-  // Find matching destination
-  const dest=DESTINATIONS.find(d=>lower.includes(d.name.toLowerCase())||lower.includes(d.country.toLowerCase()));
-  
+  const l = q.toLowerCase();
+  const dest = D.find(d=>l.includes(d.name.toLowerCase())||l.includes(d.country.toLowerCase()));
+  let ans = "";
   if(dest){
-    if(lower.includes("eat")||lower.includes("food")||lower.includes("dish")){
-      if(dest.food&&dest.food.length>0)
-        answer=`🍽️ Great question! Here's what to eat in **${dest.name}**:\n\n${dest.food.slice(0,4).map((f,i)=>`${i+1}. ${f}`).join("\n")}`;
-      else answer=`🍽️ In **${dest.name}**, you'll find amazing local cuisine. I'd recommend asking locals for their favorite spots!`;
-    }else if(lower.includes("do")||lower.includes("activity")||lower.includes("see")||lower.includes("visit")){
-      if(dest.activities&&dest.activities.length>0)
-        answer=`🎯 Here are the top things to do in **${dest.name}**:\n\n${dest.activities.slice(0,4).map((a,i)=>`${i+1}. ${a}`).join("\n")}`;
-      else answer=`🎯 In **${dest.name}**, there's so much to explore! Start with the main attractions and ask locals for hidden gems.`;
-    }else if(lower.includes("why")||lower.includes("recommend")||lower.includes("go")||lower.includes("visit")){
-      if(dest.why)
-        answer=`💎 **Why visit ${dest.name}?**\n\n${dest.why}`;
-      else answer=`💎 **${dest.name}** is an amazing destination with so much to offer! You'll love the unique experiences it provides.`;
-    }else if(lower.includes("best time")||lower.includes("weather")||lower.includes("when")){
-      answer=`📅 The best time to visit **${dest.name}** depends on what you want to do. Generally, shoulder seasons (spring and fall) offer good weather and fewer crowds.`;
-    }else{
-      answer=`✨ **${dest.name}** (${dest.country}) is a wonderful destination!\n\n${dest.desc || "It offers unique experiences, great food, and unforgettable memories."}`;
-    }
-  }else{
-    // General response
-    if(lower.includes("hello")||lower.includes("hi"))answer="Hello! 👋 I'm your travel assistant. Ask me about any destination — food, activities, or why you should go!";
-    else answer=`I'm sorry, I couldn't find a specific destination matching "${q.substring(0,30)}". Try asking about: Tokyo, Paris, Bali, Rome, Santorini, Marrakech, New York, or any other destination!`;
+    if(l.includes("eat")||l.includes("food")||l.includes("dish"))
+      ans = "🍽️ Here's what to eat in <b>"+dest.name+"</b>:<br>"+dest.food.map((f,i)=>(i+1)+". "+f).join("<br>");
+    else if(l.includes("do")||l.includes("activity")||l.includes("see")||l.includes("visit"))
+      ans = "🎯 Top things to do in <b>"+dest.name+"</b>:<br>"+dest.act.map((a,i)=>(i+1)+". "+a).join("<br>");
+    else if(l.includes("why")||l.includes("recommend")||l.includes("go"))
+      ans = "💎 <b>Why visit "+dest.name+"?</b><br>"+dest.why;
+    else
+      ans = "✨ <b>"+dest.name+"</b> ("+dest.country+") is amazing!<br>"+dest.desc;
+  } else {
+    if(l.includes("hello")||l.includes("hi")) ans = "Hello! 👋 Ask me about any destination!";
+    else ans = 'I couldn\'t find "'+q.substring(0,20)+'". Try: Tokyo, Paris, Bali, Rome...';
   }
-  
-  m.innerHTML+=`<div class="msg bot">${answer.replace(/\n/g,"<br>")}</div>`;
-  m.scrollTop=m.scrollHeight;
-  showSuggestions();
+  addMsg(ans,"bot");
 }
 
-function subNews(){
-  const email=document.getElementById("newsEmail").value.trim();
-  if(!email)showToast("Please enter your email address!");
-  else showToast(`Thanks! You're subscribed! 🎉 Welcome to Wanderlust.`);
-}
+// ══ EVENT HANDLER ══
+document.addEventListener("click", function(e){
+  const btn = e.target.closest("[data-action]");
+  if(!btn) return;
+  const action = btn.dataset.action;
+  const id = btn.dataset.id;
+  const msg = btn.dataset.msg;
 
-// ═══ INIT ═══
-renderCats();
-renderDests();
-
-// Scroll shadow
-window.addEventListener("scroll",()=>{
-  document.querySelector("nav").style.borderBottomColor=window.scrollY>10?"var(--border)":"transparent";
+  if(action==="set-cat"){ activeCat=btn.dataset.cat; renderCats(); renderDests(); }
+  else if(action==="explore"||action==="open-modal"){ openModal(id||btn.closest("[data-id]")?.dataset.id); }
+  else if(action==="close-modal"||action==="close-chat"){ document.getElementById("locationModal").classList.remove("open"); document.getElementById("chatWindow").classList.remove("open"); document.getElementById("chatBtn").style.display="block"; document.body.style.overflow=""; }
+  else if(action==="open-chat"){ document.getElementById("chatWindow").classList.add("open"); document.getElementById("chatBtn").style.display="none"; document.getElementById("chatInput").focus(); }
+  else if(action==="send-chat"||action==="chat-send"){
+    const inp = document.getElementById("chatInput"); const q = inp.value.trim();
+    if(!q) return; inp.value=""; addMsg(q,"user"); setTimeout(()=>chatResponse(q),300);
+  }
+  else if(action==="wishlist"){ e.stopPropagation(); btn.classList.toggle("liked"); }
+  else if(action==="tab"){ switchTab(btn.dataset.tab); }
+  else if(action==="scroll-destinations"){ document.getElementById("destinations-section").scrollIntoView({behavior:"smooth"}); }
+  else if(action==="scroll-features"){ document.getElementById("features-section").scrollIntoView({behavior:"smooth"}); }
+  else if(action==="scroll-deals"){ document.getElementById("deals-section").scrollIntoView({behavior:"smooth"}); }
+  else if(action==="host"){ showToast("Host program coming soon!"); }
+  else if(action==="deals"){ showToast("Summer deals loading... 🎉"); }
+  else if(action==="subscribe"){
+    const em = document.getElementById("newsEmail").value.trim();
+    if(!em) showToast("Please enter your email!");
+    else showToast("Thanks! You're subscribed! 🎉");
+  }
+  else if(action==="hero-search"){
+    const q = document.getElementById("heroSearch").value.toLowerCase().trim();
+    const found = D.find(d=>d.name.toLowerCase().includes(q)||d.country.toLowerCase().includes(q));
+    if(found){activeCat="all";renderCats();renderDests();openModal(found.id);document.getElementById("destinations-section").scrollIntoView({behavior:"smooth"});}
+    else showToast('No results for "'+q+'". Try a different search!');
+  }
+  else if(action==="toast"){ showToast(msg||"Coming soon!"); }
+  else if(action==="book"){ showToast("Booking feature coming soon! 🎉"); }
 });
 
-// Toast styles
-document.querySelector("#toast").style.cssText=`position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:12px 24px;border-radius:12px;font-size:0.9rem;z-index:300;box-shadow:0 8px 32px rgba(0,0,0,0.2);display:none;transition:opacity 0.3s;text-align:center;max-width:90vw;`;
+// Chat suggestions
+function showSuggestions(){
+  const s = document.getElementById("chatSuggestions");
+  s.innerHTML = ["What should I eat in Tokyo?","Tell me about Bali","Things to do in Santorini","Why visit Marrakech?"]
+    .map(sg=>`<button data-action="suggest" data-q="${sg}">${sg}</button>`).join("");
+}
+
+document.addEventListener("click", function(e){
+  if(e.target.closest("[data-action=suggest]")){
+    document.getElementById("chatInput").value = e.target.closest("[data-action=suggest]").dataset.q;
+    document.getElementById("chatInput").dispatchEvent(new KeyboardEvent("keydown",{key:"Enter"}));
+  }
+});
+
+document.getElementById("chatInput").addEventListener("keydown", function(e){
+  if(e.key==="Enter"){ e.preventDefault(); const q=this.value.trim(); if(!q)return; this.value=""; addMsg(q,"user"); setTimeout(()=>chatResponse(q),300); }
+});
+
+// Scroll shadow
+window.addEventListener("scroll", ()=>document.getElementById("navbar").classList.toggle("scrolled",scrollY>10));
+
+// Init
+renderCats(); renderDests(); showSuggestions();
+addMsg("Hi! I'm your AI travel assistant. Ask me about any destination — its food, activities, or why you should go!","bot");
+
+let toastTimeout;
+function showToast(m){
+  const t = document.getElementById("toast"); t.textContent=m; t.style.display="block"; t.style.opacity="1";
+  clearTimeout(toastTimeout); toastTimeout=setTimeout(()=>{t.style.opacity="0";setTimeout(()=>t.style.display="none",300)},3000);
+}
 </script>
 </body>
 </html>
