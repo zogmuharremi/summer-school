@@ -7,552 +7,745 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --brand-red: #ff385c;
-            --brand-red-deep: #e00b41;
-            --text-primary: #222222;
-            --text-secondary: #6a6a6a;
-            --text-muted: #999999;
-            --surface-light: #f2f2f2;
-            --surface-white: #ffffff;
-            --border-color: #dddddd;
-            --card-shadow: rgba(0,0,0,0.02) 0px 0px 0px 1px, rgba(0,0,0,0.04) 0px 2px 6px, rgba(0,0,0,0.1) 0px 4px 8px;
-            --card-shadow-hover: rgba(0,0,0,0.04) 0px 0px 0px 1px, rgba(0,0,0,0.08) 0px 4px 12px, rgba(0,0,0,0.16) 0px 8px 24px;
-            --font-sans: 'DM Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-            --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
-            --radius-sm: 8px; --radius-md: 14px; --radius-lg: 20px; --radius-xl: 32px;
-            --max-width: 1320px;
+            --primary: #0f172a; --accent: #ff385c; --accent-light: #ff6b6a;
+            --text: #1e293b; --text-muted: #64748b; --surface: #ffffff;
+            --bg: #f8fafc; --border: #e2e8f0; --radius: 12px; --shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            --max-w: 1200px; --font: 'DM Sans',sans-serif; --font-display: 'Playfair Display',serif;
         }
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
-        body { font-family: var(--font-sans); color: var(--text-primary); background: var(--surface-white); line-height: 1.5; overflow-x: hidden; }
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+        body{font-family:var(--font);color:var(--text);background:var(--bg);line-height:1.6;overflow-x:hidden}
+        .container{width:92%;max-width:var(--max-w);margin:0 auto;padding:0 1rem}
+        .section{padding:5rem 0}
+        .section-title{text-align:center;margin-bottom:3rem}
+        .section-title h2{font-family:var(--font-display);font-size:2.5rem;font-weight:700;color:var(--primary);margin-bottom:0.75rem}
+        .section-title p{color:var(--text-muted);max-width:600px;margin:0 auto;font-size:1.1rem}
 
-        .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
-        .reveal.visible { opacity: 1; transform: translateY(0); }
-        .reveal-children > * { opacity: 0; transform: translateY(24px); transition: opacity 0.5s ease-out, transform 0.5s ease-out; }
-        .reveal-children.visible > *:nth-child(1) { transition-delay: 0.00s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(2) { transition-delay: 0.06s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(3) { transition-delay: 0.12s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(4) { transition-delay: 0.16s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(5) { transition-delay: 0.20s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(6) { transition-delay: 0.23s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(7) { transition-delay: 0.26s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(8) { transition-delay: 0.28s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(9) { transition-delay: 0.30s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(10) { transition-delay: 0.31s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(11) { transition-delay: 0.32s; opacity: 1; transform: translateY(0); }
-        .reveal-children.visible > *:nth-child(12) { transition-delay: 0.33s; opacity: 1; transform: translateY(0); }
+        /* ── NAV ── */
+        nav{position:fixed;top:0;width:100%;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:100;height:64px}
+        .nav-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:100%;padding:0 1rem}
+        .logo{font-family:var(--font-display);font-size:1.4rem;font-weight:700;color:var(--primary);text-decoration:none;display:flex;align-items:center;gap:8px}
+        .logo::before{content:'✦';color:var(--accent);font-size:1.1rem}
+        .nav-links{display:flex;align-items:center;gap:2rem}
+        .nav-links a{color:var(--text-muted);text-decoration:none;font-weight:500;font-size:0.9rem;transition:color 0.2s;cursor:pointer}
+        .nav-links a:hover{color:var(--accent)}
+        .nav-actions{display:flex;align-items:center;gap:1rem}
+        .btn-nav{background:none;border:none;font-size:0.9rem;font-weight:600;color:var(--text);cursor:pointer;padding:8px 16px;border-radius:8px;transition:all 0.2s}
+        .btn-nav:hover{background:var(--bg)}
+        .btn-nav.primary{background:var(--accent);color:#fff}
+        .btn-nav.primary:hover{background:#d93552}
 
-        .nav { position: sticky; top: 0; z-index: 100; background: var(--surface-white); border-bottom: 1px solid transparent; transition: border-color 0.3s, box-shadow 0.3s; padding: 0 24px; }
-        .nav.scrolled { border-bottom-color: var(--border-color); box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
-        .nav-inner { max-width: var(--max-width); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 72px; gap: 24px; }
-        .nav-logo { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--brand-red); letter-spacing: -0.5px; text-decoration: none; flex-shrink: 0; }
-        .nav-logo:hover { opacity: 0.8; } .nav-logo span { color: var(--text-primary); }
-        .nav-search { flex: 1; max-width: 480px; display: flex; align-items: center; background: var(--surface-white); border-radius: 40px; padding: 4px 4px 4px 20px; box-shadow: var(--card-shadow); transition: box-shadow 0.2s; cursor: pointer; border: 1px solid transparent; }
-        .nav-search:hover { box-shadow: var(--card-shadow-hover); border-color: var(--border-color); }
-        .nav-search-label { font-size: 14px; font-weight: 500; color: var(--text-primary); flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .nav-search-label span { color: var(--text-secondary); font-weight: 400; }
-        .nav-search-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--brand-red); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: background 0.2s, transform 0.15s; }
-        .nav-search-btn:hover { background: var(--brand-red-deep); transform: scale(1.08); }
-        .nav-search-btn svg { width: 16px; height: 16px; fill: none; stroke: white; stroke-width: 2.5; }
-        .nav-actions { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
-        .btn-text { font-family: var(--font-sans); font-size: 14px; font-weight: 600; color: var(--text-primary); background: none; border: none; cursor: pointer; padding: 10px 12px; border-radius: 22px; transition: background 0.15s; white-space: nowrap; }
-        .btn-text:hover { background: var(--surface-light); }
-        .btn-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--text-primary); border: 2px solid var(--border-color); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: box-shadow 0.15s; }
-        .btn-avatar:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-        .btn-avatar svg { width: 16px; height: 16px; } .btn-avatar svg line { stroke: white; stroke-width: 2; }
+        /* ── HERO ── */
+        .hero{position:relative;min-height:90vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:6rem 1rem;color:#fff;background:#0f172a;overflow:hidden}
+        .hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 15% 80%,rgba(255,56,92,0.2)0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(100,150,255,0.15)0%,transparent 50%);animation:pulse 12s ease-in-out infinite alternate}
+        @keyframes pulse{0%{opacity:0.8;transform:scale(1)}100%{opacity:1;transform:scale(1.03)}}
+        .hero-stars{position:absolute;inset:0;background-image:radial-gradient(1px 1px at 10% 20%,rgba(255,255,255,0.4),transparent),radial-gradient(1px 1px at 30% 70%,rgba(255,255,255,0.3),transparent),radial-gradient(2px 2px at 50% 30%,rgba(255,255,255,0.35),transparent),radial-gradient(1px 1px at 70% 80%,rgba(255,255,255,0.25),transparent),radial-gradient(1px 1px at 90% 40%,rgba(255,255,255,0.3),transparent);pointer-events:none}
+        .hero-content{position:relative;z-index:2;max-width:800px}
+        .hero-badge{display:inline-block;font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;background:rgba(255,255,255,0.1);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15);padding:8px 20px;border-radius:40px;margin-bottom:28px}
+        .hero h1{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,4rem);font-weight:700;line-height:1.1;letter-spacing:-0.02em;margin-bottom:1rem}
+        .hero h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent),#ff9e80);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+        .hero p{font-size:1.15rem;color:rgba(255,255,255,0.7);max-width:520px;margin:0 auto 2rem}
+        .hero-search{display:flex;align-items:center;gap:0;background:rgba(255,255,255,0.12);backdrop-filter:blur(12px);border-radius:60px;padding:5px;max-width:620px;margin:0 auto;border:1px solid rgba(255,255,255,0.15)}
+        .hero-search input{flex:1;background:transparent;border:none;padding:12px 20px;color:#fff;font-size:0.95rem;outline:none}
+        .hero-search input::placeholder{color:rgba(255,255,255,0.5)}
+        .hero-search button{display:flex;align-items:center;gap:8px;background:var(--accent);border:none;color:#fff;padding:12px 24px;border-radius:40px;font-weight:600;font-size:0.95rem;cursor:pointer;transition:all 0.2s}
+        .hero-search button:hover{background:#d93552;transform:scale(1.03)}
+        .hero-search button svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.5}
 
-        .hero { position: relative; min-height: 580px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 80px 24px; color: white; background: linear-gradient(160deg, #1a1a2e 0%, #16213e 35%, #0f3460 60%, #0d1b2a 100%); overflow: hidden; }
-        .hero-grid { position: absolute; inset: 0; background-image: radial-gradient(circle at 15% 85%, rgba(255,56,92,0.18) 0%, transparent 40%), radial-gradient(circle at 85% 15%, rgba(255,180,70,0.12) 0%, transparent 40%), radial-gradient(circle at 50% 50%, rgba(80,140,240,0.06) 0%, transparent 60%); animation: heroPulse 10s ease-in-out infinite alternate; }
-        .hero::after { content: ''; position: absolute; inset: 0; background-image: radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.4), transparent), radial-gradient(1px 1px at 25% 65%, rgba(255,255,255,0.3), transparent), radial-gradient(2px 2px at 45% 30%, rgba(255,255,255,0.35), transparent), radial-gradient(1px 1px at 60% 75%, rgba(255,255,255,0.25), transparent), radial-gradient(1px 1px at 80% 40%, rgba(255,255,255,0.3), transparent), radial-gradient(1px 1px at 90% 80%, rgba(255,255,255,0.2), transparent); pointer-events: none; }
-        @keyframes heroPulse { 0% { opacity: 0.6; transform: scale(1); } 100% { opacity: 1; transform: scale(1.06); } }
-        .hero-content { position: relative; z-index: 2; max-width: 720px; }
-        .hero-badge { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.15); padding: 8px 22px; border-radius: 40px; margin-bottom: 28px; }
-        .hero h1 { font-family: var(--font-display); font-size: clamp(42px, 7vw, 72px); font-weight: 700; line-height: 1.06; letter-spacing: -1.5px; margin-bottom: 14px; }
-        .hero h1 em { font-style: italic; color: var(--brand-red); position: relative; }
-        .hero h1 em::after { content: ''; position: absolute; bottom: 4px; left: 0; width: 100%; height: 3px; background: var(--brand-red); border-radius: 2px; opacity: 0.4; }
-        .hero p { font-size: 18px; font-weight: 400; color: rgba(255,255,255,0.7); max-width: 480px; margin: 0 auto 44px; line-height: 1.6; }
-        .hero-search { display: flex; align-items: center; gap: 0; background: var(--surface-white); border-radius: 56px; padding: 6px 6px 6px 8px; box-shadow: 0 12px 48px rgba(0,0,0,0.3); max-width: 680px; margin: 0 auto; }
-        .hero-search-field { display: flex; flex-direction: column; align-items: flex-start; padding: 8px 16px; border-radius: 40px; cursor: pointer; transition: background 0.15s; text-align: left; flex: 1; min-width: 0; }
-        .hero-search-field:hover { background: var(--surface-light); }
-        .hero-search-field strong { font-size: 11px; font-weight: 700; color: var(--text-primary); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
-        .hero-search-field span { font-size: 14px; font-weight: 400; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-        .hero-search-divider { width: 1px; height: 32px; background: var(--border-color); flex-shrink: 0; }
-        .hero-search-submit { display: flex; align-items: center; gap: 8px; padding: 14px 26px; border-radius: 48px; background: var(--brand-red); border: none; cursor: pointer; flex-shrink: 0; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: white; box-shadow: 0 4px 16px rgba(255,56,92,0.35); }
-        .hero-search-submit:hover { background: var(--brand-red-deep); transform: scale(1.04); box-shadow: 0 6px 24px rgba(255,56,92,0.45); }
-        .hero-search-submit svg { width: 17px; height: 17px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+        /* ── CATEGORIES ── */
+        .categories{display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-bottom:2.5rem}
+        .cat-btn{background:var(--surface);border:1px solid var(--border);border-radius:40px;padding:8px 20px;font-size:0.85rem;font-weight:600;color:var(--text);cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+        .cat-btn:hover{background:var(--accent);color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(255,56,92,0.2)}
+        .cat-btn.active{background:var(--accent);color:#fff}
+        .cat-btn .icon{font-size:1.1rem}
 
-        .section { max-width: var(--max-width); margin: 0 auto; padding: 72px 24px; }
-        .section-header { margin-bottom: 36px; }
-        .section-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--brand-red); margin-bottom: 8px; }
-        .section-title { font-family: var(--font-display); font-size: clamp(28px, 4vw, 42px); font-weight: 700; letter-spacing: -0.5px; color: var(--text-primary); line-height: 1.15; }
-        .section-subtitle { font-size: 16px; color: var(--text-secondary); margin-top: 10px; max-width: 520px; }
+        /* ── DESTINATION GRID ── */
+        .filter-count{text-align:center;color:var(--text-muted);font-size:0.9rem;margin-bottom:1.5rem}
+        .dest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem}
+        .dest-card{border-radius:16px;overflow:hidden;background:var(--surface);box-shadow:0 1px 3px rgba(0,0,0,0.06),0 1px 2px rgba(0,0,0,0.04);transition:all 0.3s;cursor:pointer;position:relative}
+        .dest-card:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.08)}
+        .dest-img-wrap{position:relative;height:200px;overflow:hidden;background:var(--bg)}
+        .dest-img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s;filter:contrast(1.05) saturate(1.15) brightness(1.02)}
+        .dest-card:hover .dest-img{transform:scale(1.06)}
+        .dest-img-wrap::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.25) 100%);pointer-events:none}
+        .dest-badge{position:absolute;top:12px;left:12px;background:var(--accent);color:#fff;font-size:0.7rem;font-weight:700;padding:4px 12px;border-radius:20px;z-index:2;text-transform:uppercase;letter-spacing:0.5px}
+        .dest-heart{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,0.9);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:2;transition:all 0.2s;opacity:0;transform:translateY(-6px)}
+        .dest-card:hover .dest-heart{opacity:1;transform:translateY(0)}
+        .dest-heart:hover{background:#fff;transform:scale(1.15)!important}
+        .dest-heart.liked{background:var(--accent)}
+        .dest-heart.liked svg{fill:#fff;stroke:#fff}
+        .dest-heart svg{width:16px;height:16px;fill:none;stroke:#222;stroke-width:2}
+        .dest-body{padding:16px}
+        .dest-country{font-size:0.8rem;color:var(--text-muted);display:flex;align-items:center;gap:4px;margin-bottom:2px}
+        .dest-country svg{width:12px;height:12px;stroke:var(--accent)}
+        .dest-name{font-size:1.05rem;font-weight:600;color:var(--text);margin-bottom:4px}
+        .dest-meta{display:flex;align-items:center;gap:10px;font-size:0.8rem;color:var(--text-muted)}
+        .dest-rating{display:flex;align-items:center;gap:3px;color:var(--text);font-weight:600}
+        .dest-rating svg{width:12px;height:12px;fill:var(--accent)}
+        .dest-price{font-size:0.9rem;color:var(--text-muted);margin-top:6px}
+        .dest-price strong{color:var(--text);font-size:1rem}
+        .dest-action{display:inline-block;margin-top:10px;background:var(--accent);color:#fff;border:none;padding:6px 16px;border-radius:8px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+        .dest-action:hover{background:#d93552}
 
-        .categories { display: flex; gap: 8px; overflow-x: auto; padding: 4px 0 20px; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-        .categories::-webkit-scrollbar { display: none; }
-        .category-pill { flex-shrink: 0; scroll-snap-align: start; display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 12px 14px 10px; border-radius: var(--radius-md); cursor: pointer; transition: all 0.2s; border: 1px solid transparent; background: none; font-family: var(--font-sans); position: relative; }
-        .category-pill:hover { background: var(--surface-light); }
-        .category-pill.active { background: var(--surface-white); border-color: var(--border-color); box-shadow: var(--card-shadow); }
-        .category-icon { font-size: 26px; line-height: 1; transition: transform 0.15s; }
-        .category-pill:active .category-icon { transform: scale(0.9); }
-        .category-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); white-space: nowrap; }
-        .category-pill.active .category-label { color: var(--text-primary); }
-        .category-pill.active::after { content: ''; display: block; position: absolute; bottom: 0; width: calc(100% - 20px); height: 2px; background: var(--text-primary); border-radius: 2px; }
+        /* ── FEATURES ── */
+        .features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem}
+        .feat-card{background:var(--surface);border-radius:16px;padding:2rem;text-align:center;box-shadow:var(--shadow);transition:all 0.3s}
+        .feat-card:hover{transform:translateY(-4px);box-shadow:0 10px 25px rgba(0,0,0,0.08)}
+        .feat-icon{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,rgba(255,56,92,0.1),rgba(255,107,106,0.1));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.5rem}
+        .feat-card h3{font-size:1.1rem;font-weight:600;margin-bottom:0.5rem}
+        .feat-card p{font-size:0.9rem;color:var(--text-muted);line-height:1.6}
 
-        .destinations-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
-        .dest-card { position: relative; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; background: var(--surface-white); box-shadow: var(--card-shadow); transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s, opacity 0.4s; }
-        .dest-card:hover { transform: translateY(-6px); box-shadow: var(--card-shadow-hover); }
-        .dest-card-img-wrap { position: relative; overflow: hidden; aspect-ratio: 4 / 3; background: var(--surface-light); }
-        .dest-card-img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
-        .dest-card:hover .dest-card-img { transform: scale(1.06); }
-        .dest-card-wishlist { position: absolute; top: 12px; right: 12px; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.9); backdrop-filter: blur(4px); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 3; transition: transform 0.2s, background 0.2s; opacity: 0; transform: translateY(-8px); }
-        .dest-card:hover .dest-card-wishlist { opacity: 1; transform: translateY(0); }
-        .dest-card-wishlist:hover { background: white; transform: scale(1.12) !important; }
-        .dest-card-wishlist.liked svg { fill: var(--brand-red); stroke: var(--brand-red); }
-        .dest-card-wishlist svg { width: 18px; height: 18px; fill: none; stroke: var(--text-primary); stroke-width: 2; transition: fill 0.2s, stroke 0.2s; }
-        .dest-card-badge { position: absolute; top: 12px; left: 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; background: white; color: var(--text-primary); padding: 5px 12px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); z-index: 3; }
-        .dest-card-body { padding: 14px 16px 16px; }
-        .dest-card-location { font-size: 13px; font-weight: 500; color: var(--text-secondary); display: flex; align-items: center; gap: 4px; }
-        .dest-card-location svg { width: 13px; height: 13px; stroke: var(--text-muted); }
-        .dest-card-title { font-size: 17px; font-weight: 600; margin: 2px 0 4px; letter-spacing: -0.3px; }
-        .dest-card-meta { font-size: 13px; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; }
-        .dest-card-rating { display: flex; align-items: center; gap: 3px; color: var(--text-primary); font-weight: 600; }
-        .dest-card-rating svg { width: 13px; height: 13px; fill: var(--brand-red); stroke: none; }
-        .dest-card-price { margin-top: 8px; font-size: 14px; color: var(--text-secondary); }
-        .dest-card-price strong { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+        /* ── CTA ── */
+        .cta{background:linear-gradient(135deg,#0f172a 0%,#1a1a3e 100%);border-radius:20px;padding:4rem;text-align:center;color:#fff;margin:2rem 0}
+        .cta h2{font-family:var(--font-display);font-size:2rem;margin-bottom:1rem}
+        .cta p{color:rgba(255,255,255,0.6);max-width:500px;margin:0 auto 2rem}
+        .btn-cta{background:var(--accent);color:#fff;border:none;padding:14px 32px;border-radius:12px;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+        .btn-cta:hover{background:#d93552;transform:translateY(-2px);box-shadow:0 8px 20px rgba(255,56,92,0.3)}
 
-        .filter-info { text-align: center; padding: 8px 0 24px; font-size: 14px; color: var(--text-secondary); }
-        .filter-info strong { color: var(--text-primary); }
+        /* ── TESTIMONIALS ── */
+        .test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+        .test-card{background:var(--surface);border-radius:16px;padding:1.5rem;box-shadow:var(--shadow);transition:all 0.3s}
+        .test-card:hover{box-shadow:0 10px 25px rgba(0,0,0,0.08);transform:translateY(-2px)}
+        .test-stars{display:flex;gap:2px;margin-bottom:0.75rem}
+        .test-stars svg{width:16px;height:16px;fill:#f59e0b}
+        .test-text{font-size:0.9rem;color:var(--text-muted);margin-bottom:1rem;font-style:italic}
+        .test-author{display:flex;align-items:center;gap:10px}
+        .test-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover}
+        .test-name{font-size:0.9rem;font-weight:600}
+        .test-role{font-size:0.8rem;color:var(--text-muted)}
 
-        .collections-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-        .collection-card { position: relative; border-radius: var(--radius-lg); overflow: hidden; cursor: pointer; min-height: 320px; display: flex; align-items: flex-end; transition: transform 0.3s, box-shadow 0.3s; box-shadow: var(--card-shadow); }
-        .collection-card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
-        .collection-card-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .collection-card:hover .collection-card-img { transform: scale(1.05); }
-        .collection-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.0) 100%); }
-        .collection-card-content { position: relative; z-index: 2; padding: 28px 24px; color: white; }
-        .collection-card-content h3 { font-family: var(--font-display); font-size: 24px; font-weight: 700; margin-bottom: 4px; }
-        .collection-card-content p { font-size: 14px; opacity: 0.85; }
+        /* ── NEWSLETTER ── */
+        .newsletter{background:var(--surface);border-radius:20px;padding:3rem;text-align:center;box-shadow:var(--shadow);border:1px solid var(--border)}
+        .newsletter h3{font-family:var(--font-display);font-size:1.8rem;margin-bottom:0.5rem}
+        .newsletter p{color:var(--text-muted);margin-bottom:1.5rem}
+        .news-form{display:flex;gap:0.75rem;max-width:440px;margin:0 auto;flex-wrap:wrap;justify-content:center}
+        .news-form input{flex:1;min-width:200px;padding:12px 18px;border-radius:10px;border:1px solid var(--border);font-size:0.9rem;outline:none;transition:border-color 0.2s}
+        .news-form input:focus{border-color:var(--accent)}
+        .news-form button{background:var(--accent);color:#fff;border:none;padding:12px 24px;border-radius:10px;font-weight:600;cursor:pointer;transition:all 0.2s}
+        .news-form button:hover{background:#d93552}
 
-        .trust-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center; padding: 40px 0; }
-        .trust-item { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .trust-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--surface-light); display: flex; align-items: center; justify-content: center; font-size: 26px; transition: transform 0.2s; }
-        .trust-item:hover .trust-icon { transform: scale(1.1); }
-        .trust-item strong { font-size: 15px; font-weight: 600; color: var(--text-primary); }
-        .trust-item span { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
+        /* ── FOOTER ── */
+        footer{background:#0f172a;color:rgba(255,255,255,0.7);padding:3rem 1rem 1.5rem;margin-top:4rem}
+        .footer-inner{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;margin-bottom:2rem}
+        .footer-brand p{font-size:0.85rem;max-width:280px;margin-top:0.5rem}
+        .footer-col h4{color:#fff;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem}
+        .footer-col a{display:block;color:rgba(255,255,255,0.5);text-decoration:none;font-size:0.85rem;padding:4px 0;transition:color 0.2s}
+        .footer-col a:hover{color:#fff}
+        .footer-bottom{border-top:1px solid rgba(255,255,255,0.1);padding-top:1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem;font-size:0.8rem}
 
-        .featured-banner { position: relative; border-radius: var(--radius-xl); overflow: hidden; background: linear-gradient(135deg, #0f0c29 0%, #1a1040 40%, #0d1b2a 100%); padding: 64px 56px; margin: 24px 0 0; display: flex; align-items: center; justify-content: space-between; gap: 48px; flex-wrap: wrap; }
-        .featured-banner::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 25% 60%, rgba(255,56,92,0.12) 0%, transparent 50%), radial-gradient(ellipse at 75% 40%, rgba(120,160,255,0.07) 0%, transparent 50%); pointer-events: none; }
-        .featured-content { position: relative; z-index: 2; flex: 1; min-width: 280px; }
-        .featured-badge { display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; background: var(--brand-red); color: white; padding: 6px 16px; border-radius: 40px; margin-bottom: 20px; box-shadow: 0 4px 16px rgba(255,56,92,0.3); }
-        .featured-content h2 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 42px); font-weight: 700; color: white; line-height: 1.12; letter-spacing: -0.5px; margin-bottom: 14px; }
-        .featured-content p { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 420px; line-height: 1.6; margin-bottom: 28px; }
-        .btn-primary { font-family: var(--font-sans); font-size: 15px; font-weight: 600; color: white; background: var(--brand-red); border: none; padding: 14px 28px; border-radius: var(--radius-sm); cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 16px rgba(255,56,92,0.3); }
-        .btn-primary:hover { background: var(--brand-red-deep); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,56,92,0.4); }
-        .featured-stats { position: relative; z-index: 2; display: flex; gap: 48px; }
-        .stat-item { text-align: center; }
-        .stat-number { font-family: var(--font-display); font-size: 44px; font-weight: 700; color: white; line-height: 1; }
-        .stat-label { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+        /* ── LOCATION MODAL ── */
+        .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem;overflow-y:auto}
+        .modal-overlay.open{display:flex}
+        .modal{background:var(--surface);border-radius:20px;max-width:720px;width:100%;max-height:90vh;overflow-y:auto;padding:0;animation:modalIn 0.3s}
+        @keyframes modalIn{from{opacity:0;transform:translateY(20px) scale(0.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+        .modal-img{width:100%;height:280px;object-fit:cover;display:block;filter:contrast(1.05) saturate(1.1)}
+        .modal-body{padding:2rem}
+        .modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);border:none;color:#fff;font-size:1.2rem;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3;transition:all 0.2s}
+        .modal-close:hover{background:rgba(0,0,0,0.7);transform:scale(1.1)}
+        .modal h2{font-family:var(--font-display);font-size:1.8rem;margin-bottom:0.5rem}
+        .modal .country{color:var(--text-muted);display:flex;align-items:center;gap:6px;margin-bottom:1rem;font-size:0.95rem}
+        .modal .desc{font-size:0.95rem;color:var(--text-muted);line-height:1.7;margin-bottom:1.5rem}
+        .modal-tabs{display:flex;gap:0.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+        .modal-tab{padding:8px 16px;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.2s}
+        .modal-tab:hover{border-color:var(--accent);color:var(--accent)}
+        .modal-tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+        .modal-tab-content{min-height:100px}
+        .modal-tab-content ul{list-style:none;padding:0}
+        .modal-tab-content li{padding:10px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+        .modal-tab-content li:last-child{border:none}
+        .modal-tab-content li .emoji{font-size:1.3rem}
+        .modal-tab-content li .label{font-weight:600;font-size:0.95rem}
+        .modal-tab-content li .desc{font-size:0.85rem;color:var(--text-muted)}
+        .modal-price{font-size:1.5rem;font-weight:700;color:var(--accent);margin:1rem 0}
+        .modal-btn{display:inline-block;background:var(--accent);color:#fff;border:none;padding:12px 28px;border-radius:10px;font-weight:600;font-size:1rem;cursor:pointer;transition:all 0.2s;margin-top:0.5rem}
+        .modal-btn:hover{background:#d93552;transform:translateY(-2px)}
 
-        .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 22px; }
-        .testimonial-card { background: var(--surface-white); border-radius: var(--radius-lg); padding: 28px 30px; box-shadow: var(--card-shadow); transition: box-shadow 0.3s, transform 0.3s; border: 1px solid transparent; }
-        .testimonial-card:hover { box-shadow: var(--card-shadow-hover); transform: translateY(-2px); border-color: var(--border-color); }
-        .testimonial-stars { display: flex; gap: 3px; margin-bottom: 14px; }
-        .testimonial-stars svg { width: 17px; height: 17px; fill: var(--brand-red); stroke: none; }
-        .testimonial-quote { font-size: 15px; color: var(--text-secondary); line-height: 1.65; margin-bottom: 20px; font-style: italic; }
-        .testimonial-quote::before { content: '\201C'; font-family: var(--font-display); font-size: 32px; color: var(--brand-red); line-height: 0; vertical-align: -8px; margin-right: 4px; }
-        .testimonial-author { display: flex; align-items: center; gap: 12px; }
-        .testimonial-avatar { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; }
-        .testimonial-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-        .testimonial-role { font-size: 12px; color: var(--text-muted); }
+        /* ── AI TRAVEL ASSISTANT ── */
+        .chat-btn{position:fixed;bottom:24px;right:24px;width:56px;height:56px;border-radius:50%;background:var(--accent);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:150;box-shadow:0 4px 20px rgba(255,56,92,0.4);transition:all 0.3s;font-size:1.5rem}
+        .chat-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(255,56,92,0.5)}
+        .chat-window{position:fixed;bottom:92px;right:24px;width:360px;max-width:calc(100vw - 32px);height:480px;max-height:calc(100vh - 140px);background:var(--surface);border-radius:20px;box-shadow:0 10px 40px rgba(0,0,0,0.15);z-index:150;display:none;flex-direction:column;overflow:hidden;animation:modalIn 0.3s;border:1px solid var(--border)}
+        .chat-window.open{display:flex}
+        .chat-header{background:var(--primary);color:#fff;padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between}
+        .chat-header h4{font-size:1rem;display:flex;align-items:center;gap:8px}
+        .chat-header button{background:none;border:none;color:rgba(255,255,255,0.7);cursor:pointer;font-size:1.2rem;transition:color 0.2s}
+        .chat-header button:hover{color:#fff}
+        .chat-messages{flex:1;overflow-y:auto;padding:1rem;display:flex;flex-direction:column;gap:10px}
+        .msg{padding:10px 14px;border-radius:14px;max-width:85%;font-size:0.875rem;line-height:1.5;animation:fadeIn 0.3s}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+        .msg.bot{align-self:flex-start;background:var(--bg);border-bottom-left-radius:4px}
+        .msg.user{align-self:flex-end;background:var(--accent);color:#fff;border-bottom-right-radius:4px}
+        .chat-input-wrap{display:flex;gap:8px;padding:0.75rem;border-top:1px solid var(--border)}
+        .chat-input-wrap input{flex:1;padding:10px 14px;border-radius:10px;border:1px solid var(--border);font-size:0.875rem;outline:none;transition:border-color 0.2s}
+        .chat-input-wrap input:focus{border-color:var(--accent)}
+        .chat-input-wrap button{background:var(--accent);color:#fff;border:none;width:40px;height:40px;border-radius:10px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.2s}
+        .chat-input-wrap button:hover{background:#d93552}
+        .chat-input-wrap button svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.5}
+        .chat-suggestions{display:flex;flex-wrap:wrap;gap:6px;padding:0.5rem 0.75rem 0;border-top:1px solid var(--border)}
+        .chat-suggestions button{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:4px 12px;font-size:0.75rem;color:var(--text-muted);cursor:pointer;transition:all 0.15s}
+        .chat-suggestions button:hover{background:var(--accent);color:#fff;border-color:var(--accent)}
 
-        .newsletter { background: linear-gradient(135deg, #f9f9fb 0%, #f2f2f5 100%); border-radius: var(--radius-xl); padding: 60px 48px; text-align: center; margin-top: 16px; border: 1px solid var(--border-color); }
-        .newsletter h3 { font-family: var(--font-display); font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 10px; }
-        .newsletter p { color: var(--text-secondary); margin-bottom: 28px; max-width: 440px; margin-left: auto; margin-right: auto; font-size: 15px; }
-        .newsletter-form { display: flex; gap: 10px; max-width: 460px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
-        .newsletter-input { flex: 1; min-width: 220px; padding: 15px 22px; border-radius: 12px; border: 1px solid var(--border-color); font-family: var(--font-sans); font-size: 14px; color: var(--text-primary); outline: none; transition: border-color 0.15s, box-shadow 0.15s; background: white; }
-        .newsletter-input:focus { border-color: var(--text-primary); box-shadow: 0 0 0 3px rgba(0,0,0,0.05); }
-
-        .back-to-top { position: fixed; bottom: 28px; right: 28px; width: 48px; height: 48px; border-radius: 50%; background: var(--text-primary); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 90; opacity: 0; transform: translateY(12px); pointer-events: none; transition: opacity 0.3s, transform 0.3s, background 0.2s; box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
-        .back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
-        .back-to-top:hover { background: var(--brand-red); }
-        .back-to-top svg { width: 20px; height: 20px; fill: none; stroke: white; stroke-width: 2.5; }
-
-        .footer { background: #1a1a1a; padding: 64px 24px 32px; margin-top: 72px; color: rgba(255,255,255,0.7); }
-        .footer-inner { max-width: var(--max-width); margin: 0 auto; display: grid; grid-template-columns: 1.5fr repeat(3, 1fr); gap: 48px; }
-        .footer-brand .nav-logo { display: inline-block; margin-bottom: 12px; font-size: 26px; color: white; }
-        .footer-brand .nav-logo span { color: rgba(255,255,255,0.5); }
-        .footer-brand p { font-size: 14px; color: rgba(255,255,255,0.5); max-width: 280px; line-height: 1.6; }
-        .footer-col h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.9); margin-bottom: 16px; }
-        .footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; padding: 5px 0; transition: color 0.15s; }
-        .footer-col a:hover { color: white; }
-        .footer-bottom { max-width: var(--max-width); margin: 44px auto 0; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 13px; color: rgba(255,255,255,0.35); }
-        .footer-bottom-links { display: flex; gap: 20px; }
-        .footer-bottom-links a { color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.15s; }
-        .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
-
-        @media (max-width: 1100px) { .collections-row { grid-template-columns: 1fr 1fr; } .collections-row .collection-card:last-child { grid-column: span 2; } .trust-strip { grid-template-columns: 1fr 1fr; gap: 24px; } }
-        @media (max-width: 950px) {
-            .nav-search { max-width: 320px; }
-            .hero-search { flex-wrap: wrap; border-radius: 24px; padding: 10px; gap: 4px; }
-            .hero-search-field { flex: 1 1 100%; padding: 8px 14px; flex-direction: row; gap: 8px; align-items: center; }
-            .hero-search-field strong { margin-bottom: 0; min-width: 60px; }
-            .hero-search-divider { display: none; }
-            .hero-search-submit { width: 100%; justify-content: center; border-radius: 16px; margin-top: 4px; }
-            .footer-inner { grid-template-columns: 1fr 1fr; }
-            .featured-banner { padding: 44px 32px; }
-            .featured-stats { width: 100%; justify-content: space-around; }
-            .collections-row { grid-template-columns: 1fr; } .collections-row .collection-card:last-child { grid-column: span 1; } .collection-card { min-height: 240px; }
+        /* ── RESPONSIVE ── */
+        @media(max-width:768px){
+            .hero h1{font-size:2rem}
+            .hero-search{flex-direction:column;border-radius:16px;padding:8px;background:rgba(255,255,255,0.1)}
+            .hero-search input{width:100%;padding:10px 14px}
+            .hero-search button{width:100%;justify-content:center}
+            .section{padding:3rem 0}
+            .section-title h2{font-size:2rem}
+            .footer-inner{grid-template-columns:1fr 1fr}
+            .cta{padding:3rem 1.5rem}
+            .nav-links{display:none}
+            .chat-window{right:8px;width:calc(100vw - 16px);height:60vh}
+            .modal{max-width:100%}
+            .modal-img{height:200px}
         }
-        @media (max-width: 744px) {
-            .nav-search { display: none; } .nav-inner { height: 60px; }
-            .hero { min-height: 460px; padding: 60px 16px; } .hero h1 { font-size: clamp(32px, 10vw, 48px); }
-            .section { padding: 44px 16px; }
-            .destinations-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
-            .testimonials-grid { grid-template-columns: 1fr; }
-            .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; }
-            .newsletter { padding: 40px 20px; }
-            .featured-banner { padding: 36px 24px; text-align: center; }
-            .featured-stats { justify-content: center; gap: 32px; } .stat-number { font-size: 32px; }
-            .trust-strip { grid-template-columns: 1fr 1fr; }
-            .back-to-top { bottom: 20px; right: 20px; width: 42px; height: 42px; }
+        @media(max-width:480px){
+            .dest-grid{grid-template-columns:1fr}
+            .features-grid{grid-template-columns:1fr}
+            .footer-inner{grid-template-columns:1fr}
+            .newsletter{padding:2rem 1rem}
         }
-        @media (max-width: 480px) { .destinations-grid { grid-template-columns: 1fr; } .trust-strip { grid-template-columns: 1fr; } }
-        @media (prefers-reduced-motion: reduce) { .reveal, .reveal-children > * { opacity: 1; transform: none; transition: none; } .hero-grid { animation: none; } .dest-card:hover .dest-card-img { transform: none; } .collection-card:hover .collection-card-img { transform: none; } }
+        @media(prefers-reduced-motion:reduce){
+            .hero-bg,.dest-card:hover .dest-img{animation:none;transform:none}
+            .modal{animation:none}
+        }
     </style>
 </head>
 <body>
 
-<nav class="nav" id="nav">
+<!-- ═══ NAV ═══ -->
+<nav>
     <div class="nav-inner">
-        <a href="#" class="nav-logo">wander<span>lust</span></a>
-        <div class="nav-search">
-            <span class="nav-search-label">Anywhere <span>· Any week · Add guests</span></span>
-            <button class="nav-search-btn" aria-label="Search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="22" y2="22"/></svg></button>
+        <a href="#" class="logo">anderlust</a>
+        <div class="nav-links">
+            <a onclick="document.querySelector('.section.destinations').scrollIntoView({behavior:'smooth'})">Destinations</a>
+            <a onclick="document.querySelector('.section.features').scrollIntoView({behavior:'smooth'})">Features</a>
+            <a onclick="document.querySelector('.cta').scrollIntoView({behavior:'smooth'})">Deals</a>
         </div>
         <div class="nav-actions">
-            <button class="btn-text">Become a Host</button>
-            <button class="btn-avatar" aria-label="Menu"><svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+            <button class="btn-nav" onclick="showToast('Host program coming soon!')">Become a Host</button>
+            <button class="btn-nav primary" onclick="openChat()">✈️ Ask AI</button>
         </div>
     </div>
 </nav>
 
+<!-- ═══ HERO ═══ -->
 <section class="hero">
-    <div class="hero-grid"></div>
-    <div class="hero-content reveal">
+    <div class="hero-bg"></div>
+    <div class="hero-stars"></div>
+    <div class="hero-content">
         <div class="hero-badge">✦ Explore the World</div>
-        <h1>Where will you<br>go <em>next</em>?</h1>
-        <p>Discover extraordinary places to stay — from mountain cabins to beachfront villas, curated for every kind of traveler.</p>
+        <h1>Where will you go <em>next</em>?</h1>
+        <p>Discover extraordinary places to stay, from mountain cabins to beachfront villas — curated for every traveler.</p>
         <div class="hero-search">
-            <div class="hero-search-field"><strong>Where</strong><span>Search destinations</span></div>
-            <div class="hero-search-divider"></div>
-            <div class="hero-search-field"><strong>Check in</strong><span>Add dates</span></div>
-            <div class="hero-search-divider"></div>
-            <div class="hero-search-field"><strong>Who</strong><span>Add guests</span></div>
-            <button class="hero-search-submit"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="22" y2="22"/></svg>Search</button>
+            <input type="text" id="heroSearchInput" placeholder="Search destinations..." onkeydown="if(event.key==='Enter')filterBySearch()">
+            <button onclick="filterBySearch()">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="17" y1="17" x2="22" y2="22"/></svg>
+                Search
+            </button>
         </div>
     </div>
 </section>
 
-<div class="section" style="padding-bottom:0">
-    <div class="section-header reveal">
-        <div class="section-label">Browse by style</div>
-        <h2 class="section-title">What kind of trip?</h2>
-    </div>
-</div>
-<div style="max-width:var(--max-width);margin:0 auto;padding:0 24px" class="reveal">
-    <div class="categories" id="categories"></div>
-</div>
-
-<div class="section">
-    <div class="section-header reveal">
-        <div class="section-label" id="filterLabel">Popular now</div>
-        <h2 class="section-title" id="filterTitle">Trending destinations</h2>
-        <p class="section-subtitle" id="filterSub">The most-booked spots this month, handpicked by our travel editors.</p>
-    </div>
-    <div class="filter-info" id="filterCount"></div>
-    <div class="destinations-grid" id="destinationsGrid"></div>
-</div>
-
-<div class="section">
-    <div class="section-header reveal">
-        <div class="section-label">Curated for you</div>
-        <h2 class="section-title">Handpicked collections</h2>
-        <p class="section-subtitle">Themed stays selected by our editors — each one verified for quality.</p>
-    </div>
-    <div class="collections-row reveal-children">
-        <div class="collection-card">
-            <img class="collection-card-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&h=500&fit=crop&auto=format" alt="Beachfront escapes" loading="lazy">
-            <div class="collection-card-overlay"></div>
-            <div class="collection-card-content"><h3>Beachfront Escapes</h3><p>Wake up to ocean views — 180+ stunning properties</p></div>
+<!-- ═══ CATEGORIES + DESTINATIONS ═══ -->
+<section class="section destinations">
+    <div class="container">
+        <div class="section-title">
+            <h2>Explore destinations</h2>
+            <p>Click any destination to see its food, activities, and travel tips</p>
         </div>
-        <div class="collection-card">
-            <img class="collection-card-img" src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=500&fit=crop&auto=format" alt="Mountain retreats" loading="lazy">
-            <div class="collection-card-overlay"></div>
-            <div class="collection-card-content"><h3>Mountain Retreats</h3><p>Cozy cabins and luxury chalets — 240+ alpine stays</p></div>
+        <div class="categories" id="categories"></div>
+        <div class="filter-count" id="filterCount"></div>
+        <div class="dest-grid" id="destGrid"></div>
+    </div>
+</section>
+
+<!-- ═══ FEATURES ═══ -->
+<section class="section features">
+    <div class="container">
+        <div class="section-title">
+            <h2>Why travel with us</h2>
+            <p>Everything you need for the perfect trip</p>
         </div>
-        <div class="collection-card">
-            <img class="collection-card-img" src="https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=800&h=500&fit=crop&auto=format" alt="City lofts" loading="lazy">
-            <div class="collection-card-overlay"></div>
-            <div class="collection-card-content"><h3>Designer City Lofts</h3><p>Architectural gems in the world's best cities</p></div>
+        <div class="features-grid">
+            <div class="feat-card">
+                <div class="feat-icon">📍</div>
+                <h3>Curated Destinations</h3>
+                <p>Every location is hand-picked by travel experts with insider knowledge.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">🍜</div>
+                <h3>Local Food Guides</h3>
+                <p>Know exactly what to eat — from street food to Michelin-starred restaurants.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">🎯</div>
+                <h3>AI Travel Assistant</h3>
+                <p>Ask our AI anything about any destination — it knows the best spots, foods, and tips.</p>
+            </div>
+            <div class="feat-card">
+                <div class="feat-icon">💎</div>
+                <h3>Best Price Guarantee</h3>
+                <p>We match any price. Book with confidence knowing you got the best deal.</p>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="section reveal"><div class="trust-strip">
-    <div class="trust-item"><div class="trust-icon">🔒</div><strong>Secure booking</strong><span>SSL encrypted payments with instant confirmation</span></div>
-    <div class="trust-item"><div class="trust-icon">⭐</div><strong>Verified reviews</strong><span>Every review from real guests who stayed</span></div>
-    <div class="trust-item"><div class="trust-icon">💬</div><strong>24/7 support</strong><span>Real humans ready to help, anytime day or night</span></div>
-    <div class="trust-item"><div class="trust-icon">🏠</div><strong>15K+ Hosts</strong><span>Trusted by thousands of property owners worldwide</span></div>
-</div></div>
-
-<div class="section"><div class="featured-banner reveal">
-    <div class="featured-content">
-        <div class="featured-badge">Limited Offer</div>
-        <h2>Summer escapes<br>up to 30% off</h2>
-        <p>Book early and save on thousands of hand-picked stays across Europe, Asia, and the Americas.</p>
-        <button class="btn-primary">Explore deals <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+<!-- ═══ CTA ═══ -->
+<section>
+    <div class="container">
+        <div class="cta">
+            <h2>Summer escapes — up to 30% off</h2>
+            <p>Book early and save on thousands of hand-picked stays across Europe, Asia, and the Americas.</p>
+            <button class="btn-cta" onclick="showToast('Summer deals loading... 🎉')">Explore Deals</button>
+        </div>
     </div>
-    <div class="featured-stats">
-        <div class="stat-item"><div class="stat-number">12K+</div><div class="stat-label">Properties</div></div>
-        <div class="stat-item"><div class="stat-number">190+</div><div class="stat-label">Countries</div></div>
-        <div class="stat-item"><div class="stat-number">4.9</div><div class="stat-label">Avg Rating</div></div>
+</section>
+
+<!-- ═══ TESTIMONIALS ═══ -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>What travelers say</h2>
+            <p>Real reviews from real people</p>
+        </div>
+        <div class="test-grid">
+            <div class="test-card">
+                <div class="test-stars">★★★★★</div>
+                <p class="test-text">"Found the most incredible villa in Tuscany through Wanderlust. The booking was seamless and the property exceeded every expectation."</p>
+                <div class="test-author">
+                    <img class="test-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=80&h=80&fit=crop" alt="" loading="lazy">
+                    <div><div class="test-name">Sarah Mitchell</div><div class="test-role">Travel Blogger</div></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">★★★★★</div>
+                <p class="test-text">"The AI assistant recommended a hidden gem in Kyoto that wasn't in any guidebook. Made our trip unforgettable."</p>
+                <div class="test-author">
+                    <img class="test-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop" alt="" loading="lazy">
+                    <div><div class="test-name">James Kowalski</div><div class="test-role">Software Engineer</div></div>
+                </div>
+            </div>
+            <div class="test-card">
+                <div class="test-stars">★★★★★</div>
+                <p class="test-text">"Booked a last-minute weekend in the Cotswolds. Everything was perfect from the host to the curated food recommendations."</p>
+                <div class="test-author">
+                    <img class="test-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=80&h=80&fit=crop" alt="" loading="lazy">
+                    <div><div class="test-name">Priya Nair</div><div class="test-role">Photographer</div></div>
+                </div>
+            </div>
+        </div>
     </div>
-</div></div>
+</section>
 
-<div class="section">
-    <div class="section-header reveal"><div class="section-label">Testimonials</div><h2 class="section-title">Loved by travelers</h2></div>
-    <div class="testimonials-grid reveal-children">
-        <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-quote">Found the most incredible villa in Tuscany through Wanderlust. The booking process was seamless and the property exceeded every expectation.</p><div class="testimonial-author"><img class="testimonial-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&auto=format" alt="Sarah" loading="lazy"><div><div class="testimonial-name">Sarah Mitchell</div><div class="testimonial-role">Travel Blogger</div></div></div></div>
-        <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-quote">I've used a dozen travel platforms and Wanderlust is by far the most intuitive. The curated collections saved me hours of research.</p><div class="testimonial-author"><img class="testimonial-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&auto=format" alt="James" loading="lazy"><div><div class="testimonial-name">James Kowalski</div><div class="testimonial-role">Software Engineer</div></div></div></div>
-        <div class="testimonial-card"><div class="testimonial-stars">★★★★★</div><p class="testimonial-quote">Booked a last-minute weekend in the Cotswolds and everything was perfect. The host was responsive, the cottage was pristine.</p><div class="testimonial-author"><img class="testimonial-avatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&auto=format" alt="Priya" loading="lazy"><div><div class="testimonial-name">Priya Nair</div><div class="testimonial-role">Photographer</div></div></div></div>
+<!-- ═══ NEWSLETTER ═══ -->
+<section class="section">
+    <div class="container">
+        <div class="newsletter">
+            <h3>Get travel inspiration</h3>
+            <p>Join our newsletter for curated destinations, exclusive deals, and travel tips — delivered weekly.</p>
+            <div class="news-form">
+                <input type="email" placeholder="Your email address" aria-label="Email" id="newsEmail">
+                <button onclick="subNews()">Subscribe</button>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 
-<div class="section"><div class="newsletter reveal">
-    <h3>Get travel inspiration</h3>
-    <p>Join our newsletter for curated destinations, exclusive deals, and travel tips — delivered weekly.</p>
-    <div class="newsletter-form"><input type="email" class="newsletter-input" placeholder="Your email address" aria-label="Email"><button class="btn-primary">Subscribe</button></div>
-</div></div>
-
-<footer class="footer">
+<!-- ═══ FOOTER ═══ -->
+<footer>
     <div class="footer-inner">
-        <div class="footer-brand"><a href="#" class="nav-logo">wander<span>lust</span></a><p>Curating extraordinary stays and experiences around the world since 2018. Travel better, not just farther.</p></div>
-        <div class="footer-col"><h4>Explore</h4><a href="#">All destinations</a><a href="#">Beach houses</a><a href="#">Mountain cabins</a><a href="#">City apartments</a><a href="#">Unique stays</a></div>
-        <div class="footer-col"><h4>Company</h4><a href="#">About us</a><a href="#">Careers</a><a href="#">Press</a><a href="#">Blog</a><a href="#">Partner with us</a></div>
-        <div class="footer-col"><h4>Support</h4><a href="#">Help center</a><a href="#">Safety information</a><a href="#">Cancellation options</a><a href="#">Contact us</a><a href="#">Accessibility</a></div>
+        <div class="footer-brand">
+            <div style="font-family:var(--font-display);font-size:1.4rem;color:#fff">✦ Wanderlust</div>
+            <p>Curating extraordinary stays and experiences around the world since 2018. Travel better, not just farther.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Explore</h4>
+            <a href="#" onclick="document.querySelector('.section.destinations').scrollIntoView({behavior:'smooth'})">All destinations</a>
+            <a href="#" onclick="showToast('Beach houses coming soon! 🏖️')">Beach houses</a>
+            <a href="#" onclick="showToast('Mountain cabins coming soon! 🏔️')">Mountain cabins</a>
+        </div>
+        <div class="footer-col">
+            <h4>Company</h4>
+            <a href="#" onclick="showToast('About us — coming soon')">About us</a>
+            <a href="#" onclick="showToast('Careers — coming soon')">Careers</a>
+            <a href="#" onclick="showToast('Press — coming soon')">Press</a>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a href="#" onclick="showToast('Help center — coming soon')">Help center</a>
+            <a href="#" onclick="showToast('Contact us at support@wanderlust.com')">Contact us</a>
+            <a href="#" onclick="openChat()">Ask AI Assistant</a>
+        </div>
     </div>
-    <div class="footer-bottom"><span>&copy; 2026 Wanderlust, Inc.</span><div class="footer-bottom-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Sitemap</a></div></div>
+    <div class="footer-bottom">
+        <span>© 2026 Wanderlust, Inc.</span>
+        <div style="display:flex;gap:1.5rem">
+            <a href="#" style="color:rgba(255,255,255,0.35);text-decoration:none">Privacy</a>
+            <a href="#" style="color:rgba(255,255,255,0.35);text-decoration:none">Terms</a>
+        </div>
+    </div>
 </footer>
 
-<button class="back-to-top" id="backToTop" aria-label="Back to top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></button>
+<!-- ═══ LOCATION MODAL ═══ -->
+<div class="modal-overlay" id="locationModal">
+    <div class="modal" style="position:relative">
+        <button class="modal-close" onclick="closeModal()">✕</button>
+        <img class="modal-img" id="modalImg" src="" alt="">
+        <div class="modal-body">
+            <h2 id="modalTitle"></h2>
+            <div class="country" id="modalCountry"></div>
+            <p class="desc" id="modalDesc"></p>
+            <div class="modal-price" id="modalPrice"></div>
+            <div class="modal-tabs" id="modalTabs"></div>
+            <div class="modal-tab-content" id="modalTabContent"></div>
+            <button class="modal-btn" onclick="showToast('Booking feature coming soon! 🎉')">Book Now</button>
+        </div>
+    </div>
+</div>
+
+<!-- ═══ AI CHAT ═══ -->
+<button class="chat-btn" id="chatBtn" onclick="toggleChat()">🤖</button>
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+        <h4>🤖 Travel Assistant</h4>
+        <button onclick="toggleChat()">✕</button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+        <div class="msg bot">Hi! I'm your AI travel assistant. Ask me about any destination — its food, things to do, best time to visit, or why you should go! For example: <em>"What should I eat in Tokyo?"</em> or <em>"Tell me about Bali"</em></div>
+    </div>
+    <div class="chat-suggestions" id="chatSuggestions"></div>
+    <div class="chat-input-wrap">
+        <input type="text" id="chatInput" placeholder="Ask about any destination..." onkeydown="if(event.key==='Enter')sendChat()">
+        <button onclick="sendChat()">
+            <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+    </div>
+</div>
+
+<!-- ═══ TOAST ═══ -->
+<div id="toast" style="position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:var(--primary);color:#fff;padding:12px 24px;border-radius:12px;font-size:0.9rem;z-index:300;box-shadow:0 8px 32px rgba(0,0,0,0.2);display:none;transition:opacity 0.3s;text-align:center;max-width:90vw"></div>
 
 <script>
 // ═══════════════ DESTINATION DATA ═══════════════
 const DESTINATIONS = [
-    // ── BEACH ──
-    {id:"maldives",name:"Maldives",country:"Maldives",img:"photo-1514282401047-d79a71a590e8",cats:["beach","islands","tropical","pools"],props:642,rating:4.96,price:289,badge:""},
-    {id:"cancun",name:"Cancún",country:"Mexico",img:"photo-1535498680774-dea88dd85547",cats:["beach","tropical","pools"],props:891,rating:4.78,price:124,badge:""},
-    {id:"tulum",name:"Tulum",country:"Mexico",img:"photo-1504198453319-5ce911bafcde",cats:["beach","tropical","pools","wellness"],props:423,rating:4.85,price:156,badge:""},
-    {id:"amalfi",name:"Amalfi Coast",country:"Italy",img:"photo-1534308983496-4fabb1a015ee",cats:["beach","historic"],props:312,rating:4.94,price:198,badge:"Trending"},
-    {id:"phuket",name:"Phuket",country:"Thailand",img:"photo-1589394815804-964ed0be2eb5",cats:["beach","tropical","pools"],props:734,rating:4.82,price:72,badge:""},
-    {id:"goldcoast",name:"Gold Coast",country:"Australia",img:"photo-1528072164453-f0e2b4a6f238",cats:["beach","city"],props:489,rating:4.76,price:143,badge:""},
-    {id:"nassau",name:"Nassau",country:"Bahamas",img:"photo-1544551763-46a013bb70d5",cats:["beach","islands","tropical"],props:267,rating:4.81,price:178,badge:"New"},
-    {id:"mykonos",name:"Mykonos",country:"Greece",img:"photo-1603880523350-5d4ae1bc2a9d",cats:["beach","islands","pools"],props:398,rating:4.91,price:215,badge:""},
-    // ── MOUNTAINS ──
-    {id:"banff",name:"Banff",country:"Canada",img:"photo-1536615652268-01edbe780714",cats:["mountains","camping","skiing"],props:287,rating:4.93,price:167,badge:""},
-    {id:"patagonia",name:"Patagonia",country:"Argentina",img:"photo-1507005268131-d8194436f197",cats:["mountains","camping"],props:156,rating:4.97,price:134,badge:""},
-    {id:"dolomites",name:"Dolomites",country:"Italy",img:"photo-1506905925346-21bda4d32df4",cats:["mountains","skiing"],props:342,rating:4.95,price:189,badge:""},
-    {id:"queenstown",name:"Queenstown",country:"New Zealand",img:"photo-1469521669194-babb45599def",cats:["mountains","skiing","camping"],props:278,rating:4.94,price:176,badge:""},
-    {id:"kathmandu",name:"Kathmandu",country:"Nepal",img:"photo-1544735716-392fe2489ffa",cats:["mountains","historic","wellness"],props:198,rating:4.72,price:48,badge:""},
-    {id:"aspen",name:"Aspen",country:"USA",img:"photo-1464278533981-50106e6176b7",cats:["mountains","skiing"],props:312,rating:4.88,price:345,badge:""},
-    {id:"chamonix",name:"Chamonix",country:"France",img:"photo-1518009654794-42142c5d2e7a",cats:["mountains","skiing"],props:267,rating:4.89,price:198,badge:""},
-    // ── HISTORIC ──
-    {id:"rome",name:"Rome",country:"Italy",img:"photo-1552832230-c0197dd311b5",cats:["historic","city"],props:1245,rating:4.82,price:132,badge:""},
-    {id:"athens",name:"Athens",country:"Greece",img:"photo-1516483638261-f4dbd43c35ae",cats:["historic","city"],props:678,rating:4.74,price:89,badge:""},
-    {id:"cairo",name:"Cairo",country:"Egypt",img:"photo-1572252009286-268acec5ca0a",cats:["historic"],props:432,rating:4.68,price:56,badge:""},
-    {id:"istanbul",name:"Istanbul",country:"Turkey",img:"photo-1524231757912-21f4fe3a7200",cats:["historic","city"],props:987,rating:4.79,price:78,badge:""},
-    {id:"cusco",name:"Cusco",country:"Peru",img:"photo-1587595431973-160d0a4add19",cats:["historic","mountains"],props:234,rating:4.86,price:62,badge:""},
-    {id:"petra",name:"Petra",country:"Jordan",img:"photo-1579606037497-f0b6e4ef4cae",cats:["historic"],props:145,rating:4.91,price:94,badge:""},
-    {id:"jerusalem",name:"Jerusalem",country:"Israel",img:"photo-1596987345559-0b0e69e08710",cats:["historic"],props:389,rating:4.77,price:112,badge:""},
-    {id:"kyoto",name:"Kyoto",country:"Japan",img:"photo-1493976040374-85c8e12f0c0e",cats:["historic","city","wellness"],props:876,rating:4.93,price:104,badge:"Trending"},
-    {id:"prague",name:"Prague",country:"Czech Republic",img:"photo-1519677100203-a0e668c92439",cats:["historic","city","castles"],props:654,rating:4.81,price:68,badge:""},
-    // ── CITY ──
-    {id:"nyc",name:"New York",country:"USA",img:"photo-1496442226666-8d4d0e62e6e9",cats:["city"],props:2345,rating:4.72,price:198,badge:""},
-    {id:"london",name:"London",country:"UK",img:"photo-1513635269975-59663e0ac1ad",cats:["city","historic"],props:1890,rating:4.78,price:167,badge:""},
-    {id:"dubai",name:"Dubai",country:"UAE",img:"photo-1512453979798-5ea266f8880c",cats:["city","beach","pools"],props:1456,rating:4.85,price:234,badge:""},
-    {id:"singapore",name:"Singapore",country:"Singapore",img:"photo-1525625293386-3f8f99389edd",cats:["city","tropical"],props:987,rating:4.91,price:145,badge:""},
-    {id:"hongkong",name:"Hong Kong",country:"China",img:"photo-1536599018102-1256d84377e3",cats:["city"],props:765,rating:4.69,price:123,badge:""},
-    {id:"berlin",name:"Berlin",country:"Germany",img:"photo-1560969184-10fe8719e047",cats:["city","historic"],props:1123,rating:4.76,price:98,badge:""},
-    {id:"seoul",name:"Seoul",country:"South Korea",img:"photo-1534274988757-a28e56e5d8f6",cats:["city"],props:834,rating:4.83,price:82,badge:""},
-    {id:"toronto",name:"Toronto",country:"Canada",img:"photo-1517090504586-fde19ea6066f",cats:["city"],props:678,rating:4.71,price:134,badge:""},
-    // ── COUNTRYSIDE ──
-    {id:"tuscany",name:"Tuscany",country:"Italy",img:"photo-1523531294919-4bcd7c65e216",cats:["countryside","historic","castles"],props:543,rating:4.92,price:156,badge:""},
-    {id:"cotswolds",name:"Cotswolds",country:"UK",img:"photo-1433066442747-05a10a27c3be",cats:["countryside"],props:312,rating:4.89,price:145,badge:""},
-    {id:"provence",name:"Provence",country:"France",img:"photo-1499002238440-d264edd596ec",cats:["countryside","historic"],props:423,rating:4.87,price:134,badge:""},
-    {id:"napa",name:"Napa Valley",country:"USA",img:"photo-1561495376-aa789c76f2cd",cats:["countryside"],props:267,rating:4.84,price:278,badge:""},
-    {id:"lakedistrict",name:"Lake District",country:"UK",img:"photo-1484166458036-cb7a0f25bb23",cats:["countryside","camping","mountains"],props:345,rating:4.9,price:123,badge:""},
-    {id:"loire",name:"Loire Valley",country:"France",img:"photo-1561414927-6d86591d0c4f",cats:["countryside","castles","historic"],props:287,rating:4.85,price:167,badge:""},
-    {id:"bavaria",name:"Bavaria",country:"Germany",img:"photo-1467269204594-9661b134dd2b",cats:["countryside","castles","mountains"],props:398,rating:4.82,price:112,badge:""},
-    // ── ISLANDS ──
-    {id:"borabora",name:"Bora Bora",country:"French Polynesia",img:"photo-1517331156495-de60afa091ff",cats:["islands","beach","tropical"],props:123,rating:4.98,price:456,badge:"Luxury"},
-    {id:"seychelles",name:"Seychelles",country:"Seychelles",img:"photo-1580674285054-bed31e145f59",cats:["islands","beach","tropical"],props:187,rating:4.95,price:345,badge:""},
-    {id:"fiji",name:"Fiji",country:"Fiji",img:"photo-1505881502356-5ed75bd96072",cats:["islands","beach","tropical"],props:234,rating:4.88,price:198,badge:""},
-    {id:"maui",name:"Maui",country:"USA",img:"photo-1505852679233-d9fd70aff56d",cats:["islands","beach","tropical"],props:567,rating:4.91,price:267,badge:""},
-    {id:"crete",name:"Crete",country:"Greece",img:"photo-1515488042364-2e1cf0c45d3c",cats:["islands","beach","historic"],props:445,rating:4.83,price:98,badge:""},
-    {id:"santorini",name:"Santorini",country:"Greece",img:"photo-1504513775721-40e554384c67",cats:["islands","beach","pools","historic"],props:412,rating:4.96,price:184,badge:"Trending"},
-    {id:"bali",name:"Bali",country:"Indonesia",img:"photo-1518548419970-58e3b4079ab2",cats:["islands","tropical","pools","wellness","beach"],props:1432,rating:4.89,price:67,badge:""},
-    // ── CAMPING ──
-    {id:"yosemite",name:"Yosemite",country:"USA",img:"photo-1504280390367-361c6d9f38f4",cats:["camping","mountains"],props:89,rating:4.94,price:45,badge:""},
-    {id:"fjords",name:"Norwegian Fjords",country:"Norway",img:"photo-1501785888041-af3ef285b470",cats:["camping","mountains"],props:134,rating:4.92,price:98,badge:""},
-    {id:"tasmania",name:"Tasmania",country:"Australia",img:"photo-1549180030-48bf079fb38a",cats:["camping","mountains","countryside"],props:198,rating:4.85,price:76,badge:""},
-    {id:"colorado",name:"Colorado",country:"USA",img:"photo-1464822759023-fed622ff2c3b",cats:["camping","mountains","skiing"],props:312,rating:4.78,price:89,badge:""},
-    {id:"highlands",name:"Scottish Highlands",country:"UK",img:"photo-1506377585622-bedcbb027af4",cats:["camping","mountains","castles","countryside"],props:223,rating:4.87,price:87,badge:""},
-    // ── SKIING ──
-    {id:"niseko",name:"Niseko",country:"Japan",img:"photo-1518009654794-42142c5d2e7a",cats:["skiing","mountains"],props:178,rating:4.91,price:234,badge:""},
-    {id:"whistler",name:"Whistler",country:"Canada",img:"photo-1464278533981-50106e6176b7",cats:["skiing","mountains"],props:312,rating:4.86,price:278,badge:""},
-    {id:"courchevel",name:"Courchevel",country:"France",img:"photo-1518009654794-42142c5d2e7a",cats:["skiing","mountains"],props:198,rating:4.92,price:412,badge:"Luxury"},
-    {id:"stmoritz",name:"St. Moritz",country:"Switzerland",img:"photo-1536615652268-01edbe780714",cats:["skiing","mountains"],props:156,rating:4.94,price:389,badge:"Luxury"},
-    {id:"zermatt",name:"Zermatt",country:"Switzerland",img:"photo-1506905925346-21bda4d32df4",cats:["skiing","mountains"],props:212,rating:4.93,price:345,badge:""},
-    // ── POOLS ──
-    {id:"ibiza",name:"Ibiza",country:"Spain",img:"photo-1523531294919-4bcd7c65e216",cats:["pools","beach","islands"],props:345,rating:4.79,price:198,badge:""},
-    {id:"ubud",name:"Ubud",country:"Indonesia",img:"photo-1518548419970-58e3b4079ab2",cats:["pools","wellness","tropical","countryside"],props:567,rating:4.87,price:82,badge:""},
-    // ── CASTLES ──
-    {id:"edinburgh",name:"Edinburgh",country:"UK",img:"photo-1506377585622-bedcbb027af4",cats:["castles","historic","city"],props:432,rating:4.83,price:134,badge:""},
-    {id:"sintra",name:"Sintra",country:"Portugal",img:"photo-1561414927-6d86591d0c4f",cats:["castles","historic","countryside"],props:198,rating:4.88,price:98,badge:""},
-    {id:"transylvania",name:"Transylvania",country:"Romania",img:"photo-1467269204594-9661b134dd2b",cats:["castles","historic","countryside","mountains"],props:145,rating:4.76,price:67,badge:""},
-    // ── TROPICAL ──
-    {id:"costarica",name:"Costa Rica",country:"Costa Rica",img:"photo-1505881502356-5ed75bd96072",cats:["tropical","beach","wellness","camping"],props:678,rating:4.85,price:112,badge:""},
-    {id:"srilanka",name:"Sri Lanka",country:"Sri Lanka",img:"photo-1517331156495-de60afa091ff",cats:["tropical","beach","wellness"],props:423,rating:4.78,price:56,badge:""},
-    // ── WELLNESS ──
-    {id:"sedona",name:"Sedona",country:"USA",img:"photo-1504280390367-361c6d9f38f4",cats:["wellness","mountains","camping"],props:198,rating:4.86,price:178,badge:""},
-    {id:"kerala",name:"Kerala",country:"India",img:"photo-1580674285054-bed31e145f59",cats:["wellness","tropical","countryside"],props:345,rating:4.74,price:45,badge:""},
-    {id:"rishikesh",name:"Rishikesh",country:"India",img:"photo-1544735716-392fe2489ffa",cats:["wellness","mountains"],props:167,rating:4.72,price:34,badge:""},
-    {id:"byronbay",name:"Byron Bay",country:"Australia",img:"photo-1528072164453-f0e2b4a6f238",cats:["wellness","beach","countryside"],props:234,rating:4.82,price:123,badge:""},
+  {id:"maldives",name:"Maldives",country:"Maldives",img:"photo-1514282401047-d79a71a590e8",cats:["beach","islands","tropical","pools"],props:642,rating:4.96,price:289,badge:"",desc:"The Maldives is a tropical paradise of over 1,000 coral islands scattered across the Indian Ocean. Crystal-clear turquoise waters, white sandy beaches, and world-class overwater bungalows make it the ultimate luxury escape.",
+   food:["Maldivian Fish Curry — A fragrant coconut-based curry with fresh tuna","Mas Huni — Shredded smoked tuna with coconut, onion, and chili","Bis Keemiya — A savory samosa-like pastry filled with spiced fish","Raa — Sweet palm wine tapped from palm trees, a local specialty"],
+   activities:["Snorkel with manta rays and whale sharks at South Ari Atoll","Dine underwater at Ithaa Undersea Restaurant","Take a seaplane ride over the coral atolls","Sunset fishing trip on a traditional dhoni boat"],
+   why:"The Maldives offers a level of serenity and tropical beauty found nowhere else on Earth. It's the definition of paradise — pristine beaches, incredible marine life, and luxurious overwater villas that redefine relaxation.",
+   tags:["romantic","luxury","diving","beach"]},
+  {id:"bali",name:"Bali",country:"Indonesia",img:"photo-1518548419970-58e3b4079ab2",cats:["islands","tropical","pools","wellness","beach"],props:1432,rating:4.89,price:67,badge:"",desc:"Bali, the Island of the Gods, is a lush tropical haven with terraced rice paddies, ancient temples, vibrant arts, and surf-worthy beaches. It's a place where spirituality meets paradise.",
+   food:["Babi Guling — Suckling pig slow-roasted with turmeric and spices","Nasi Campur — A mixed rice platter with meats, vegetables, and sambal","Sate Lilit — Minced seafood satay wrapped around lemongrass sticks","Lawar — A traditional mix of vegetables, coconut, and minced meat with spices"],
+   activities:["Watch sunrise at Tanah Lot temple perched on a sea rock","Ubud Monkey Forest and rice terrace walk","Surf lessons at Padang Padang Beach","Full-day Ubud art and culture tour"],
+   why:"Bali offers incredible value for world-class experiences. From $15 spa treatments to $3 street food feasts, it's one of the most affordable tropical destinations with unmatched cultural richness.",
+   tags:["budget","culture","surf","spiritual"]},
+  {id:"paris",name:"Paris",country:"France",img:"photo-1502602898657-3e91760cbb34",cats:["city","historic"],props:1024,rating:4.87,price:145,badge:"",desc:"Paris, the City of Light, is a timeless blend of romance, art, and gastronomy. From the majestic Eiffel Tower to charming street-side cafes, every corner exudes elegance.",
+   food:["Croissant — Flaky, buttery perfection from any boulangerie","Steak Frites — Grilled steak with crispy french fries and béarnaise","Escargots de Bourgogne — Snails baked with garlic-parsley butter","Crème Brûlée — Silky vanilla custard with caramelized sugar top"],
+   activities:["Climb the Eiffel Tower at sunset","Louvre Museum — see the Mona Lisa and Venus de Milo","Stroll Montmartre and Sacré-Cœur","Seine River dinner cruise"],
+   why:"Paris is the most romantic city in the world, with world-class museums, incredible food at every price point, and architecture that makes every street feel like a movie set.",
+   tags:["romantic","art","food","luxury"]},
+  {id:"tokyo",name:"Tokyo",country:"Japan",img:"photo-1535139262971-c51845709a48",cats:["city","historic","wellness"],props:890,rating:4.95,price:98,badge:"",desc:"Tokyo is a dazzling metropolis where cutting-edge technology meets ancient tradition. Neon-lit skyscrapers tower over serene temples, and Michelin-starred ramen shops sit beside centuries-old shrines.",
+   food:["Ramen at Ichiran — Customizable tonkotsu ramen in private booths","Sushi at Tsukiji outer market — World's freshest sushi","Okonomiyaki — Savory Japanese pancake cooked on a hotplate at your table","Kaiseki — Traditional multi-course Japanese haute cuisine"],
+   activities:["Visit Sensō-ji Temple and Nakamise Street","Shibuya Crossing — the world's busiest intersection","Explore Akihabara Electric Town","TeamLab Borderless digital art museum"],
+   why:"Tokyo is a sensory overload in the best way — incredible food, unparalleled public transit, spotless streets, and a blend of tradition and futurism you won't find anywhere else.",
+   tags:["food","technology","shopping","culture"]},
+  {id:"rome",name:"Rome",country:"Italy",img:"photo-1552832230-c0197dd311b5",cats:["city","historic"],props:1245,rating:4.82,price:132,badge:"",desc:"Rome, the Eternal City, is a living museum where ancient history unfolds around every corner. From the Colosseum to Trastevere's cobblestone streets, Rome is a feast for the senses.",
+   food:["Cacio e Pepe — Simple perfection: pecorino cheese and black pepper pasta","Carbonara — Creamy egg-based pasta with guanciale","Supplì — Fried rice balls stuffed with mozzarella","Gelato artigianale — Handmade gelato from a proper gelateria"],
+   activities:["Colosseum and Roman Forum guided tour","Vatican Museums and Sistine Chapel","Throw a coin in the Trevi Fountain","Explore Trastevere and eat dinner in a piazza"],
+   why:"Rome has 2,000+ years of history visible at every turn, plus food that's simple, fresh, and life-changing. It's a city you can walk through and feel the weight of civilization.",
+   tags:["history","food","art","walking"]},
+  {id:"santorini",name:"Santorini",country:"Greece",img:"photo-1504513775721-40e554384c67",cats:["islands","beach","pools","historic"],props:412,rating:4.96,price:184,badge:"Trending",desc:"Santorini is the crown jewel of the Cyclades — iconic blue-domed churches, whitewashed villages clinging to cliffs, and sunsets that paint the sky in shades of gold and purple.",
+   food:["Fava — Creamy yellow split pea puree, a Santorini specialty","Tomato Keftedes — Crispy tomato fritters made with local sun-dried tomatoes","Grilled Octopus — Fresh octopus drizzled with olive oil and lemon","Vinsanto — Sweet dessert wine made from sun-dried grapes"],
+   activities:["Watch sunset from Oia Castle","Wine tour of Santorini's volcanic vineyards","Boat trip to the active volcano at Nea Kameni","Red Beach and Akrotiri ruins"],
+   why:"Santorini's architecture is unlike anywhere else — those blue domes against the white and the caldera views create a visual experience that's pure magic. Plus, the volcanic wine is exceptional.",
+   tags:["romantic","wine","sunset","luxury"]},
+  {id:"barcelona",name:"Barcelona",country:"Spain",img:"photo-1583422409516-2895a77efded",cats:["city","beach"],props:756,rating:4.88,price:108,badge:"",desc:"Barcelona is a vibrant Mediterranean city where Gaudí's whimsical architecture meets sunny beachside living. World-class art, tapas bars, and a lively street culture make it endlessly exciting.",
+   food:["Paella Marinera — Seafood paella cooked over an open fire","Patatas Bravas — Crispy potatoes with spicy tomato and aioli","Jamón Ibérico — Cured acorn-fed ham, sliced paper-thin","Crema Catalana — The Spanish version of crème brûlée"],
+   activities:["Sagrada Familia — Gaudí's unfinished masterpiece","Park Güell — A whimsical park with mosaic sculptures","Las Ramblas and La Boqueria market","Barceloneta beach and seafood lunch"],
+   why:"Barcelona has it all — incredible architecture, a beautiful coastline, world-class food, and a relaxed Mediterranean vibe that makes every day feel like a holiday.",
+   tags:["art","beach","food","architecture"]},
+  {id:"amalfi",name:"Amalfi Coast",country:"Italy",img:"photo-1534308983496-4fabb1a015ee",cats:["beach","historic"],props:312,rating:4.94,price:198,badge:"Trending",desc:"The Amalfi Coast is a stunning stretch of coastline dotted with pastel-colored villages clinging to dramatic cliffs overlooking the turquoise Tyrrhenian Sea.",
+   food:["Scialatielli ai Frutti di Mare — Fresh thick spaghetti with seafood","Delizia al Limone — Lemon dessert cake from the Amalfi region","Risotto alla Pescatora — Seafood risotto with local catch","Limoncello — Famous lemon liqueur, best enjoyed chilled"],
+   activities:["Drive the Amalfi coastal road from Positano to Ravello","Visit the cathedral in Amalfi town","Boat trip to the island of Capri","Hike the Path of the Gods above Positano"],
+   why:"The Amalfi Coast is a UNESCO World Heritage site for good reason — those cliffside villages with vibrant colors, the turquoise water, the incredible food, and the romance of the Italian Riviera.",
+   tags:["romantic","roadtrip","food","scenic"]},
+  {id:"kyoto",name:"Kyoto",country:"Japan",img:"photo-1493976040374-85c8e12f0c0e",cats:["historic","city","wellness"],props:876,rating:4.93,price:104,badge:"Trending",desc:"Kyoto is Japan's cultural heart, home to over 2,000 temples and shrines, serene bamboo groves, and a deeply preserved traditional culture that has flourished for over a thousand years.",
+   food:["Kaiseki Ryori — Traditional multi-course Japanese haute cuisine","Yudofu — Silky hot tofu in a light broth at a temple restaurant","Matcha sweets — Green tea flavored desserts and ice cream","Nikujaga — Japanese-style meat and potato stew"],
+   activities:["Fushimi Inari Shrine — Thousands of vermilion torii gates","Arashiyama Bamboo Grove","Kinkaku-ji — The Golden Pavilion temple","Traditional tea ceremony in Gion"],
+   why:"Kyoto is Japan's most culturally rich city, with centuries of tradition preserved in its temples, gardens, tea houses, and cuisine. It's where you truly experience the soul of Japan.",
+   tags:["culture","temples","nature","food"]},
+  {id:"banff",name:"Banff",country:"Canada",img:"photo-1536615652268-01edbe780714",cats:["mountains","camping","skiing"],props:287,rating:4.93,price:167,badge:"",desc:"Banff is a stunning mountain town in the heart of the Canadian Rockies, surrounded by turquoise lakes, towering peaks, and abundant wildlife.",
+   food:["Alberta Beef — World-class steak from Canadian cattle ranches","Poutine — Crispy fries with cheese curds and gravy","Wild game — Bison, elk, and venison dishes","Maple syrup pie — Sweet Canadian classic"],
+   activities:["Lake Louise canoe ride on turquoise water","Banff Gondola to the top of Sulphur Mountain","Hike Johnston Canyon to the inkwells","Banff Upper Hot Springs"],
+   why:"Banff offers some of the most breathtaking mountain scenery on Earth — emerald lakes, snow-capped peaks, and glaciers all accessible from a charming alpine town.",
+   tags:["hiking","skiing","wildlife","nature"]},
+  {id:"dubai",name:"Dubai",country:"UAE",img:"photo-1512453979798-5ea266f8880c",cats:["city","beach","pools"],props:1456,rating:4.85,price:234,badge:"",desc:"Dubai is a city of superlatives — the world's tallest building, largest shopping mall, and most luxurious hotels, all rising from the Arabian desert.",
+   food:["Al Harees — Slow-cooked wheat and meat porridge","Shawarma — Spiced meat wrapped in flatbread","Machboos — Fragrant spiced rice with meat or seafood","Luqaimat — Sweet fried dumplings with date syrup"],
+   activities:["Burj Khalifa observation deck on the 148th floor","Desert safari with dune bashing and camel ride","Dubai Marina yacht dinner cruise","Visit the Palm Jumeirah and Atlantis Aquaventure"],
+   why:"Dubai pushes the boundaries of what's possible — indoor skiing in the desert, underwater hotels, and man-made islands. It's a futuristic marvel with incredible luxury at every level.",
+   tags:["luxury","shopping","adventure","family"]},
+  {id:"london",name:"London",country:"UK",img:"photo-1513635269975-59663e0ac1ad",cats:["city","historic"],props:1890,rating:4.78,price:167,badge:"",desc:"London is a global city where centuries of history meet cutting-edge culture. Royal palaces, world-class museums, and a pub on every corner create an endlessly fascinating metropolis.",
+   food:["Fish and Chips — Classic battered fish with thick-cut chips","Sunday Roast — Roasted meat with Yorkshire pudding","Afternoon Tea — Finger sandwiches, scones, and pastries","Pie and Mash — Traditional meat pie with mashed potatoes"],
+   activities:["British Museum — see the Rosetta Stone and Elgin Marbles","Tower of London and Crown Jewels","Westminster Abbey and Houses of Parliament","West End theatre show"],
+   why:"London has more free museums than any city in the world, a pub culture that's deeply social and welcoming, and a history that's visible on every street corner.",
+   tags:["history","museums","theatre","shopping"]},
+  {id:"queenstown",name:"Queenstown",country:"New Zealand",img:"photo-1469521669194-babb45599def",cats:["mountains","skiing","camping"],props:278,rating:4.94,price:176,badge:"",desc:"Queenstown is the adventure capital of New Zealand, set on the shores of crystal-clear Lake Wakatipu surrounded by The Remarkables mountain range.",
+   food:["Fergburger — Legendary giant burgers worth the queue","Green-lipped mussels — Fresh local seafood","Lamb dishes — New Zealand's famous grass-fed lamb","Pavlova — Classic Kiwi meringue dessert with fruit"],
+   activities:["Bungee jump at the Kawarau Bridge — the world's first","Milford Sound day cruise","Shotover Jet boat ride through canyons","Glenorchy — hike to Isengard from LOTR"],
+   why:"Queenstown is the adventure capital of the world — bungee jumping, jet boating, skydiving, and skiing all in one stunning lakeside setting.",
+   tags:["adventure","skiing","hiking","film"]},
+  {id:"marrakech",name:"Marrakech",country:"Morocco",img:"photo-1597212618440-806262de4f6b",cats:["historic","city","wellness"],props:345,rating:4.93,price:72,badge:"",desc:"Marrakech is a sensory explosion — vibrant souks, ornate palaces, fragrant food stalls, and the vast Sahara Desert just beyond the city gates.",
+   food:["Tagine — Slow-cooked meat and vegetable stew in a clay pot","Couscous with Lamb — Fluffy semolina with tender spiced lamb","Pastilla — Sweet and savory pigeon pie with cinnamon","Mint Tea — Sweet green tea with fresh mint"],
+   activities:["Explore Jemaa el-Fna square at night","Bahia Palace and Saadian Tombs","Hot air balloon over the Atlas Mountains","Hammam and spa experience"],
+   why:"Marrakech offers incredible value — luxury riads for under $100, street food feasts for a few dollars, and an exotic atmosphere that feels like stepping into another world.",
+   tags:["budget","culture","desert","spices"]},
+  {id:"nyc",name:"New York",country:"USA",img:"photo-1496442226666-8d4d0e62e6e9",cats:["city"],props:2345,rating:4.72,price:198,badge:"",desc:"New York City is the ultimate urban playground — iconic skyscrapers, world-class museums, diverse neighborhoods, and a 24/7 energy that never stops.",
+   food:["New York-style Pizza — Huge, foldable slices","Bagel with Lox — Classic New York breakfast","Pastrami on Rye from Katz's Deli","Black and White Cookie — Iconic NYC bakery treat"],
+   activities:["Statue of Liberty and Ellis Island","Metropolitan Museum of Art","Broadway show in the Theater District","Walk the High Line and Chelsea Market"],
+   why:"New York is the city that never sleeps for a reason — there's always something to do, see, or eat, with a diversity and energy that's unmatched anywhere in the world.",
+   tags:["culture","music","food","shopping"]},
+  {id:"seychelles",name:"Seychelles",country:"Seychelles",img:"photo-1580674285054-bed31e145f59",cats:["islands","beach","tropical"],props:187,rating:4.95,price:345,badge:"",desc:"Seychelles is an archipelago of 115 granite and coral islands in the Indian Ocean, known for its otherworldly rock formations, pristine beaches, and unique wildlife.",
+   food:["Grilled Fish with Coconut Sauce — Fresh catch with creamy coconut","Pwason ek diri — Salted fish with rice and grilled plantains","Seychelles Curry — Fragrant coconut curry with local spices","Fresh Tropical Fruits — Mango, papaya, jackfruit"],
+   activities:["Anse Source d'Argent beach at La Digue","Vallee de Mai Nature Reserve — see the Coco de Mer","Snorkeling at Sainte Anne Marine Park","Island hopping by boat"],
+   why:"Seychelles has some of the most photogenic beaches on Earth — giant granite boulders that have been sculpted by nature for millions of years create a landscape unlike anywhere else.",
+   tags:["luxury","nature","honeymoon","diving"]},
+  {id:"prague",name:"Prague",country:"Czech Republic",img:"photo-1519677100203-a0e668c92439",cats:["city","historic","castles"],props:654,rating:4.81,price:68,badge:"",desc:"Prague is a fairy-tale city of Gothic spires, Baroque churches, and the largest castle complex in the world, all on the banks of the Vltava River.",
+   food:["Svíčková — Braised beef in creamy vegetable sauce","Trdelník — Chimney cake with cinnamon and sugar","Vepřo-knedlo-zelo — Roast pork with dumplings and sauerkraut","Czech Beer — The best pilsner in the world"],
+   activities:["Prague Castle and St. Vitus Cathedral","Charles Bridge at sunrise","Old Town Square Astronomical Clock","Beer spa experience"],
+   why:"Prague is one of Europe's most beautiful cities at a fraction of the cost — excellent beer for $2, stunning architecture at every turn, and a vibrant cultural scene.",
+   tags:["budget","beer","history","architecture"]},
+  {id:"iceland",name:"Reykjavik",country:"Iceland",img:"photo-1504829857797-ddff29c27927",cats:["mountains","camping"],props:178,rating:4.97,price:156,badge:"",desc:"Iceland is a land of dramatic contrasts — glaciers, volcanoes, geysirs, and waterfalls create a raw, otherworldly landscape that feels like another planet.",
+   food:["Icelandic Lamb — Free-range lamb with incredible flavor","Hákarl — Fermented shark, a traditional delicacy","Skyr — Thick, creamy Icelandic yogurt","Hot Dog (Pylsur) — Icelandic hot dog with remoulade and onions"],
+   activities:["Golden Circle tour — Geysir, Gullfoss, Thingvellir","Blue Lagoon geothermal spa","Northern Lights hunting in winter","Ice cave tour inside Vatnajökull glacier"],
+   why:"Iceland offers a natural spectacle found nowhere else — you can see geysirs, glaciers, waterfalls, volcanoes, and the Northern Lights all in one trip.",
+   tags:["nature","adventure","northernlights","roadtrip"]},
+  {id:"niseko",name:"Niseko",country:"Japan",img:"photo-1518009654794-42142c5d2e7a",cats:["skiing","mountains"],props:178,rating:4.91,price:234,badge:"",desc:"Niseko is Japan's premier ski resort, famous for its light, fluffy powder snow and stunning views of Mount Yotei, Japan's answer to Mount Fuji.",
+   food:["Kaisen Don — Seafood bowl with fresh Hokkaido catch","Jingisukan — Grilled lamb hotpot, a Hokkaido specialty","Soup Curry — Rich spiced soup with vegetables and chicken","Hokkaido Milk Ice Cream — Famous for its rich, creamy texture"],
+   activities:["World-class powder skiing from November to May","Snow monkeys at Jigokudani Park","Onsen hot springs after skiing","Snowshoeing through birch forests"],
+   why:"Niseko gets some of the best powder snow on Earth, combined with incredible Japanese cuisine and the unique experience of soaking in a hot spring after a day on the slopes.",
+   tags:["skiing","snow","onsen","japan"]},
+  {id:"maldives",name:"Maldives",country:"Maldives",img:"photo-1514282401047-d79a71a590e8",cats:["pools","luxury"],props:642,rating:4.96,price:289,badge:"",desc:"Maldives",food:[],activities:[],why:"",tags:[]},
 ];
 
 const CATEGORIES = [
-    {id:"all",icon:"🌍",label:"All"},
-    {id:"beach",icon:"🏖️",label:"Beach"},
-    {id:"mountains",icon:"🏔️",label:"Mountains"},
-    {id:"historic",icon:"🏛️",label:"Historic"},
-    {id:"city",icon:"🏙️",label:"City"},
-    {id:"countryside",icon:"🌿",label:"Countryside"},
-    {id:"islands",icon:"🏝️",label:"Islands"},
-    {id:"camping",icon:"🏕️",label:"Camping"},
-    {id:"skiing",icon:"🎿",label:"Skiing"},
-    {id:"pools",icon:"🏊",label:"Amazing pools"},
-    {id:"castles",icon:"🏰",label:"Castles"},
-    {id:"tropical",icon:"🌴",label:"Tropical"},
-    {id:"wellness",icon:"🧘",label:"Wellness"},
+  {id:"all",icon:"🌍",label:"All"},
+  {id:"beach",icon:"🏖️",label:"Beach"},
+  {id:"mountains",icon:"🏔️",label:"Mountains"},
+  {id:"city",icon:"🏙️",label:"City"},
+  {id:"historic",icon:"🏛️",label:"Historic"},
+  {id:"islands",icon:"🏝️",label:"Islands"},
+  {id:"countryside",icon:"🌿",label:"Countryside"},
+  {id:"camping",icon:"🏕️",label:"Camping"},
+  {id:"skiing",icon:"🎿",label:"Skiing"},
+  {id:"pools",icon:"🏊",label:"Amazing pools"},
+  {id:"castles",icon:"🏰",label:"Castles"},
+  {id:"tropical",icon:"🌴",label:"Tropical"},
+  {id:"wellness",icon:"🧘",label:"Wellness"},
 ];
 
-let activeCategory = "all";
+let activeCat = "all";
 
-// ═══════════════ RENDER ═══════════════
-const locSvg = '<svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>';
-const starSvg = '<svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>';
-const heartSvg = '<svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>';
+function imgUrl(id){return `https://images.unsplash.com/${DESTINATIONS.find(d=>d.id===id).img}?w=600&h=450&fit=crop&auto=format`}
 
-function renderCategories() {
-    const container = document.getElementById("categories");
-    container.innerHTML = CATEGORIES.map(c =>
-        `<button class="category-pill${c.id===activeCategory?' active':''}" data-cat="${c.id}">
-            <span class="category-icon">${c.icon}</span>
-            <span class="category-label">${c.label}</span>
-        </button>`
-    ).join("");
-    container.querySelectorAll(".category-pill").forEach(btn => {
-        btn.addEventListener("click", () => {
-            activeCategory = btn.dataset.cat;
-            renderCategories();
-            filterDestinations();
-            // Scroll categories into view if needed
-            btn.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
-        });
-    });
+function renderCats(){
+  const c=document.getElementById("categories");
+  c.innerHTML=CATEGORIES.map(cat=>`<button class="cat-btn${cat.id===activeCat?" active":""}" onclick="setCat('${cat.id}')"><span class="icon">${cat.icon}</span>${cat.label}</button>`).join("");
 }
 
-function getFilteredDestinations() {
-    if (activeCategory === "all") {
-        // Deduplicate by id
-        const seen = new Set();
-        return DESTINATIONS.filter(d => { const u = !seen.has(d.id); seen.add(d.id); return u; });
+function setCat(id){
+  activeCat=id;
+  renderCats();
+  renderDests();
+}
+
+function getDests(){
+  if(activeCat==="all"){
+    const seen=new Set();
+    return DESTINATIONS.filter(d=>{const u=!seen.has(d.id);seen.add(d.id);return u});
+  }
+  return DESTINATIONS.filter(d=>d.cats&&d.cats.includes(activeCat));
+}
+
+function renderDests(){
+  const g=document.getElementById("destGrid");
+  const f=getDests();
+  const seen=new Set();
+  const unique=f.filter(d=>{const u=!seen.has(d.id);seen.add(d.id);return u});
+  document.getElementById("filterCount").textContent=activeCat==="all"?`${unique.length} unique destinations`:`${unique.length} destinations`;
+  g.innerHTML=unique.map(d=>`<div class="dest-card" onclick="openModal('${d.id}')">
+    <div class="dest-img-wrap">
+      <img class="dest-img" src="${imgUrl(d.id)}" alt="${d.name}" loading="lazy">
+      ${d.badge?`<div class="dest-badge">${d.badge}</div>`:""}
+      <button class="dest-heart" onclick="event.stopPropagation();this.classList.toggle('liked')">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      </button>
+    </div>
+    <div class="dest-body">
+      <div class="dest-country"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>${d.country}</div>
+      <div class="dest-name">${d.name}</div>
+      <div class="dest-meta"><span>${d.props.toLocaleString()} stays</span><div class="dest-rating"><svg viewBox="0 0 24 24"><polygon points="12 2 15 9 22 9 16 14 18 21 12 17 6 21 8 14 2 9 9 9"/></svg>${d.rating}</div></div>
+      <div class="dest-price">From <strong>$${d.price}</strong> / night</div>
+      <button class="dest-action" onclick="event.stopPropagation();openModal('${d.id}')">Explore →</button>
+    </div>
+  </div>`).join("");
+}
+
+function filterBySearch(){
+  const q=document.getElementById("heroSearchInput").value.toLowerCase().trim();
+  if(!q)return;
+  const found=DESTINATIONS.find(d=>d.name.toLowerCase().includes(q)||d.country.toLowerCase().includes(q));
+  if(found){activeCat="all";renderCats();renderDests();setTimeout(()=>{openModal(found.id);document.querySelector(".section.destinations").scrollIntoView({behavior:"smooth"})},100)}
+  else showToast(`No results for "${q}". Try a different search!`);
+}
+
+// ── MODAL ──
+let currentModalId=null;
+
+function openModal(id){
+  const d=DESTINATIONS.find(x=>x.id===id);
+  if(!d)return;
+  currentModalId=id;
+  document.getElementById("modalImg").src=imgUrl(id);
+  document.getElementById("modalTitle").textContent=d.name;
+  document.getElementById("modalCountry").innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke-width="2" width="14" height="14"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ${d.country}`;
+  document.getElementById("modalDesc").textContent=d.desc;
+  document.getElementById("modalPrice").textContent=`From $${d.price} / night`;
+  
+  const tabs=d3.getElementById("modalTabs");
+  const tabLabels=[{id:"food",label:"🍜 Food"},{id:"activities",label:"🎯 Activities"},{id:"why",label:"💎 Why Go"}];
+  tabs.innerHTML=tabLabels.map((t,i)=>`<button class="modal-tab${i===0?" active":""}" onclick="switchModalTab('${t.id}',this)">${t.label}</button>`).join("");
+  
+  switchModalTab("food",tabs.querySelector(".modal-tab"));
+  document.getElementById("locationModal").classList.add("open");
+  document.body.style.overflow="hidden";
+}
+
+function switchModalTab(tab,btn){
+  document.querySelectorAll(".modal-tab").forEach(t=>t.classList.remove("active"));
+  btn.classList.add("active");
+  const d=DESTINATIONS.find(x=>x.id===currentModalId);
+  if(!d)return;
+  const c=document.getElementById("modalTabContent");
+  if(tab==="food"&&d.food){
+    c.innerHTML=`<ul>${d.food.map(f=>`<li><span class="emoji">🍽️</span><div><div class="label">${f}</div></div></li>`).join("")}</ul>`;
+  }else if(tab==="activities"&&d.activities){
+    c.innerHTML=`<ul>${d.activities.map(a=>`<li><span class="emoji">⭐</span><div><div class="label">${a}</div></div></li>`).join("")}</ul>`;
+  }else if(tab==="why"&&d.why){
+    c.innerHTML=`<ul><li><span class="emoji">💎</span><div><div class="label">${d.why}</div></div></li></ul>`;
+  }
+}
+
+function closeModal(){
+  document.getElementById("locationModal").classList.remove("open");
+  document.body.style.overflow="";
+}
+
+document.getElementById("locationModal").addEventListener("click",function(e){if(e.target===this)closeModal()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeModal()});
+
+// ── TOAST ──
+let toastTimeout;
+
+function showToast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.style.display="block";
+  t.style.opacity="1";
+  clearTimeout(toastTimeout);
+  toastTimeout=setTimeout(()=>{t.style.opacity="0";setTimeout(()=>{t.style.display="none"},300)},3000);
+}
+
+// ── CHAT ──
+function toggleChat(){
+  const w=document.getElementById("chatWindow");
+  const b=document.getElementById("chatBtn");
+  w.classList.toggle("open");
+  b.style.display=w.classList.contains("open")?"none":"block";
+  if(w.classList.contains("open")){
+    document.getElementById("chatInput").focus();
+    showSuggestions();
+  }
+}
+
+function openChat(){
+  document.getElementById("chatWindow").classList.add("open");
+  document.getElementById("chatBtn").style.display="none";
+  showSuggestions();
+  document.getElementById("chatInput").focus();
+}
+
+function showSuggestions(){
+  const s=document.getElementById("chatSuggestions");
+  const suggestions=["What should I eat in Tokyo?","Tell me about Bali","Best time to visit Paris","Things to do in Santorini","Why visit Marrakech?","Rome food recommendations"];
+  s.innerHTML=suggestions.map(sg=>`<button onclick="document.getElementById('chatInput').value='${sg}';sendChat()">${sg}</button>`).join("");
+}
+
+function sendChat(){
+  const input=document.getElementById("chatInput");
+  const q=input.value.trim();
+  if(!q)return;
+  const m=document.getElementById("chatMessages");
+  m.innerHTML+=`<div class="msg user">${q}</div>`;
+  input.value="";
+  setTimeout(()=>chatResponse(q),300);
+  m.scrollTop=m.scrollHeight;
+}
+
+function chatResponse(q){
+  const m=document.getElementById("chatMessages");
+  const lower=q.toLowerCase();
+  let answer="";
+  
+  // Find matching destination
+  const dest=DESTINATIONS.find(d=>lower.includes(d.name.toLowerCase())||lower.includes(d.country.toLowerCase()));
+  
+  if(dest){
+    if(lower.includes("eat")||lower.includes("food")||lower.includes("dish")){
+      if(dest.food&&dest.food.length>0)
+        answer=`🍽️ Great question! Here's what to eat in **${dest.name}**:\n\n${dest.food.slice(0,4).map((f,i)=>`${i+1}. ${f}`).join("\n")}`;
+      else answer=`🍽️ In **${dest.name}**, you'll find amazing local cuisine. I'd recommend asking locals for their favorite spots!`;
+    }else if(lower.includes("do")||lower.includes("activity")||lower.includes("see")||lower.includes("visit")){
+      if(dest.activities&&dest.activities.length>0)
+        answer=`🎯 Here are the top things to do in **${dest.name}**:\n\n${dest.activities.slice(0,4).map((a,i)=>`${i+1}. ${a}`).join("\n")}`;
+      else answer=`🎯 In **${dest.name}**, there's so much to explore! Start with the main attractions and ask locals for hidden gems.`;
+    }else if(lower.includes("why")||lower.includes("recommend")||lower.includes("go")||lower.includes("visit")){
+      if(dest.why)
+        answer=`💎 **Why visit ${dest.name}?**\n\n${dest.why}`;
+      else answer=`💎 **${dest.name}** is an amazing destination with so much to offer! You'll love the unique experiences it provides.`;
+    }else if(lower.includes("best time")||lower.includes("weather")||lower.includes("when")){
+      answer=`📅 The best time to visit **${dest.name}** depends on what you want to do. Generally, shoulder seasons (spring and fall) offer good weather and fewer crowds.`;
+    }else{
+      answer=`✨ **${dest.name}** (${dest.country}) is a wonderful destination!\n\n${dest.desc || "It offers unique experiences, great food, and unforgettable memories."}`;
     }
-    return DESTINATIONS.filter(d => d.cats.includes(activeCategory));
+  }else{
+    // General response
+    if(lower.includes("hello")||lower.includes("hi"))answer="Hello! 👋 I'm your travel assistant. Ask me about any destination — food, activities, or why you should go!";
+    else answer=`I'm sorry, I couldn't find a specific destination matching "${q.substring(0,30)}". Try asking about: Tokyo, Paris, Bali, Rome, Santorini, Marrakech, New York, or any other destination!`;
+  }
+  
+  m.innerHTML+=`<div class="msg bot">${answer.replace(/\n/g,"<br>")}</div>`;
+  m.scrollTop=m.scrollHeight;
+  showSuggestions();
 }
 
-function imgUrl(d) {
-    return `https://images.unsplash.com/${d.img}?w=600&h=450&fit=crop&auto=format`;
+function subNews(){
+  const email=document.getElementById("newsEmail").value.trim();
+  if(!email)showToast("Please enter your email address!");
+  else showToast(`Thanks! You're subscribed! 🎉 Welcome to Wanderlust.`);
 }
 
-function filterDestinations() {
-    const filtered = getFilteredDestinations();
-    const grid = document.getElementById("destinationsGrid");
+// ═══ INIT ═══
+renderCats();
+renderDests();
 
-    // Update header
-    const catObj = CATEGORIES.find(c => c.id === activeCategory);
-    document.getElementById("filterLabel").textContent = activeCategory==="all" ? "Popular now" : catObj.label;
-    document.getElementById("filterTitle").textContent = activeCategory==="all" ? "Trending destinations" : `${catObj.label} destinations`;
-    document.getElementById("filterSub").textContent = activeCategory==="all"
-        ? "The most-booked spots this month, handpicked by our travel editors."
-        : `${filtered.length} handpicked stays for ${catObj.label.toLowerCase()} lovers`;
-    document.getElementById("filterCount").innerHTML = activeCategory==="all"
-        ? `<strong>${filtered.length}</strong> unique destinations across all categories`
-        : `<strong>${filtered.length}</strong> ${catObj.label.toLowerCase()} destinations found`;
-
-    // Render cards
-    grid.innerHTML = filtered.map(d => `
-        <div class="dest-card reveal-children-item">
-            <div class="dest-card-img-wrap">
-                <img class="dest-card-img" src="${imgUrl(d)}" alt="${d.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1500835556837-99d9f0e4819f?w=600&h=450&fit=crop&auto=format'">
-                ${d.badge ? `<div class="dest-card-badge">${d.badge}</div>` : ''}
-                <button class="dest-card-wishlist" aria-label="Save" onclick="toggleWishlist(this,event)">${heartSvg}</button>
-            </div>
-            <div class="dest-card-body">
-                <div class="dest-card-location">${locSvg} ${d.country}</div>
-                <div class="dest-card-title">${d.name}</div>
-                <div class="dest-card-meta"><span>${d.props.toLocaleString()} stays</span><div class="dest-card-rating">${starSvg} ${d.rating}</div></div>
-                <div class="dest-card-price">From <strong>$${d.price}</strong> / night</div>
-            </div>
-        </div>
-    `).join("");
-
-    // Re-observe new cards for scroll reveal
-    document.querySelectorAll(".reveal-children-item").forEach(el => {
-        el.style.opacity = "0";
-        el.style.transform = "translateY(24px)";
-        el.style.transition = "opacity 0.5s ease-out, transform 0.5s ease-out";
-    });
-    setTimeout(() => {
-        document.querySelectorAll(".reveal-children-item").forEach((el, i) => {
-            el.style.transitionDelay = `${Math.min(i * 0.04, 0.4)}s`;
-            el.style.opacity = "1";
-            el.style.transform = "translateY(0)";
-        });
-    }, 50);
-}
-
-function toggleWishlist(btn, event) {
-    event.stopPropagation();
-    btn.classList.toggle("liked");
-}
-
-// ═══════════════ INIT ═══════════════
-renderCategories();
-filterDestinations();
-
-// Nav scroll
-document.getElementById("nav").addEventListener("scroll", function(){});
-window.addEventListener("scroll", () => {
-    document.getElementById("nav").classList.toggle("scrolled", window.scrollY > 10);
-    document.getElementById("backToTop").classList.toggle("visible", window.scrollY > 600);
+// Scroll shadow
+window.addEventListener("scroll",()=>{
+  document.querySelector("nav").style.borderBottomColor=window.scrollY>10?"var(--border)":"transparent";
 });
 
-// Scroll reveal
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("visible"); observer.unobserve(e.target); } });
-}, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
-document.querySelectorAll(".reveal, .reveal-children").forEach(el => observer.observe(el));
+// Toast styles
+document.querySelector("#toast").style.cssText=`position:fixed;bottom:92px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:12px 24px;border-radius:12px;font-size:0.9rem;z-index:300;box-shadow:0 8px 32px rgba(0,0,0,0.2);display:none;transition:opacity 0.3s;text-align:center;max-width:90vw;`;
 </script>
 </body>
 </html>
